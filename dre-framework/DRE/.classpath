@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Axis2"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Logging"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/PDFBox"/>
+	<classpathentry kind="lib" path="C:/Documents and Settings/Santthosh/Desktop/Workspace/DRE/lib/LiveSearchAPI.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
