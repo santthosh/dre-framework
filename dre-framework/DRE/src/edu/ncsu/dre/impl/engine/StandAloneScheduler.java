@@ -20,7 +20,7 @@ package edu.ncsu.dre.impl.engine;
 
 import java.util.*;
 
-import edu.ncsu.dre.configuration.Component;
+import edu.ncsu.dre.configuration.*;
 import edu.ncsu.dre.engine.*;
 
 /**
@@ -44,7 +44,17 @@ public class StandAloneScheduler implements ResearchScheduler {
 				Class searchProvider = Class.forName(searchProviders.get(i).getHandler());
 				ServiceProvider serviceProvider = (ServiceProvider) searchProvider.newInstance();
 				
-				serviceProvider.gatherInformation(artifact, searchProviders.get(i).getOption());
+				List<Arguments> arguments = searchProviders.get(i).getOption();
+				Map<String,String> keyValuePair = new Hashtable<String,String>();
+				
+				for(int j=0;j<arguments.size();j++)
+				{
+					System.out.println("Key: " + arguments.get(j).getKey().toLowerCase());
+					System.out.println("Value: " + arguments.get(j).getValue().toLowerCase());
+					keyValuePair.put(arguments.get(j).getKey().toLowerCase(),arguments.get(j).getValue().toLowerCase());
+				}
+				
+				serviceProvider.gatherInformation(artifact,keyValuePair);
 			}
 			catch(Exception e)
 			{

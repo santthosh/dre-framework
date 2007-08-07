@@ -44,23 +44,25 @@ public class LiveSearchProvider implements ServiceProvider {
 	 * @see edu.ncsu.dre.engine.ServiceProvider#gatherInformation(java.util.Collection)
 	 */
 	@Override
-	public Map<Object, Object> gatherInformation(Collection<Object> artifactSubset, List<Arguments> options) {
+	public Map<Object, Object> gatherInformation(Collection<Object> artifactSubset, Map<String,String> options) {
 		
 		try
 		{
 			int arraySize = 1;
 			
 			MSNSearchServiceStub s = new MSNSearchServiceStub();
+			//If you don't set the request to be CHUNKED you will get HTTP error for this call.
 			s._getServiceClient().getOptions().setProperty(HTTPConstants.CHUNKED,false);
-			                 
+
+			//Format the result set types
             ResultFieldMask_type0[] rsfmt = new ResultFieldMask_type0[arraySize];
-            rsfmt[0] = ResultFieldMask_type0.All;
-            
+            rsfmt[0] = ResultFieldMask_type0.All;            
             ResultFieldMask rsfm = new ResultFieldMask();
             rsfm.setResultFieldMask_type0(rsfmt);
             
-            SearchFlags sf = new SearchFlags();                        
-                        
+            SearchFlags sf = new SearchFlags();               
+            
+            //Form the request variable
             SearchRequest searchRequest = new SearchRequest();
             searchRequest.setFlags(sf);
             
@@ -70,14 +72,44 @@ public class LiveSearchProvider implements ServiceProvider {
             srAr.setSourceRequest(sr);
             
             sr[0] = new SourceRequest();
-            sr[0].setSource(SourceType.Web);
             sr[0].setResultFields(rsfm);
-                                             
-            searchRequest.setRequests(srAr);
-            searchRequest.setAppID("7E8E2A6CDEEE7248E0EBF23EDD20303F86364CCE");
-            searchRequest.setCultureInfo("en-US");                     
-            searchRequest.setSafeSearch(SafeSearchOptions.Off);
             
+            //Set the source type, choose from 9 options Ads/Image/InlineAnswers/News/PhoneBook/QueryLocation/Spelling/Web/WordBreaker
+            if(options.get("source").compareToIgnoreCase("Web")==0)
+            	sr[0].setSource(SourceType.Web);
+            if(options.get("source").compareToIgnoreCase("Image")==0)
+            	sr[0].setSource(SourceType.Image);
+            if(options.get("source").compareToIgnoreCase("InlineAnswers")==0)
+            	sr[0].setSource(SourceType.InlineAnswers);
+            if(options.get("source").compareToIgnoreCase("News")==0)
+            	sr[0].setSource(SourceType.News);
+            if(options.get("source").compareToIgnoreCase("PhoneBook")==0)
+            	sr[0].setSource(SourceType.PhoneBook);
+            if(options.get("source").compareToIgnoreCase("QueryLocation")==0)
+            	sr[0].setSource(SourceType.QueryLocation);
+            if(options.get("source").compareToIgnoreCase("Spelling")==0)
+            	sr[0].setSource(SourceType.Spelling);
+            if(options.get("source").compareToIgnoreCase("Ads")==0)
+            	sr[0].setSource(SourceType.Ads);
+            if(options.get("source").compareToIgnoreCase("WordBreaker")==0)
+            	sr[0].setSource(SourceType.WordBreaker);
+                   
+            searchRequest.setRequests(srAr);
+            
+            //Set the application ID given by Microsoft onto the SOAP query
+            searchRequest.setAppID(options.get("appid").toUpperCase());
+            
+            //Set the language preference example: en-US
+            searchRequest.setCultureInfo(options.get("culture"));     
+            
+            //Set the SafeSearch options from the options list
+            if(options.get("safesearch").compareToIgnoreCase("off")==0)
+            	searchRequest.setSafeSearch(SafeSearchOptions.Off);	
+            if(options.get("safesearch").compareToIgnoreCase("strict")==0)
+            	searchRequest.setSafeSearch(SafeSearchOptions.Strict);
+            if(options.get("safesearch").compareToIgnoreCase("moderate")==0)
+            	searchRequest.setSafeSearch(SafeSearchOptions.Moderate);
+                        
             Search srch = new Search();
             
             List<Object> QueryList = (List<Object>) artifactSubset;
@@ -98,16 +130,17 @@ public class LiveSearchProvider implements ServiceProvider {
 
             		System.out.println( QueryList.get(a).toString() + " " + 
             								srcResponse[i].getSource().toString() + 
-            								" Total Results: " + srcResponse[i].getTotal());            		
+            								" Total Results: " + srcResponse[i].getTotal());            
+            		
             		for(int j=0;j<sourceResults.length;j++)
             		{
-            			/*if(sourceResults[j].getTitle()!=null && !sourceResults[j].getTitle().isEmpty())
+            			if(sourceResults[j].getTitle()!=null && !sourceResults[j].getTitle().isEmpty())
             				System.out.println("Title: " + sourceResults[j].getTitle());
             			if(sourceResults[j].getDescription()!=null && !sourceResults[j].getDescription().isEmpty())
             				System.out.println("Description: " + sourceResults[j].getDescription());
             			if(sourceResults[j].getUrl()!=null && !sourceResults[j].getUrl().isEmpty())
             				System.out.println("URL: " + sourceResults[j].getUrl());
-            			System.out.println("***");*/
+            			System.out.println("***");
             		}
             	}
             }

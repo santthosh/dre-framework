@@ -18,7 +18,10 @@
   </Aggregator> 
   <ServiceProvider>
   	<Handler>edu.ncsu.dre.impl.engine.LiveSearchProvider</Handler>
-  	<Option key="web" value="true"/>
+  	<Option key="AppID" value="7E8E2A6CDEEE7248E0EBF23EDD20303F86364CCE"/>
+  	<Option key="Culture" value="en-US"/>
+  	<Option key="SafeSearch" value="Off"/>
+  	<Option key="Source" value="web"/>	<!-- value="Ads/Image/InlineAnswers/News/PhoneBook/QueryLocation/Spelling/Web/WordBreaker" -->  	
   </ServiceProvider>  
   <Parameter key="Comment" value="SimpleStandAlone DRE Framework."/>
 </EngineConfiguration>

@@ -42,5 +42,5 @@ public interface ServiceProvider extends java.io.Serializable
 	 * @return java.util.Map<Object,Object>
 	 */
 	public java.util.Map<Object,Object> gatherInformation(java.util.Collection<Object> artifactSubset,
-			java.util.List<Arguments> options);
+			java.util.Map<String,String> options);
 }
