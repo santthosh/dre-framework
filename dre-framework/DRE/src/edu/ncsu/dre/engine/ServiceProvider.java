@@ -37,10 +37,21 @@ public interface ServiceProvider extends java.io.Serializable
 	 * Generalized method for gathering information on the given artifact subset.
 	 * 
 	 * @param java.util.Collection<Object> artifactSubset, 
-	 * 		  java.util.List<Arguments> options
+	 * 		  java.util.Map<String,String> options
 	 * 
 	 * @return java.util.Map<Object,Object>
 	 */
 	public java.util.Map<Object,Object> gatherInformation(java.util.Collection<Object> artifactSubset,
+			java.util.Map<String,String> options);
+	
+	/**
+	 * Generalized method for validating information on the given artifact subset.
+	 * 
+	 * @param java.util.Collection<Object> artifactSubset, 
+	 * 		  java.util.Map<String,String> options
+	 * 
+	 * @return java.util.Map<Object,Object>
+	 */
+	public boolean validateArguments(java.util.Collection<Object> artifactSubset,
 			java.util.Map<String,String> options);
 }

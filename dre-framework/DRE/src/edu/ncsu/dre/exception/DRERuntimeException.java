@@ -59,6 +59,11 @@ public class DRERuntimeException extends InternationalizedRuntimeException
 	 * file."
 	 */
 	public static final String CONFIGURATION_FILE_ERROR = "configuration_file_error";
+	
+	/**
+	 * Message key for a standard DRE exception message: "NULL Query."
+	 */
+	public static final String NULL_QUERY = "null_query";
 
 	/**
 	 * Creates a new exception with a null message.
