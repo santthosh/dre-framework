@@ -18,6 +18,8 @@
  */
 package edu.ncsu.dre.impl.data;
 
+import org.apache.log4j.Logger;
+
 import edu.ncsu.dre.util.*;
 import edu.ncsu.dre.data.Artifact;
 import edu.ncsu.dre.exception.*;
@@ -35,6 +37,8 @@ import edu.ncsu.dre.exception.*;
  * @author <a href="mailto:sbselvad@ncsu.edu">Santthosh Babu Selvadurai</a>
  */
 public class TextArtifact implements Artifact {
+	
+	static Logger logger = Logger.getLogger("edu.ncsu.dre.impl.data.TextArtifact");
 
 	private static final long serialVersionUID = -481270147011237L;
 	/**
@@ -47,7 +51,8 @@ public class TextArtifact implements Artifact {
 	 * @see edu.ncsu.dre.Artifact#getQuery()
 	 */
 	@Override
-	public Object getQuery() {		
+	public Object getQuery() {	
+		logger.trace("getQuery()");
 		return this.artifact;
 	}
 
@@ -56,6 +61,7 @@ public class TextArtifact implements Artifact {
 	 */
 	@Override
 	public void setArtifact(Object inputArtifact) {
+		logger.trace("setArtifact(Object inputArtifact)");
 		this.artifact = inputArtifact;
 	}
 	
@@ -67,6 +73,7 @@ public class TextArtifact implements Artifact {
 	 */
 	public TextArtifact(String inputArtifact)
 	{
+		logger.trace("TextArtifact(String inputArtifact)");
 		setArtifact((Object)inputArtifact);
 	}
 	
@@ -82,10 +89,11 @@ public class TextArtifact implements Artifact {
 	 * @throws DREIllegalArgumentException
 	 * 
 	 * @throws DRERuntimeException
-	 */
-	
+	 */	
 	public TextArtifact(java.io.File inputArtifact) throws DREIllegalArgumentException,DRERuntimeException
-	{		
+	{	
+		logger.trace("TextArtifact(java.io.File inputArtifact)");
+		
 		if (!inputArtifact.exists() || !inputArtifact.isFile())
 			throw new DREIllegalArgumentException(DREIllegalArgumentException.FILE_SYSTEM_OBJECT_ERROR,
 					new Object[] { inputArtifact.getName(),this.getClass().getName() });
@@ -109,6 +117,7 @@ public class TextArtifact implements Artifact {
 		} 
 		catch (java.io.IOException ioe) 
 		{
+			logger.error("IOException while parsing text artifact.",ioe);
 			throw new DRERuntimeException(DRERuntimeException.FAILED_CONTENT_EXTRACTION, ioe.getMessage(), 
 					new Object[] { this.getClass().getName() });
 		}	

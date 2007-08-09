@@ -20,6 +20,7 @@ package edu.ncsu.dre.util;
 
 import java.io.IOException;
 
+import org.apache.log4j.Logger;
 import org.pdfbox.pdmodel.PDDocument;
 import org.pdfbox.util.PDFTextStripper;
 
@@ -32,6 +33,8 @@ import edu.ncsu.dre.exception.DRERuntimeException;
  */
 public class PDFUtils {
 	
+	private static Logger logger = Logger.getLogger("edu.ncsu.dre.util.PDFUtils");
+	
 	/**
 	 * Read the contents of a PDF file into a string.
 	 * 
@@ -42,6 +45,9 @@ public class PDFUtils {
 	 *           Various I/O errors.
 	 */
 	public static String pdf2String(java.io.File inputFile) throws java.io.IOException {
+		
+		logger.trace("pdf2String(java.io.File inputFile)");
+		
 		PDDocument pdfDocument = null;
 		try {
 			pdfDocument = PDDocument.load(inputFile);
@@ -50,12 +56,14 @@ public class PDFUtils {
 				try {
 					pdfDocument.decrypt("");
 				} catch (org.pdfbox.exceptions.InvalidPasswordException ipe) {
+					logger.error("Decryption of PDF document failed!",ipe);
 					throw new DRERuntimeException(
 							DRERuntimeException.FAILED_CONTENT_EXTRACTION,
 							"The PDF document is encrypted.",
 							new Object[] {"edu.ncsu.dre.util.PDFUtils"});
 				} catch (org.pdfbox.exceptions.CryptographyException ce) {
-					throw new DRERuntimeException(
+					logger.error("Cryptanalysis failed on the PDF document!",ce);
+					throw new DRERuntimeException(							
 							DRERuntimeException.FAILED_CONTENT_EXTRACTION,
 							"The PDF document is encrypted, unknown cipher text.",
 							new Object[] {"edu.ncsu.dre.util.PDFUtils"});

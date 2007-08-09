@@ -19,7 +19,6 @@
 package edu.ncsu.dre;
 
 /**
- * @author santthosh
  * Constants used by the DRE framework
  * 
  * @author <a href="mailto:sbselvad@ncsu.edu">Santthosh Babu Selvadurai</a>

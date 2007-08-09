@@ -79,8 +79,6 @@ public class FrameworkTest {
 			StandAloneScheduler ss = new StandAloneScheduler();
 			ss.scheduleResearch((Collection<Object>) ObjectList.get(i), framework.getConfiguration().getServiceProvider());
 		}
-		
-		
 	}
 
 	/**

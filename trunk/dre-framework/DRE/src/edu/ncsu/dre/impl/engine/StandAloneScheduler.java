@@ -20,6 +20,8 @@ package edu.ncsu.dre.impl.engine;
 
 import java.util.*;
 
+import org.apache.log4j.Logger;
+
 import edu.ncsu.dre.configuration.*;
 import edu.ncsu.dre.engine.*;
 
@@ -33,10 +35,14 @@ import edu.ncsu.dre.engine.*;
  */
 public class StandAloneScheduler implements ResearchScheduler {
 	
+	private static Logger logger = Logger.getLogger("edu.ncsu.dre.impl.engine.StandAloneScheduler");
+	
 	private static final long serialVersionUID = 86761654684684654L;
 	
 	public Map<Object,Object> scheduleResearch(Collection<Object> artifact, List<Component> searchProviders)
 	{		
+		logger.trace("scheduleResearch(Collection<Object> artifact, List<Component> searchProviders)");
+		
 		for(int i=0;i<searchProviders.size();i++)
 		{
 			try
@@ -48,9 +54,7 @@ public class StandAloneScheduler implements ResearchScheduler {
 				Map<String,String> keyValuePair = new Hashtable<String,String>();
 				
 				for(int j=0;j<arguments.size();j++)
-				{
-					System.out.println("Key: " + arguments.get(j).getKey().toLowerCase());
-					System.out.println("Value: " + arguments.get(j).getValue().toLowerCase());
+				{					
 					keyValuePair.put(arguments.get(j).getKey().toLowerCase(),arguments.get(j).getValue().toLowerCase());
 				}
 				
@@ -58,7 +62,7 @@ public class StandAloneScheduler implements ResearchScheduler {
 			}
 			catch(Exception e)
 			{
-				e.printStackTrace();
+				logger.error("Error occured in Standalone scheduling mechanism",e);				
 			}
 		}
 		return null;
