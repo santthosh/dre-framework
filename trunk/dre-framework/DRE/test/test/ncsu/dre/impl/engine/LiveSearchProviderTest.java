@@ -26,13 +26,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.microsoft.schemas.msnsearch.MSNSearchServiceStub.*;
-
 import edu.ncsu.dre.impl.engine.*;
 import edu.ncsu.dre.exception.*;
 
 /**
- * 
+ * Test routine for the Microsoft LiveSearch API
  *
  * @author <a href="mailto:sbselvad@ncsu.edu">Santthosh Babu Selvadurai</a>
  */
@@ -107,7 +105,7 @@ public class LiveSearchProviderTest {
 		try
 		{
 			//Test the non-availability of options
-			artifactSubset.add("simple");			
+			artifactSubset.add("simple");	
 			searchAgent.validateArguments(artifactSubset, options);			
 			assertEquals(options.get("source"),"web");
 			assertEquals(options.get("appid"),"7E8E2A6CDEEE7248E0EBF23EDD20303F86364CCE");
@@ -139,48 +137,15 @@ public class LiveSearchProviderTest {
 	public void testgatherInformation() {		
 		
 		artifactSubset.add("simple");	
+		artifactSubset.add("fact");
 		options.put("source", "asdasd");
-		options.put("appid", "tempappid");
-		options.put("culture", "us-EN");
+		//options.put("appid", "tempappid");
+		options.put("culture", "en-US");
 		options.put("safesearch", "asdasd");
 		
-		Map<Object,Object> sourceSet = new HashMap<Object,Object>();
-		sourceSet.put("simple", "value");
 		Map<Object,Object> resultSet = searchAgent.gatherInformation(artifactSubset, options);
 
-		//assertNotNull(resultSet);
-		//assertEquals(sourceSet,resultSet);
-	}
-	
-	/**
-	 * Tests the gatherInformation functionality
-	 */
-	@Test
-	public void testResultXMLSerialization()
-	{
-		//LiveSearchResult result = new LiveSearchResult();
-		Result result = new Result();
-		
-		Address address = new Address();
-		DateTime dateTime = new DateTime();
-		Image image = new Image();
-		Location location = new Location();
-		
-		result.setAddress(address);
-		result.setCacheUrl("Cached URL");
-		result.setDateTime(dateTime);
-		result.setDescription("Description");
-		result.setDisplayUrl("Display URL");
-		result.setImage(image);
-		result.setLocation(location);
-		result.setPhone("Phone");
-		result.setResultType("Result Type");
-		result.setSearchTags("Search Tags");
-		result.setSource("Source");
-		result.setSummary("Summary");
-		result.setTitle("Title");
-		result.setUrl("URL");
-		
-		searchAgent.ResultXMLSerialization(result);		
+		System.out.println(resultSet.toString());
+		assertNotNull(resultSet);
 	}
 }

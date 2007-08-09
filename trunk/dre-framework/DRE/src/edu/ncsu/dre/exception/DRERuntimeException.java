@@ -66,6 +66,11 @@ public class DRERuntimeException extends InternationalizedRuntimeException
 	public static final String NULL_QUERY = "null_query";
 
 	/**
+	 * Message key for a standard DRE exception message: "XML parsing failed."
+	 */
+	public static final String XML_FAILIURE = "xml_failiure";
+	
+	/**
 	 * Creates a new exception with a null message.
 	 */
 	public DRERuntimeException() {
