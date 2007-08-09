@@ -18,8 +18,6 @@
  */
 package edu.ncsu.dre.engine;
 
-
-import edu.ncsu.dre.configuration.*;
 /**
  * <code>ServiceProvider</code> is the general term for all DRE components that can be used to 
  * collect information on a subset of the artifact. The subset of artifacts is provided to this   
