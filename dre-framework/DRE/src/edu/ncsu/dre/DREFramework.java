@@ -20,6 +20,8 @@ package edu.ncsu.dre;
 
 import javax.xml.bind.*;
 
+import org.apache.log4j.Logger;
+
 import edu.ncsu.dre.data.Artifact;
 import edu.ncsu.dre.exception.*;
 import edu.ncsu.dre.engine.*;
@@ -35,6 +37,8 @@ import edu.ncsu.dre.configuration.*;
  */
 
 public class DREFramework {
+	
+	static Logger logger = Logger.getLogger("edu.ncsu.dre.DREFramework");
 		
 	/**
 	 * This is the framework configuration associated with the singleton instance;
@@ -48,6 +52,7 @@ public class DREFramework {
 	 * @return the version.
 	 */
 	public String getVersionString() {
+		logger.trace("getVersionString()");
 		return "" + getMajorVersion() + "." + getMinorVersion() + "." + getBuildRevision();
 	}
 
@@ -57,6 +62,7 @@ public class DREFramework {
 	 * @return the major version number
 	 */
 	public short getMajorVersion() {
+		logger.trace("getMajorVersion()");
 		return 0;
 	}
 
@@ -66,6 +72,7 @@ public class DREFramework {
      * @return the minor version number
 	 */
 	public short getMinorVersion() {
+		logger.trace("getMinorVersion()");
 		return 1;
 	}
 
@@ -75,6 +82,7 @@ public class DREFramework {
 	 * @return the build revision number
 	 */
 	public short getBuildRevision() {
+		logger.trace("getBuildRevision()");
 		return 1;
 	}
 	
@@ -84,6 +92,7 @@ public class DREFramework {
 	 * @return the configuration
 	 */
 	public DREConfiguration getConfiguration() {
+		logger.trace("getConfiguration()");
 		return configuration;
 	}
 
@@ -93,6 +102,7 @@ public class DREFramework {
 	 * @param configuration the configuration to set
 	 */
 	public void setConfiguration(DREConfiguration configuration) {
+		logger.trace("setConfiguration(DREConfiguration configuration)");
 		DREFramework.configuration = configuration;
 		
 		if(!hasValidConfiguration())
@@ -107,6 +117,7 @@ public class DREFramework {
 	 */
 	public void setConfiguration(java.io.File configurationFile)
 	{		
+		logger.trace("setConfiguration(java.io.File configurationFile)");
 		try
 		{
 			DREConfiguration dreConfiguration = new DREConfiguration();
@@ -147,12 +158,12 @@ public class DREFramework {
 		}
 		catch(JAXBException je)
 		{
-			je.printStackTrace();
+			logger.error("JAXBException occured!",je);			
 			throw new DREIllegalArgumentException(DREIllegalArgumentException.CONFIGURATION_FILE_PARSE_ERROR,null);						
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
+			logger.error("Error demarshalling configuration file!",e);					
 			throw new DRERuntimeException(DRERuntimeException.CONFIGURATION_FILE_ERROR, null);
 		}
 	}
@@ -167,6 +178,8 @@ public class DREFramework {
 	 */
 	protected java.util.Map<Object,Object> list2Map(java.util.List<Arguments> optionsList)
 	{
+		logger.trace("list2Map(java.util.List<Arguments> optionsList)");
+		
 		java.util.Map<Object,Object> componentOptions = new java.util.HashMap<Object,Object>();
 		for(int i=0;i<optionsList.size();i++)
 		{	
@@ -187,7 +200,9 @@ public class DREFramework {
 	 * if necessary.  
 	 */	
 	public DREFramework()
-	{}
+	{
+		logger.trace("DREFramework()");
+	}
 	
 	/**
 	 * Constructor for the DREFramework given a configuration information. The constructor
@@ -198,6 +213,8 @@ public class DREFramework {
 	 */
 	public DREFramework(DREConfiguration configuration) throws DREIllegalStateException
 	{
+		logger.trace("DREFramework(DREConfiguration configuration)");
+		
 		DREFramework.configuration = configuration;
 		if(!hasValidConfiguration())
 			throw new DREIllegalStateException(DREIllegalStateException.INVALID_CONFIGURATION,null);					
@@ -212,6 +229,8 @@ public class DREFramework {
 	 */
 	public DREFramework(java.io.File configurationFile) throws DREIllegalStateException
 	{
+		logger.trace("DREFramework(java.io.File configurationFile)");
+		
 		setConfiguration(configurationFile);
 		if(!hasValidConfiguration())
 			throw new DREIllegalStateException(DREIllegalStateException.INVALID_CONFIGURATION,null);
@@ -236,6 +255,8 @@ public class DREFramework {
 	 * scheduler
 	 */
 	public boolean hasValidConfiguration(){
+		logger.trace("hasValidConfiguration()");
+		
 		if(configuration != null &&
 		   configuration.getAggregator()!= null &&
 		   configuration.getSegregator()!= null &&

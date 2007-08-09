@@ -20,6 +20,8 @@ package edu.ncsu.dre.impl.engine;
 
 import java.util.*;
 import edu.ncsu.dre.engine.Segregator;
+
+import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.*;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 
@@ -33,6 +35,8 @@ import org.apache.lucene.analysis.standard.StandardAnalyzer;
  * @author <a href="mailto:sbselvad@ncsu.edu">Santthosh Babu Selvadurai</a>
  */
 public class LexicalSegregator implements Segregator {
+	
+	static Logger logger = Logger.getLogger("edu.ncsu.dre.impl.data.engine.LexicalSegregator");
 	
 	private static final long serialVersionUID = 7863186186756348L;
 	
@@ -55,6 +59,8 @@ public class LexicalSegregator implements Segregator {
 	 */
 	public Collection<Object> segregateArtifact(Object artifact){
 		
+		logger.trace("segregateArtifact(Object artifact)");
+		
 		String sArtifact = (String)artifact;
 		
 		List<Object> queryList = new ArrayList<Object>();
@@ -76,7 +82,7 @@ public class LexicalSegregator implements Segregator {
 		}
 		catch(java.io.IOException ioe)
 		{
-			ioe.printStackTrace();
+			logger.error("IOException occured while parsing input stream",ioe);
 		}
 		
 		queryList.add(wordList);		

@@ -31,12 +31,16 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Random;
 
+import org.apache.log4j.Logger;
+
 /**
  * Some utilities for handling files.
  * 
  * @author <a href="mailto:sbselvad@ncsu.edu">Santthosh Babu Selvadurai</a>
  */
 public class FileUtils {
+	
+	private static Logger logger = Logger.getLogger("edu.ncsu.dre.util.FileUtils");
 
   /**
    * Get a list of all files in a directory. Optionally, get files in subdirectories as well.
@@ -49,6 +53,9 @@ public class FileUtils {
    *         <code>directory</code> does not exist, or is not a directory.
    */
   public static final ArrayList<File> getFiles(File directory, boolean getRecursive) {
+	  
+	  logger.trace("getFiles(File directory, boolean getRecursive)");
+	  
     if (!directory.exists() || !directory.isDirectory()) {
       return null;
     }
@@ -77,6 +84,9 @@ public class FileUtils {
    *         <code>directory</code> does not exist, or is not a directory.
    */
   public static final ArrayList<File> getFiles(File directory) {
+	  
+	  logger.trace("getFiles(File directory)");
+	  
     return getFiles(directory, false);
   }
 
@@ -89,6 +99,9 @@ public class FileUtils {
    *         <code>directory</code> does not exist, or is not a directory.
    */
   public static final ArrayList<File> getSubDirs(File directory) {
+	  
+	  logger.trace("getSubDirs(File directory)");
+	  
     if (!directory.exists() || !directory.isDirectory()) {
       return null;
     }
@@ -114,6 +127,9 @@ public class FileUtils {
    *           Various I/O errors.
    */
   public static String reader2String(Reader reader) throws IOException {
+	  
+	  logger.trace("reader2String(Reader reader)");
+	  
     StringBuffer strBuffer = new StringBuffer();
     char[] buf = new char[10000];
     int charsRead;
@@ -137,6 +153,9 @@ public class FileUtils {
    *           Various I/O errors.
    */
   public static String file2String(File file) throws IOException {
+	  
+	  logger.trace("file2String(File file)");
+	  
     return reader2String(new FileReader(file));
   }
 
@@ -153,6 +172,9 @@ public class FileUtils {
    *           Various I/O errors.
    */
   public static String file2String(File file, String fileEncoding) throws IOException {
+	  
+	  logger.trace("file2String(File file, String fileEncoding)");
+	  
     if (fileEncoding == null) { // use default
       return file2String(file);
     }
@@ -170,6 +192,9 @@ public class FileUtils {
    *           If for any reason the file can't be written.
    */
   public static void saveString2File(String fileContents, File file) throws IOException {
+	  
+	  logger.trace("saveString2File(String fileContents, File file)");
+	  
     BufferedWriter writer = new BufferedWriter(new FileWriter(file));
     writer.write(fileContents);
     writer.close();
@@ -188,6 +213,9 @@ public class FileUtils {
    *           If for any reason the file can't be written.
    */
   public static void saveString2File(String s, File file, String encoding) throws IOException {
+	  
+	  logger.trace("saveString2File(String s, File file, String encoding)");
+	  
     BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file),
         encoding));
     writer.write(s);
@@ -201,6 +229,9 @@ public class FileUtils {
    *          The directory that contains the files to be deleted.
    */
   public static final void deleteAllFiles(File directory) {
+	  
+	  logger.trace("deleteAllFiles(File directory)");
+	  
     File[] fileList = directory.listFiles();
     // If file does not exist, or is not a directory, do nothing.
     if (fileList == null) {
@@ -223,6 +254,9 @@ public class FileUtils {
    * @return <code>true</code> iff the file/directory could be deleted.
    */
   public static final boolean deleteRecursive(File file) {
+	  
+	  logger.trace("deleteRecursive(File file)");
+	  
     if (!file.exists()) {
       return false;
     }
@@ -246,6 +280,7 @@ public class FileUtils {
    *         <code>false</code>.
    */
   public static final boolean mkdir(File directory) {
+	  logger.trace("mkdir(File directory)");
     // Check if directory already exists. The documentation is silent on
     // what
     // could actually cause File.mkdir() to fail.
@@ -266,6 +301,7 @@ public class FileUtils {
    *         could be created for some reason (e.g., if the parent is not writable).
    */
   public static final File createTempDir(File parent, String prefix) {
+	  logger.trace("createTempDir(File parent, String prefix)");
     Random rand = new Random();
     File tempDir;
     while (true) {
@@ -282,6 +318,7 @@ public class FileUtils {
 
   public static final File createTempFile(String prefix, String suffix, File tempDir)
       throws IOException {
+	  logger.trace("createTempFile(String prefix, String suffix, File tempDir)");
     File file = File.createTempFile(prefix, suffix, tempDir);
     file.deleteOnExit();
     return file;
@@ -307,6 +344,7 @@ public class FileUtils {
    *           copied for any reason.
    */
   public static final void copyFile(File file, File dir) throws IOException {
+	  logger.trace("copyFile(File file, File dir)");	  
     if (!file.exists() || !file.canRead()) {
       throw new IOException("File does not exist or is not readable: " + file.getAbsolutePath());
     }

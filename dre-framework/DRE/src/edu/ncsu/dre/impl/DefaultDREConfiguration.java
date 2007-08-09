@@ -18,6 +18,8 @@
  */
 package edu.ncsu.dre.impl;
 
+import org.apache.log4j.Logger;
+
 import edu.ncsu.dre.DREConfiguration;
 import edu.ncsu.dre.impl.engine.*;
 
@@ -33,6 +35,8 @@ import edu.ncsu.dre.impl.engine.*;
  */
 public final class DefaultDREConfiguration extends DREConfiguration {
 
+	static Logger logger = Logger.getLogger("edu.ncsu.dre.impl.DefaultDREConfiguration");
+	
 	/**
 	 * Object for {@link edu.ncsu.dre.impl.engine.LexicalSegregator} 
 	 */
@@ -62,6 +66,8 @@ public final class DefaultDREConfiguration extends DREConfiguration {
 	 */	
 	public DefaultDREConfiguration()
 	{
+		logger.trace("DefaultDREConfiguration()");
+		
 		lexicalSegregator = new LexicalSegregator();		
 		this.setSegregator(lexicalSegregator);
 		

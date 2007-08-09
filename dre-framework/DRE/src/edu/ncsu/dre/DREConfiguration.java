@@ -19,6 +19,9 @@
 package edu.ncsu.dre;
 
 import java.util.*;
+
+import org.apache.log4j.Logger;
+
 import edu.ncsu.dre.engine.*;
 import edu.ncsu.dre.configuration.*;
 
@@ -35,6 +38,7 @@ import edu.ncsu.dre.configuration.*;
  */
 public class DREConfiguration {
 	
+	static Logger logger = Logger.getLogger("edu.ncsu.dre.DREConfiguration");
 	/**
 	 * General Segregator object that is used inside the DRE framework 
 	 */
@@ -82,6 +86,7 @@ public class DREConfiguration {
 	 * @return the segregator
 	 */
 	public Segregator getSegregator() {
+		logger.trace("getSegregator()");
 		return segregator;
 	}
 	/**
@@ -91,7 +96,8 @@ public class DREConfiguration {
 	 * 
 	 * @param segregator the segregator to set
 	 */
-	public void setSegregator(Segregator segregator) {		
+	public void setSegregator(Segregator segregator) {
+		logger.trace("setSegregator(Segregator segregator)");
 		this.segregator = segregator;
 	}
 	
@@ -101,6 +107,7 @@ public class DREConfiguration {
 	 * @return the segregatorOptions
 	 */
 	public Map<Object,Object> getSegregatorOptions() {
+		logger.trace("getSegregatorOptions()");
 		return segregatorOptions;
 	}
 	/**
@@ -109,6 +116,7 @@ public class DREConfiguration {
 	 * @param segregatorOptions the segregatorOptions to set
 	 */
 	public void setSegregatorOptions(Map<Object,Object> segregatorOptions) {
+		logger.trace("setSegregatorOptions(Map<Object,Object> segregatorOptions)");
 		this.segregatorOptions = segregatorOptions;
 	}	
 	
@@ -118,6 +126,7 @@ public class DREConfiguration {
 	 * @return the aggregator
 	 */
 	public Aggregator getAggregator() {
+		logger.trace("getAggregator()");
 		return aggregator;
 	}
 	/**
@@ -128,6 +137,7 @@ public class DREConfiguration {
 	 * @param aggregator the aggregator to set
 	 */
 	public void setAggregator(Aggregator aggregator) {
+		logger.trace("setAggregator(Aggregator aggregator)");
 		this.aggregator = aggregator;
 	}
 	/**
@@ -136,6 +146,7 @@ public class DREConfiguration {
 	 * @return the aggregatorOptions
 	 */
 	public Map<Object,Object> getAggregatorOptions() {
+		logger.trace("getAggregatorOptions()");
 		return aggregatorOptions;
 	}
 	/**
@@ -144,6 +155,7 @@ public class DREConfiguration {
 	 * @param aggregatorOptions the aggregatorOptions to set
 	 */
 	public void setAggregatorOptions(Map<Object,Object> aggregatorOptions) {
+		logger.trace("setAggregatorOptions(Map<Object,Object> aggregatorOptions)");
 		this.aggregatorOptions = aggregatorOptions;
 	}
 	
@@ -153,6 +165,7 @@ public class DREConfiguration {
 	 * @return the scheduler
 	 */
 	public ResearchScheduler getScheduler() {
+		logger.trace("getScheduler()");
 		return scheduler;
 	}
 	/**
@@ -163,6 +176,7 @@ public class DREConfiguration {
 	 * @param scheduler the scheduler to set
 	 */
 	public void setScheduler(ResearchScheduler scheduler) {
+		logger.trace("setScheduler(ResearchScheduler scheduler)");
 		this.scheduler = scheduler;
 	}	
 	/**
@@ -171,6 +185,7 @@ public class DREConfiguration {
 	 * @return the schedulerOptions
 	 */
 	public Map<Object,Object> getSchedulerOptions() {
+		logger.trace("getSchedulerOptions()");
 		return schedulerOptions;
 	}
 	/**
@@ -179,6 +194,7 @@ public class DREConfiguration {
 	 * @param schedulerOptions the schedulerOptions to set
 	 */
 	public void setSchedulerOptions(Map<Object,Object> schedulerOptions) {
+		logger.trace("setSchedulerOptions(Map<Object,Object> schedulerOptions)");
 		this.schedulerOptions = schedulerOptions;
 	}
 	/**
@@ -187,6 +203,7 @@ public class DREConfiguration {
 	 * @return the parameters
 	 */
 	public Map<Object,Object> getParameters() {
+		logger.trace("getParameters()");
 		return parameters;
 	}
 	/**
@@ -195,6 +212,7 @@ public class DREConfiguration {
 	 * @param parameters the parameters to set
 	 */
 	public void setParameters(Map<Object,Object> parameters) {
+		logger.trace("setParameters(Map<Object,Object> parameters)");
 		this.parameters = parameters;
 	}
 	/**
@@ -203,6 +221,7 @@ public class DREConfiguration {
 	 * @return the serviceProvider
 	 */
 	public List<Component> getServiceProvider() {
+		logger.trace("getServiceProvider()");
 		return ServiceProvider;
 	}
 	/**
@@ -212,6 +231,7 @@ public class DREConfiguration {
 	 * @param serviceProvider the serviceProvider to set
 	 */
 	public void setServiceProvider(List<Component> serviceProvider) {
+		logger.trace("setServiceProvider(List<Component> serviceProvider)");
 		ServiceProvider = serviceProvider;
 	}
 }

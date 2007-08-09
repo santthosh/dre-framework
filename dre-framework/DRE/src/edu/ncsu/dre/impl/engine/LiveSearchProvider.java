@@ -43,16 +43,19 @@ import javax.xml.stream.*;
  * @author <a href="mailto:sbselvad@ncsu.edu">Santthosh Babu Selvadurai</a>
  */
 public class LiveSearchProvider implements ServiceProvider {
-
-	private static final long serialVersionUID = 54545658676165L;
 	
 	private static Logger logger = Logger.getLogger("edu.ncsu.dre.impl.engine.LiveSearchProvider");
+
+	private static final long serialVersionUID = 54545658676165L;		
 	
 	/* (non-Javadoc)
 	 * @see edu.ncsu.dre.engine.ServiceProvider#gatherInformation(java.util.Collection,java.util.Map)
 	 */
 	@Override
-	public Map<Object, Object> gatherInformation(Collection<Object> artifactSubset, Map<String,String> options){		
+	public Map<Object, Object> gatherInformation(Collection<Object> artifactSubset, Map<String,String> options){
+		
+		logger.trace("gatherInformation(Collection<Object> artifactSubset, Map<String,String> options)");
+		
 		try
 		{
 			int arraySize = 1;	
@@ -126,10 +129,12 @@ public class LiveSearchProvider implements ServiceProvider {
 		}
 		catch(java.rmi.RemoteException e)
 		{
+			logger.error("Livesearch SOAP service invocation failed!",e);
 			throw new DREIllegalArgumentException(DREIllegalArgumentException.ILLEGAL_ARGUMENT,"Search failed. Please check AppID, options and the internet connection!",null);			
 		}
 		catch(XMLStreamException e)
 		{
+			logger.error("XMLStreamException occured while accessing Livesearch results!",e);
 			throw new DRERuntimeException(DRERuntimeException.XML_FAILIURE,"Failed during the construction of result stream!",null);
 		}				
 	}
@@ -140,7 +145,9 @@ public class LiveSearchProvider implements ServiceProvider {
 	
 	public boolean validateArguments(java.util.Collection<Object> artifactSubset,java.util.Map<String,String> options)
 	throws DRERuntimeException, DREIllegalArgumentException	
-	{
+	{		
+		logger.trace("validateArguments(java.util.Collection<Object> artifactSubset,java.util.Map<String,String> options)");
+		
 		//Check for the validity of the arguments
 		if(artifactSubset==null || artifactSubset.isEmpty())			
 			throw new DRERuntimeException(DRERuntimeException.NULL_QUERY,null);
@@ -185,6 +192,8 @@ public class LiveSearchProvider implements ServiceProvider {
 	 */
 	private SourceType populateSource(String source)
 	{		
+		logger.trace("populateSource(String source)");
+		
 		 //Set the source type, choose from 9 options Ads/Image/InlineAnswers/News/PhoneBook/QueryLocation/Spelling/Web/WordBreaker
         if(source.compareToIgnoreCase("Web")==0)
         	return SourceType.Web;
@@ -218,6 +227,8 @@ public class LiveSearchProvider implements ServiceProvider {
 	 */
 	private SafeSearchOptions populateSafeSearch(String safesearch)
 	{		
+		logger.trace("populateSafeSearch(String safesearch)");
+		
 		//Set the SafeSearch options from the options list
         if(safesearch.compareToIgnoreCase("off")==0)
         	return SafeSearchOptions.Off;	
