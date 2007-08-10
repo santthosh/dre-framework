@@ -116,7 +116,7 @@ public class TextArtifact implements Artifact {
 				setArtifact((Object) PDFUtils.pdf2String(inputArtifact));			
 		} 
 		catch (java.io.IOException ioe) 
-		{
+		{			
 			logger.error("IOException while parsing text artifact.",ioe);
 			throw new DRERuntimeException(DRERuntimeException.FAILED_CONTENT_EXTRACTION, ioe.getMessage(), 
 					new Object[] { this.getClass().getName() });

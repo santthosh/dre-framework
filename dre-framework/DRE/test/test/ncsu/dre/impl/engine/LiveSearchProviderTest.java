@@ -20,7 +20,7 @@ package test.ncsu.dre.impl.engine;
 
 import java.util.*;
 
-import static org.junit.Assert.*;
+import junit.framework.TestCase;
 
 import org.junit.After;
 import org.junit.Before;
@@ -34,7 +34,7 @@ import edu.ncsu.dre.exception.*;
  *
  * @author <a href="mailto:sbselvad@ncsu.edu">Santthosh Babu Selvadurai</a>
  */
-public class LiveSearchProviderTest {
+public class LiveSearchProviderTest extends TestCase{
 	
 	private LiveSearchProvider searchAgent;
 	private Collection<Object> artifactSubset;

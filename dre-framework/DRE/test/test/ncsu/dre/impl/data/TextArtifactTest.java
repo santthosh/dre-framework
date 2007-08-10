@@ -18,7 +18,7 @@
  */
 package test.ncsu.dre.impl.data;
 
-import static org.junit.Assert.*;
+import junit.framework.TestCase;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -27,11 +27,11 @@ import edu.ncsu.dre.impl.data.*;
 import edu.ncsu.dre.exception.*;
 
 /**
- * 
+ * Test cases to check the TextArtifact class
  *
  * @author <a href="mailto:sbselvad@ncsu.edu">Santthosh Babu Selvadurai</a>
  */
-public class TextArtifactTest {
+public class TextArtifactTest extends TestCase{
 
 	TextArtifact stringArtifact = null;
 	TextArtifact textFileArtifact = null;

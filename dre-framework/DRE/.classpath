@@ -4,7 +4,7 @@
 	<classpathentry including="edu/ncsu/dre/exception/DREException_Messages.properties|log4j.properties" kind="src" path="resources"/>
 	<classpathentry kind="src" path="test">
 		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="DRE/src"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="DRE/test"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
