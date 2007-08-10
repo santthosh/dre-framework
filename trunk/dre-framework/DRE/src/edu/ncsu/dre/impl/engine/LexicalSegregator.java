@@ -70,6 +70,10 @@ public class LexicalSegregator implements Segregator {
 		try
 		{
 			StandardAnalyzer analyst = new StandardAnalyzer();
+			
+			if(sArtifact==null)
+				return queryList;
+			
 			TokenStream tokenStream = analyst.tokenStream("Input Stream", new java.io.StringReader(sArtifact.trim()));
 			
 			Token word = null;
@@ -82,10 +86,9 @@ public class LexicalSegregator implements Segregator {
 		}
 		catch(java.io.IOException ioe)
 		{
-			logger.error("IOException occured while parsing input stream",ioe);
-		}
-		
-		queryList.add(wordList);		
+			logger.error("IOException occured while parsing input stream!",ioe);
+		}	
+		queryList.add(wordList);
 		return queryList;
 	}
 }

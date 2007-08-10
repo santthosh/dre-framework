@@ -21,6 +21,8 @@ package test.ncsu.dre;
 import edu.ncsu.dre.*;
 import edu.ncsu.dre.impl.*;
 
+import junit.framework.TestCase;
+
 import static org.junit.Assert.*;
 
 import org.junit.After;
@@ -32,7 +34,7 @@ import org.junit.Test;
  *
  * @author <a href="mailto:sbselvad@ncsu.edu">Santthosh Babu Selvadurai</a>
  */
-public class DREFrameworkTest {
+public class DREFrameworkTest extends TestCase{
 
 	DefaultDREConfiguration defaultConfiguration = null;
 	DREFramework framework = null;
@@ -50,7 +52,9 @@ public class DREFrameworkTest {
 	 * @throws java.lang.Exception
 	 */
 	@After
-	public void tearDown() throws Exception {		
+	public void tearDown() throws Exception {
+		framework = null;
+		defaultConfiguration = null;
 	}
 
 	/**
@@ -191,9 +195,6 @@ public class DREFrameworkTest {
 	 */
 	@Test
 	public void testHasValidConfiguration() {
-		
-		framework = new DREFramework();
-		
 		assert(!framework.hasValidConfiguration());
 		framework.setConfiguration(defaultConfiguration);
 		assert(framework.hasValidConfiguration());

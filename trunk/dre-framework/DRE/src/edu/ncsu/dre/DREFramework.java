@@ -115,7 +115,7 @@ public class DREFramework {
 	 * 
 	 * @param File from which configuration can be loaded, typically an XML file. 
 	 */
-	public void setConfiguration(java.io.File configurationFile)
+	public @SuppressWarnings("unchecked") void setConfiguration(java.io.File configurationFile)
 	{		
 		logger.trace("setConfiguration(java.io.File configurationFile)");
 		try
@@ -161,10 +161,25 @@ public class DREFramework {
 			logger.error("JAXBException occured!",je);			
 			throw new DREIllegalArgumentException(DREIllegalArgumentException.CONFIGURATION_FILE_PARSE_ERROR,null);						
 		}
-		catch(Exception e)
+		catch(ClassCastException ce)
 		{
-			logger.error("Error demarshalling configuration file!",e);					
-			throw new DRERuntimeException(DRERuntimeException.CONFIGURATION_FILE_ERROR, null);
+			logger.error("Failed to build framework based on specified configuration!",ce);
+			throw new DREIllegalStateException(DREIllegalStateException.INVALID_CONFIGURATION,null);
+		}
+		catch(ClassNotFoundException cnfe)
+		{
+			logger.error("One of the classes was not found! Aborting configuration.",cnfe);
+			throw new DREIllegalStateException(DREIllegalStateException.INVALID_CONFIGURATION,null);
+		}
+		catch(IllegalAccessException iae)
+		{
+			logger.error("Illegal access to class, Aborting configuration.",iae);
+			throw new DREIllegalStateException(DREIllegalStateException.INVALID_CONFIGURATION,null);
+		}
+		catch(InstantiationException ie)
+		{
+			logger.error("One of the classes could not be instantiated! Aborting configuration",ie);
+			throw new DREIllegalStateException(DREIllegalStateException.INVALID_CONFIGURATION,null);
 		}
 	}
 	

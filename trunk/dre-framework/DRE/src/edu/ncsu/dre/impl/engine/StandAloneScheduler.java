@@ -24,6 +24,7 @@ import org.apache.log4j.Logger;
 
 import edu.ncsu.dre.configuration.*;
 import edu.ncsu.dre.engine.*;
+import edu.ncsu.dre.exception.*;
 
 /**
  * <code>StandAloneScheduler</code> is a research scheduler that schedules the search for artifact 
@@ -39,7 +40,7 @@ public class StandAloneScheduler implements ResearchScheduler {
 	
 	private static final long serialVersionUID = 86761654684684654L;
 	
-	public Map<Object,Object> scheduleResearch(Collection<Object> artifact, List<Component> searchProviders)
+	public @SuppressWarnings("unchecked") Map<Object,Object> scheduleResearch(Collection<Object> artifact, List<Component> searchProviders)
 	{		
 		logger.trace("scheduleResearch(Collection<Object> artifact, List<Component> searchProviders)");
 		
@@ -60,9 +61,25 @@ public class StandAloneScheduler implements ResearchScheduler {
 				
 				serviceProvider.gatherInformation(artifact,keyValuePair);
 			}
-			catch(Exception e)
+			catch(ClassCastException ce)
 			{
-				logger.error("Error occured in Standalone scheduling mechanism",e);				
+				logger.error("Failed to cast handler for a search provider, please use appropriate providers!",ce);
+				throw new DREIllegalStateException(DREIllegalStateException.INVALID_CONFIGURATION,null);
+			}
+			catch(ClassNotFoundException cnfe)
+			{
+				logger.error("The class " + searchProviders.get(i).getHandler() +" was not found!",cnfe);
+				throw new DREIllegalStateException(DREIllegalStateException.INVALID_CONFIGURATION,null);
+			}
+			catch(IllegalAccessException iae)
+			{
+				logger.error("Illegal access to class " + searchProviders.get(i).getHandler(),iae);
+				throw new DREIllegalStateException(DREIllegalStateException.INVALID_CONFIGURATION,null);
+			}
+			catch(InstantiationException ie)
+			{
+				logger.error("The class " + searchProviders.get(i).getHandler() +" could not be instantiated!",ie);
+				throw new DREIllegalStateException(DREIllegalStateException.INVALID_CONFIGURATION,null);
 			}
 		}
 		return null;
