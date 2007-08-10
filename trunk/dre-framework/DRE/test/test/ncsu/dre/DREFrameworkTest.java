@@ -36,6 +36,7 @@ public class DREFrameworkTest {
 
 	DefaultDREConfiguration defaultConfiguration = null;
 	DREFramework framework = null;
+	DREConfiguration sampleConfiguration = null;
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -59,23 +60,36 @@ public class DREFrameworkTest {
 	public void testGetVersionString() {
 		assertEquals(framework.getVersionString(),"0.1.1"); 
 	}
+	
+	/**
+	 * Test method for {@link edu.ncsu.dre.DREFramework#setConfiguration(edu.ncsu.dre.DREConfiguration)}.
+	 */
+	@Test
+	public void testSetConfigurationDREConfiguration() {	
+		
+		assertNull(framework.getConfiguration());
+		framework.setConfiguration(defaultConfiguration);
+		assertNotNull(framework.getConfiguration());
+	}
 
 	/**
 	 * Test method for {@link edu.ncsu.dre.DREFramework#getConfiguration()}.
 	 */
 	@Test
 	public void testGetConfiguration() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	/**
-	 * Test method for {@link edu.ncsu.dre.DREFramework#setConfiguration(edu.ncsu.dre.DREConfiguration)}.
-	 */
-	@Test
-	public void testSetConfigurationDREConfiguration() {			
-		assertNull(framework.getConfiguration());
-		framework.setConfiguration(defaultConfiguration);
-		assertNotNull(framework.getConfiguration());
+		framework.setConfiguration(new java.io.File("configuration.xml"));
+		sampleConfiguration = framework.getConfiguration();
+		
+		assertEquals(sampleConfiguration.getSegregator().getClass().getName(),"edu.ncsu.dre.impl.engine.LexicalSegregator");
+		
+		java.util.Map<Object,Object> frmMap = sampleConfiguration.getParameters();
+		assertEquals(frmMap.get("Comment"),"SimpleStandAlone DRE Framework.");
+		java.util.Map<Object,Object> segMap = sampleConfiguration.getSegregatorOptions();
+		assertEquals(segMap.get("Comment"),"This is the LexicalSegregator");
+		java.util.Map<Object,Object> aggMap = sampleConfiguration.getAggregatorOptions();
+		assertEquals(aggMap.get("Comment"),"This is the XMLAggregator");
+		java.util.Map<Object,Object> rsMap = sampleConfiguration.getSchedulerOptions();
+		assertEquals(rsMap.get("Comment"),"This is the StandAloneScheduler");
 	}
 
 	/**
@@ -87,6 +101,8 @@ public class DREFrameworkTest {
 		framework.setConfiguration(new java.io.File("configuration.xml"));
 		assertNotNull(framework.getConfiguration());
 		
+		assertEquals(framework.getConfiguration().getSegregator().getClass().getName(),"edu.ncsu.dre.impl.engine.LexicalSegregator");
+		
 		java.util.Map<Object,Object> frmMap = framework.getConfiguration().getParameters();
 		assertEquals(frmMap.get("Comment"),"SimpleStandAlone DRE Framework.");
 		java.util.Map<Object,Object> segMap = framework.getConfiguration().getSegregatorOptions();
@@ -95,6 +111,19 @@ public class DREFrameworkTest {
 		assertEquals(aggMap.get("Comment"),"This is the XMLAggregator");
 		java.util.Map<Object,Object> rsMap = framework.getConfiguration().getSchedulerOptions();
 		assertEquals(rsMap.get("Comment"),"This is the StandAloneScheduler");
+		
+		try
+		{
+			framework.setConfiguration(new java.io.File("unavailable.xml"));
+		}
+		catch(edu.ncsu.dre.exception.DRERuntimeException e)
+		{
+			assert(true);		//This is normal behavior
+		}
+		catch(Exception e)
+		{
+			fail("Errors not handled properly");
+		}
 	}
 
 	/**
@@ -102,7 +131,7 @@ public class DREFrameworkTest {
 	 */
 	@Test
 	public void testDREFramework() {
-		fail("Not yet implemented"); // TODO
+		assert(true);		
 	}
 
 	/**
@@ -110,7 +139,10 @@ public class DREFrameworkTest {
 	 */
 	@Test
 	public void testDREFrameworkDREConfiguration() {
-		fail("Not yet implemented"); // TODO
+		
+		assertNotSame(framework.getConfiguration(),defaultConfiguration);		
+		framework = new DREFramework(defaultConfiguration);		
+		assertEquals(framework.getConfiguration(),defaultConfiguration);	
 	}
 
 	/**
@@ -118,7 +150,32 @@ public class DREFrameworkTest {
 	 */
 	@Test
 	public void testDREFrameworkFile() {
-		fail("Not yet implemented"); // TODO
+		framework = new DREFramework(new java.io.File("configuration.xml"));		
+		assertNotNull(framework.getConfiguration());
+		
+		assertEquals(framework.getConfiguration().getSegregator().getClass().getName(),"edu.ncsu.dre.impl.engine.LexicalSegregator");
+		
+		java.util.Map<Object,Object> frmMap = framework.getConfiguration().getParameters();
+		assertEquals(frmMap.get("Comment"),"SimpleStandAlone DRE Framework.");
+		java.util.Map<Object,Object> segMap = framework.getConfiguration().getSegregatorOptions();
+		assertEquals(segMap.get("Comment"),"This is the LexicalSegregator");
+		java.util.Map<Object,Object> aggMap = framework.getConfiguration().getAggregatorOptions();
+		assertEquals(aggMap.get("Comment"),"This is the XMLAggregator");
+		java.util.Map<Object,Object> rsMap = framework.getConfiguration().getSchedulerOptions();
+		assertEquals(rsMap.get("Comment"),"This is the StandAloneScheduler");
+		
+		try
+		{
+			framework = new DREFramework(new java.io.File("unavailable.xml"));			
+		}
+		catch(edu.ncsu.dre.exception.DRERuntimeException e)
+		{
+			assert(true);		//This is normal behavior
+		}
+		catch(Exception e)
+		{
+			fail("Errors not handled properly");
+		}
 	}
 
 	/**
@@ -134,7 +191,12 @@ public class DREFrameworkTest {
 	 */
 	@Test
 	public void testHasValidConfiguration() {
-		fail("Not yet implemented"); // TODO
+		
+		framework = new DREFramework();
+		
+		assert(!framework.hasValidConfiguration());
+		framework.setConfiguration(defaultConfiguration);
+		assert(framework.hasValidConfiguration());
 	}
 
 }

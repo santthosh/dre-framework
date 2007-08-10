@@ -38,35 +38,10 @@ public class FrameworkTest {
 	 * Constructor class
 	 */
 	public @SuppressWarnings("unchecked") FrameworkTest()
-	{
-		//DefaultDREConfiguration defaultConfiguration = null;
-		//defaultConfiguration = new DefaultDREConfiguration();
-		
-		//DREFramework framework = new DREFramework();
+	{		
 		DREFramework framework = new DREFramework(new java.io.File("configuration.xml"));
-		//DREFramework framework = new DREFramework(defaultConfiguration);
-		
-		logger.info(framework.getVersionString());
-		logger.info("Class Name " + framework.getConfiguration().getSegregator().getClass().getName());
-		
-		java.util.Map<Object,Object> frmMap = framework.getConfiguration().getParameters();
-		logger.info(frmMap.get("Comment"));
-		java.util.Map<Object,Object> segMap = framework.getConfiguration().getSegregatorOptions();
-		logger.info(segMap.get("Comment"));
-		java.util.Map<Object,Object> aggMap = framework.getConfiguration().getAggregatorOptions();
-		logger.info(aggMap.get("Comment"));
-		java.util.Map<Object,Object> rsMap = framework.getConfiguration().getSchedulerOptions();
-		logger.info(rsMap.get("Comment"));
-		
-		logger.info("Before setting the configuration: " + String.valueOf(framework.hasValidConfiguration()));		
-		//framework.setConfiguration(new java.io.File("configuration.xml"));
-		
-		//framework.setConfiguration(defaultConfiguration);		
-		logger.info("After setting the configuration: " + String.valueOf(framework.hasValidConfiguration()));
-		
-		//TextArtifact artifact = new TextArtifact("Hello World");		
+			
 		TextArtifact artifact = new TextArtifact(new java.io.File("sample.pdf"));
-		//logger.info(artifact.getQuery().toString());
 		
 		List<Object> ObjectList = (List<Object>) framework.getConfiguration().getSegregator().segregateArtifact(artifact.getQuery());
 		
