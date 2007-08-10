@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry including="edu/ncsu/dre/|edu/ncsu/dre/configuration/|edu/ncsu/dre/data/|edu/ncsu/dre/engine/|edu/ncsu/dre/exception/|edu/ncsu/dre/impl/|edu/ncsu/dre/util/" kind="src" path="src"/>
+	<classpathentry including="edu/ncsu/dre/exception/DREException_Messages.properties|log4j.properties" kind="src" path="resources"/>
 	<classpathentry kind="src" path="test">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="DRE/src"/>
