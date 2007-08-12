@@ -25,5 +25,15 @@ import edu.ncsu.dre.engine.Aggregator;
  * @author <a href="mailto:sbselvad@ncsu.edu">Santthosh Babu Selvadurai</a>
  */
 public class XMLAggregator implements Aggregator {
-
+	
+	/**
+	 * Generalized method for processing result aggregation on the given artifact search results.
+	 * 
+	 * @param artifact
+	 * @return java.lang.Collection<Object>
+	 */
+	public java.util.Collection<Object> aggregateResults(Object artifact)
+	{
+		return null;
+	}
 }

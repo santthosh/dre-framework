@@ -113,7 +113,7 @@ public class DREFramework {
 	 * This sets the current instance's configuration to the one loaded from the
 	 * XML configuration file. The mapping is done through JAXB 
 	 * 
-	 * @param File from which configuration can be loaded, typically an XML file. 
+	 * @param configurationFile 
 	 */
 	public @SuppressWarnings("unchecked") void setConfiguration(java.io.File configurationFile)
 	{		
@@ -240,7 +240,7 @@ public class DREFramework {
 	 * automatically checks for the validity of the configuration information by calling the 
 	 * <code>hasValidConfiguration()</code>
 	 * 
-	 *  @param configuration the configuration to set
+	 *  @param configurationFile
 	 */
 	public DREFramework(java.io.File configurationFile) throws DREIllegalStateException
 	{
@@ -264,10 +264,10 @@ public class DREFramework {
 	{}//Todo list
 	
 	/**
-	 * This method checks to see if the framework has been set with a valid configuration 
+	 * This method checks to see if the framework has been set with a valid configuration.
+	 * True if this instance of framework has a valid Segregator, Aggregator and a scheduler
 	 * 
-	 * @return, true if this instance of framework has a valid Segregator, Aggregator and a
-	 * scheduler
+	 * @return boolean 
 	 */
 	public boolean hasValidConfiguration(){
 		logger.trace("hasValidConfiguration()");

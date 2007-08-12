@@ -29,7 +29,7 @@ import org.apache.lucene.analysis.standard.StandardAnalyzer;
 /**
  * <code>LexicalSegregator</code> is the default text segregator for DRE framework. It is used to  
  * divide an {@link edu.ncsu.dre.data.Artifact} into a manageable/requisite pieces of literals 
- * and sequences which are then fed to {@link edu.ncsu.dre.ResearchScheduler} for further research.
+ * and sequences which are then fed to {@link edu.ncsu.dre.engine.ResearchScheduler} for further research.
  * and analysis<p>
  * 
  * @author <a href="mailto:sbselvad@ncsu.edu">Santthosh Babu Selvadurai</a>
@@ -42,14 +42,14 @@ public class LexicalSegregator implements Segregator {
 	
 	/**
 	 * This method implements the Lexical segeration functionality of a given String
-	 * which is available as an Object. 
+	 * which is available as an Object. Returns List of Objects. The lexical segregator 
+	 * splits the given String artifact into words and sequences of words. Prepares them 
+	 * into lists of strings as shown below. The scheduler will use these words and sequence 
+	 * of words to gather more information on the artifact.
 	 * 
-	 * @param String provided inside a java.lang.Object
+	 * @param artifact
 	 * 
-	 * @return List of Objects. The lexical segregator splits the given String artifact
-	 * into words and sequences of words. Prepares them into lists of strings as shown 
-	 * below. The scheduler will use these words and sequence of words to gather more 
-	 * information on the artifact.
+	 * @return Collection<Object>
 	 *  
 	 * {@code
 	 * ReturnList

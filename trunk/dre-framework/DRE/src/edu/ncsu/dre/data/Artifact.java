@@ -42,7 +42,7 @@ public interface Artifact extends java.io.Serializable{
 	/**
 	 * Sets the generalized artifact to the artifact provided 
 	 *  
-	 * @param set the given object as the general artifact  
+	 * @param artifact 
 	 */
 	public void setArtifact(Object artifact);
 }
