@@ -21,7 +21,7 @@ package edu.ncsu.dre.engine;
 /**
  * <code>ServiceProvider</code> is the general term for all DRE components that can be used to 
  * collect information on a subset of the artifact. The subset of artifacts is provided to this   
- * interface and its derivatives by a {@link edu.ncsu.dre.ResearchScheduler}.
+ * interface and its derivatives by a {@link edu.ncsu.dre.engine.ResearchScheduler}.
  * <p>
  * Most applications will not need to deal with this abstract <code>ServiceProvider</code> interface.
  * DRE Developers who need to introduce new types of ServiceProviders however, will need to implement
@@ -34,8 +34,8 @@ public interface ServiceProvider extends java.io.Serializable
 	/**
 	 * Generalized method for gathering information on the given artifact subset.
 	 * 
-	 * @param java.util.Collection<Object> artifactSubset, 
-	 * 		  java.util.Map<String,String> options
+	 * @param artifactSubset 
+	 * 		  options
 	 * 
 	 * @return java.util.Map<Object,Object>
 	 */
@@ -45,10 +45,10 @@ public interface ServiceProvider extends java.io.Serializable
 	/**
 	 * Generalized method for validating information on the given artifact subset.
 	 * 
-	 * @param java.util.Collection<Object> artifactSubset, 
-	 * 		  java.util.Map<String,String> options
+	 * @param artifactSubset 
+	 * 		  options
 	 * 
-	 * @return java.util.Map<Object,Object>
+	 * @return boolean
 	 */
 	public boolean validateArguments(java.util.Collection<Object> artifactSubset,
 			java.util.Map<String,String> options);

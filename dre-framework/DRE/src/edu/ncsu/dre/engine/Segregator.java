@@ -21,7 +21,7 @@ package edu.ncsu.dre.engine;
 /**
  * <code>Segregator</code> is the general term for all DRE components that can be used to 
  * divide an {@link edu.ncsu.dre.data.Artifact} into a manageable/requisite pieces of information 
- * which can be provided to the {@link edu.ncsu.dre.ResearchScheduler} for further research.
+ * which can be provided to the {@link edu.ncsu.dre.engine.ResearchScheduler} for further research.
  * <p>
  * Most applications will not need to deal with this abstract <code>Segregator</code> interface.
  * DRE Developers who need to introduce new types of Segregator however, will need to implement
@@ -34,8 +34,8 @@ public interface Segregator extends java.io.Serializable{
 	/**
 	 * Generalized method for processing query segregation on the given artifact.
 	 * 
-	 * @param java.lang.Object
-	 * @return java.lang.Collection<Object>
+	 * @param artifact
+	 * @return java.util.Collection<Object>
 	 */
 	public java.util.Collection<Object> segregateArtifact(Object artifact);
 }

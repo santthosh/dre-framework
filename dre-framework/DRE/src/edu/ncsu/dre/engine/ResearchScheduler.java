@@ -23,7 +23,7 @@ import edu.ncsu.dre.configuration.*;
 /**
  * <code>ResearchScheduler</code> is the general term for all DRE components that can be used to 
  * schedule information collection over all the artifact subsets. The subsets of artifacts are 
- * provided to this interface and its derivatives by a {@link edu.ncsu.dre.Segregator}.
+ * provided to this interface and its derivatives by a {@link edu.ncsu.dre.engine.Segregator}.
  * <p>
  * Most applications will not need to deal with this abstract <code>ResearchScheduler</code> interface.
  * DRE Developers who need to introduce new types of Schedulers however, will need to implement
@@ -36,7 +36,9 @@ public interface ResearchScheduler extends java.io.Serializable{
 	/**
 	 * Generalized method for scheduling research on the given artifact.
 	 * 
-	 * @param java.lang.Object
+	 * @param artifact
+	 * 		  searchProviders
+	 * 
 	 * @return java.lang.Collection<Object>
 	 */
 	public java.util.Map<Object,Object> scheduleResearch(java.util.Collection<Object> artifact, java.util.List<Component> searchProviders);

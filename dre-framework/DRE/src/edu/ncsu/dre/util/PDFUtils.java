@@ -38,9 +38,9 @@ public class PDFUtils {
 	/**
 	 * Read the contents of a PDF file into a string.
 	 * 
-	 * @param file
-	 *          The input PDF file.
-	 * @return String The contents of the file.
+	 * @param inputFile
+	 *          
+	 * @return String
 	 * @throws IOException
 	 *           Various I/O errors.
 	 */
