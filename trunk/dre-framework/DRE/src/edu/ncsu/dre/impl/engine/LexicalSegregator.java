@@ -78,8 +78,8 @@ public class LexicalSegregator implements Segregator {
 			
 			Token word = null;
 			do
-			{
-				if(word!=null)
+			{													//Remove duplicates and insert into the list
+				if(word!=null && !wordList.contains(word.termText()))
 					wordList.add(word.termText());				
 				word = tokenStream.next();				
 			}while(word!=null);
@@ -90,5 +90,5 @@ public class LexicalSegregator implements Segregator {
 		}	
 		queryList.add(wordList);
 		return queryList;
-	}
+	}		
 }
