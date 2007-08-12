@@ -44,6 +44,8 @@ public class StandAloneScheduler implements ResearchScheduler {
 	{		
 		logger.trace("scheduleResearch(Collection<Object> artifact, List<Component> searchProviders)");
 		
+		Map<Object,Object> ResultSetMap = null;
+		
 		for(int i=0;i<searchProviders.size();i++)
 		{
 			try
@@ -59,7 +61,7 @@ public class StandAloneScheduler implements ResearchScheduler {
 					keyValuePair.put(arguments.get(j).getKey().toLowerCase(),arguments.get(j).getValue().toLowerCase());
 				}
 				
-				serviceProvider.gatherInformation(artifact,keyValuePair);
+				ResultSetMap = serviceProvider.gatherInformation(artifact,keyValuePair);
 			}
 			catch(ClassCastException ce)
 			{
@@ -82,7 +84,7 @@ public class StandAloneScheduler implements ResearchScheduler {
 				throw new DREIllegalStateException(DREIllegalStateException.INVALID_CONFIGURATION,null);
 			}
 		}
-		return null;
+		return ResultSetMap;
 	}
 
 }

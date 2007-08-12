@@ -57,7 +57,9 @@ public class LexicalSegregatorTest extends TestCase{
 		{
 			ArrayList<String> wordList = (ArrayList<String>) ObjectList.get(i);
 			for(int j=0;j<wordList.size();j++)
-			{assertEquals(wordList.get(j),"santthosh");}			
+			{
+				assertEquals(wordList.get(j),"santthosh");
+			}			
 		}
 		
 		String nullInput = "  ";

@@ -18,10 +18,9 @@
  */
 package test.ncsu.dre.impl.engine;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
+import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -37,6 +36,8 @@ import edu.ncsu.dre.impl.engine.StandAloneScheduler;
  * @author <a href="mailto:sbselvad@ncsu.edu">Santthosh Babu Selvadurai</a>
  */
 public class StandAloneSchedulerTest extends TestCase{
+	
+	private static Logger logger = Logger.getLogger("edu.ncsu.dre.impl.engine.StandAloneScheduler");
 
 	DREFramework framework = null;
 	TextArtifact artifact = null;
@@ -57,16 +58,22 @@ public class StandAloneSchedulerTest extends TestCase{
 	 * Test method for {@link edu.ncsu.dre.impl.engine.StandAloneScheduler#scheduleResearch(java.util.Collection, java.util.List)}.
 	 */
 	@Test
-	public @SuppressWarnings("unchecked") void testScheduleResearch() {		
+	public @SuppressWarnings("unchecked") void testScheduleResearch() {
 		
 		for(int i=0;i<ObjectList.size();i++)
 		{
-			ArrayList<String> wordList = (ArrayList<String>) ObjectList.get(i);
-			for(int j=0;j<wordList.size();j++)
-			{System.out.println(wordList.get(j));}
+			ArrayList<String> wordList = (ArrayList<String>) ObjectList.get(i);			
 			
 			StandAloneScheduler ss = new StandAloneScheduler();
-			ss.scheduleResearch((Collection<Object>) ObjectList.get(i), framework.getConfiguration().getServiceProvider());
+			Map<Object,Object> ResultMap = ss.scheduleResearch((Collection<Object>) ObjectList.get(i), framework.getConfiguration().getServiceProvider());
+			
+			logger.info("Break");
+			
+			for(int j=0;j<wordList.size();j++)
+			{				
+				logger.info("Source: " + wordList.get(j) + " Result: " + ResultMap.get(wordList.get(j)));
+			}	
+			assertEquals(wordList.size(),ResultMap.size());
 		}
 	}
 }
