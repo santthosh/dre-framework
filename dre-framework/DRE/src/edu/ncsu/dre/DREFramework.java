@@ -18,6 +18,11 @@
  */
 package edu.ncsu.dre;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+
 import javax.xml.bind.*;
 
 import org.apache.log4j.Logger;
@@ -25,6 +30,7 @@ import org.apache.log4j.Logger;
 import edu.ncsu.dre.data.Artifact;
 import edu.ncsu.dre.exception.*;
 import edu.ncsu.dre.engine.*;
+import edu.ncsu.dre.impl.engine.StandAloneScheduler;
 import edu.ncsu.dre.configuration.*;
 
 /**
@@ -260,8 +266,24 @@ public class DREFramework {
 	 *   
 	 * @param inputArtifact
 	 */
-	public void processArtifact(Artifact inputArtifact)
-	{}//Todo list
+	public @SuppressWarnings("unchecked") javax.xml.transform.stream.StreamResult processLiteralArtifact(Artifact inputArtifact)
+	{
+		if(this.getConfiguration() == null || !this.hasValidConfiguration())
+			throw new DREIllegalStateException(DREIllegalStateException.INVALID_CONFIGURATION,"Configuration not set! Framework configuration has to be set before calling this function.",null);
+			
+		List<Object> ObjectList = (List<Object>) this.getConfiguration().getSegregator().segregateArtifact(inputArtifact.getQuery());
+		
+		//Arrays and generics don't mix well, hence use a list rather than a map
+		List<Map<Object,Object>> ResultMap = new java.util.ArrayList<Map<Object,Object>>();
+		
+		for(int i=0;i<ObjectList.size();i++)
+		{
+			ResultMap.add( 
+				this.getConfiguration().getScheduler().scheduleResearch((Collection<Object>) ObjectList.get(i), this.getConfiguration().getServiceProvider()));		
+		}		
+		
+		return this.getConfiguration().getAggregator().aggregateResults(inputArtifact, ObjectList, ResultMap); 
+	}
 	
 	/**
 	 * This method checks to see if the framework has been set with a valid configuration.

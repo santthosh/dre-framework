@@ -40,8 +40,13 @@ public class StandAloneSchedulerTest extends TestCase{
 	private static Logger logger = Logger.getLogger("edu.ncsu.dre.impl.engine.StandAloneScheduler");
 
 	DREFramework framework = null;
+	DREFramework dummyFramework = null;
+	
 	TextArtifact artifact = null;
+	TextArtifact dummyArtifact = null;
+	
 	List<Object> ObjectList = null;
+	List<Object> dummyObjectList = null;
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -49,9 +54,13 @@ public class StandAloneSchedulerTest extends TestCase{
 	public void setUp() throws Exception {
 		
 		framework = new DREFramework(new java.io.File("configuration.xml"));
+		dummyFramework = new DREFramework(new java.io.File("DummySegregatorConfiguration.xml"));
+	
 		artifact = new TextArtifact(new java.io.File("sample.pdf"));
+		dummyArtifact = new TextArtifact("santthosh");
 		
-		ObjectList = (List<Object>) framework.getConfiguration().getSegregator().segregateArtifact(artifact.getQuery());		
+		ObjectList = (List<Object>) framework.getConfiguration().getSegregator().segregateArtifact(artifact.getQuery());
+		dummyObjectList = (List<Object>) dummyFramework.getConfiguration().getSegregator().segregateArtifact(dummyArtifact.getQuery());
 	}
 
 	/**
@@ -60,14 +69,28 @@ public class StandAloneSchedulerTest extends TestCase{
 	@Test
 	public @SuppressWarnings("unchecked") void testScheduleResearch() {
 		
+		//Check with the Lexical Segregator
 		for(int i=0;i<ObjectList.size();i++)
 		{
 			ArrayList<String> wordList = (ArrayList<String>) ObjectList.get(i);			
 			
 			StandAloneScheduler ss = new StandAloneScheduler();
-			Map<Object,Object> ResultMap = ss.scheduleResearch((Collection<Object>) ObjectList.get(i), framework.getConfiguration().getServiceProvider());
+			Map<Object,Object> ResultMap = ss.scheduleResearch((Collection<Object>) ObjectList.get(i), framework.getConfiguration().getServiceProvider());		
 			
-			logger.info("Break");
+			for(int j=0;j<wordList.size();j++)
+			{				
+				logger.info("Source: " + wordList.get(j) + " Result: " + ResultMap.get(wordList.get(j)));
+			}	
+			assertEquals(wordList.size(),ResultMap.size());
+		}
+		
+		//Check with the Dummy Segregator
+		for(int i=0;i<dummyObjectList.size();i++)
+		{
+			ArrayList<String> wordList = (ArrayList<String>) dummyObjectList.get(i);			
+			
+			StandAloneScheduler ss = new StandAloneScheduler();
+			Map<Object,Object> ResultMap = ss.scheduleResearch((Collection<Object>) dummyObjectList.get(i), dummyFramework.getConfiguration().getServiceProvider());
 			
 			for(int j=0;j<wordList.size();j++)
 			{				
