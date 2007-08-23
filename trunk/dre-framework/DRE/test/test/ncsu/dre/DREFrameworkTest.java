@@ -36,6 +36,7 @@ public class DREFrameworkTest extends TestCase{
 
 	DefaultDREConfiguration defaultConfiguration = null;
 	DREFramework framework = null;
+	DREFramework dummyFramework = null;
 	DREConfiguration sampleConfiguration = null;
 	/**
 	 * @throws java.lang.Exception
@@ -43,6 +44,7 @@ public class DREFrameworkTest extends TestCase{
 	@Before
 	public void setUp() throws Exception {
 		framework = new DREFramework();
+		dummyFramework = new DREFramework(new java.io.File("DummySegregatorConfiguration.xml"));
 		defaultConfiguration = new DefaultDREConfiguration();
 	}
 
@@ -69,7 +71,7 @@ public class DREFrameworkTest extends TestCase{
 	@Test
 	public void testSetConfigurationDREConfiguration() {	
 		
-		assertNull(framework.getConfiguration());
+		//assertNull(framework.getConfiguration());
 		framework.setConfiguration(defaultConfiguration);
 		assertNotNull(framework.getConfiguration());
 	}
@@ -181,11 +183,12 @@ public class DREFrameworkTest extends TestCase{
 	}
 
 	/**
-	 * Test method for {@link edu.ncsu.dre.DREFramework#processArtifact(edu.ncsu.dre.data.Artifact)}.
+	 * Test method for {@link edu.ncsu.dre.DREFramework#processLiteralArtifact(edu.ncsu.dre.data.Artifact)}.
 	 */
 	@Test
-	public void testProcessArtifact() {
-		fail("Not yet implemented"); // TODO
+	public void testProcessLiteralArtifact() {		
+		assertNull(dummyFramework.processLiteralArtifact(new edu.ncsu.dre.impl.data.TextArtifact("santthosh")));
+		//fail("Not yet implemented"); // TODO
 	}
 
 	/**

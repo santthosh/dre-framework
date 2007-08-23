@@ -18,6 +18,20 @@
  */
 package edu.ncsu.dre.impl.engine;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerConfigurationException;
+
+
+import org.apache.log4j.Logger;
+
 import edu.ncsu.dre.engine.Aggregator;
 
 /**
@@ -26,14 +40,72 @@ import edu.ncsu.dre.engine.Aggregator;
  */
 public class XMLAggregator implements Aggregator {
 	
+	static Logger logger = Logger.getLogger("edu.ncsu.dre.impl.engine.XMLAggregator");
+	
 	/**
 	 * Generalized method for processing result aggregation on the given artifact search results.
+	 * Collates the results and presents a HTML document
 	 * 
 	 * @param artifact
-	 * @return java.lang.Collection<Object>
+	 * 		  ObjectList
+	 * 		  ResultMap
+	 * 
+	 * @return javax.xml.transform.stream.StreamResult
 	 */
-	public java.util.Collection<Object> aggregateResults(Object artifact)
+	public @SuppressWarnings("unchecked")  javax.xml.transform.stream.StreamResult aggregateResults(edu.ncsu.dre.data.Artifact artifact, 
+																	java.util.List<Object> ObjectList,
+																	java.util.List<Map<Object,Object>> ResultMap)
 	{
+		String XMLResultSet = "<?xml version=\"1.0\" encoding=\"utf-8\"?><ResultSet>";
+		
+		for(int i=0;i<ObjectList.size();i++)
+		{				
+			ArrayList<String> wordList = (ArrayList<String>) ObjectList.get(i);
+			
+			Map<Object,Object> xmlResultMap = ResultMap.get(i);
+			
+			for(int j=0;j<wordList.size();j++)
+			{
+				XMLResultSet = XMLResultSet.concat(xmlResultMap.get(wordList.get(j)).toString());	
+			}
+		}
+		XMLResultSet = XMLResultSet.concat("</ResultSet>");
+		logger.info("Result: " + XMLResultSet);
+		
 		return null;
 	}
+	
+	/**
+	 * Method to convert input XML as string into a HTML document and present it as a StreamResult.
+	 * this method is thread safe
+	 * 
+	 * @param artifact
+	 * 		  ObjectList
+	 * 		  ResultMap
+	 * 
+	 * @return javax.xml.transform.stream.StreamResult
+	 */
+	  synchronized  public javax.xml.transform.stream.StreamResult buildReport(String sXMLData, String sXSLFile)
+	        throws  TransformerException, TransformerConfigurationException,java.io.IOException
+	  {	     
+	    // Use the static TransformerFactory.newInstance() method to instantiate 
+	    // a TransformerFactory. The javax.xml.transform.TransformerFactory 
+	    // system property setting determines the actual class to instantiate --
+	    // org.apache.xalan.transformer.TransformerImpl.
+	    TransformerFactory tFactory = TransformerFactory.newInstance();
+		
+	    // Use the TransformerFactory to instantiate a transformer that will work with  
+	    // the style sheet you specify. This method call also processes the style sheet
+	    // into a compiled Templates object.
+	    Transformer transformer = tFactory.newTransformer(new StreamSource(sXSLFile));
+
+	    javax.xml.transform.stream.StreamResult streamResult = new javax.xml.transform.stream.StreamResult();
+	    // Use the transformer to apply the associated templates object to an XML document
+	    // and write the output to a file with the same name as the XSL template file that 
+	    // was passed in sXSLFile.
+	    transformer.transform(new StreamSource(new java.io.StringReader(sXMLData)),streamResult);
+
+	    return streamResult;
+	  }
+
 }

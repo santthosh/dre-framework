@@ -32,6 +32,7 @@ import edu.ncsu.dre.engine.ServiceProvider;
 
 import javax.xml.namespace.*;
 import javax.xml.stream.*;
+import java.util.regex.*;
 
 /**
  * <code>LiveSearchProvider</code> is a data service provider add-in for the DRE framework, it 
@@ -117,10 +118,22 @@ public class LiveSearchProvider implements ServiceProvider {
             		{            							
             			XMLOutputFactory factory = XMLOutputFactory.newInstance();
             			XMLStreamWriter writer = factory.createXMLStreamWriter(xmlResult);	
-            									
+            			            			
+            			if(options.get("highlight").compareToIgnoreCase("true")==0)
+            			{
+            				/*sourceResults[j].setTitle(sourceResults[j].getTitle().replaceAll(QueryList.get(a).toString(),"<b>"+QueryList.get(a).toString()+"</b>"));
+            				
+            				Pattern pattern = Pattern.compile(QueryList.get(a).toString(),Pattern.CASE_INSENSITIVE);
+            				Matcher literalMatcher = pattern.matcher(sourceResults[j].getDescription());    
+            				while (literalMatcher.find()){            					 
+            					    literalMatcher.
+            				}
+            				sourceResults[j].setDescription(literalMatcher.replaceAll("<b>"+QueryList.get(a).toString()+"</b>"));*/
+            			}
+            			
             			sourceResults[j].serialize(new QName("http://schemas.microsoft.com/MSNSearch/2005/09/fex","Result"), new OMDOMFactory(), writer);
-            			writer.close();
-            			ResultSet = ResultSet.concat(xmlResult.toString());
+            			writer.close();            	
+            			ResultSet = ResultSet.concat(xmlResult.toString().replaceAll(" xmlns=\"http://schemas.microsoft.com/MSNSearch/2005/09/fex\"",""));
             		}            		
             		ResultSetMap.put(QueryList.get(a).toString(), ResultSet);
             	}               	
@@ -178,6 +191,13 @@ public class LiveSearchProvider implements ServiceProvider {
 		{
 			logger.info("Livesearch SafeSearch option was set to strict");				
 			options.put("safesearch", "strict");
+		}
+		
+		//Check to see if the mandatory highlight option is specified, if not default to the false
+		if(options.get("highlight") == null)
+		{
+			logger.warn("Livesearch highlight has be turned on");
+			options.put("highlight", "true");
 		}
 		
 		return true;

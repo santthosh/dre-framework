@@ -18,6 +18,9 @@
  */
 package edu.ncsu.dre.engine;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * <code>Aggregator</code> is the general term for all DRE components that can be used to 
  * collate the results of an {@link edu.ncsu.dre.data.Artifact} so that it can be displayed 
@@ -35,7 +38,12 @@ public interface Aggregator {
 	 * Generalized method for processing result aggregation on the given artifact search results.
 	 * 
 	 * @param artifact
-	 * @return java.lang.Collection<Object>
+	 * 		  ObjectList
+	 * 		  ResultMap	
+	 * 
+	 * @return javax.xml.transform.stream.StreamResult
 	 */
-	public java.util.Collection<Object> aggregateResults(Object artifact);
+	public javax.xml.transform.stream.StreamResult aggregateResults(edu.ncsu.dre.data.Artifact artifact, 
+																	java.util.List<Object> ObjectList,
+																	java.util.List<Map<Object,Object>> ResultMap);
 }
