@@ -1,0 +1,5 @@
+<module>
+	<inherits name="com.google.gwt.user.User"/>
+	<entry-point class="edu.ncsu.cobu.client.SearchInterface"/>
+	<servlet path="/SimpleSearch" class="edu.ncsu.cobu.server.SimpleSearchImpl"/>
+</module>

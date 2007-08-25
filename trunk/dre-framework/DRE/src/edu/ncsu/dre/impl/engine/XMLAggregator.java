@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import java.io.*;
+
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.stream.StreamSource;
@@ -32,6 +34,7 @@ import javax.xml.transform.TransformerConfigurationException;
 
 import org.apache.log4j.Logger;
 
+import edu.ncsu.dre.util.*;
 import edu.ncsu.dre.engine.Aggregator;
 
 /**
@@ -52,7 +55,7 @@ public class XMLAggregator implements Aggregator {
 	 * 
 	 * @return javax.xml.transform.stream.StreamResult
 	 */
-	public @SuppressWarnings("unchecked")  javax.xml.transform.stream.StreamResult aggregateResults(edu.ncsu.dre.data.Artifact artifact, 
+	public @SuppressWarnings("unchecked")  StreamResult aggregateResults(edu.ncsu.dre.data.Artifact artifact, 
 																	java.util.List<Object> ObjectList,
 																	java.util.List<Map<Object,Object>> ResultMap)
 	{
@@ -72,7 +75,22 @@ public class XMLAggregator implements Aggregator {
 		XMLResultSet = XMLResultSet.concat("</ResultSet>");
 		logger.info("Result: " + XMLResultSet);
 		
-		return null;
+		StreamResult HTMLResult = null;
+		
+		try
+		{
+			HTMLResult = buildHTMLStream(XMLResultSet,"xml/XML2HTML.xslt");
+		}
+		catch(IOException ie)
+		{
+			logger.error("IOException occured during the extraction of XSLTFilter",ie);
+		}	
+		catch(TransformerException te)
+		{
+			logger.error("XSLTFiltering failed!",te);
+		}								
+		
+		return HTMLResult;
 	}
 	
 	/**
@@ -85,21 +103,21 @@ public class XMLAggregator implements Aggregator {
 	 * 
 	 * @return javax.xml.transform.stream.StreamResult
 	 */
-	  synchronized  public javax.xml.transform.stream.StreamResult buildReport(String sXMLData, String sXSLFile)
+	  synchronized  public javax.xml.transform.stream.StreamResult buildHTMLStream(String sXMLData, String sXSLFile)
 	        throws  TransformerException, TransformerConfigurationException,java.io.IOException
 	  {	     
 	    // Use the static TransformerFactory.newInstance() method to instantiate 
 	    // a TransformerFactory. The javax.xml.transform.TransformerFactory 
-	    // system property setting determines the actual class to instantiate --
-	    // org.apache.xalan.transformer.TransformerImpl.
+	    // system property setting determines the actual class to instantiate
 	    TransformerFactory tFactory = TransformerFactory.newInstance();
-		
+			    
+	    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 	    // Use the TransformerFactory to instantiate a transformer that will work with  
 	    // the style sheet you specify. This method call also processes the style sheet
 	    // into a compiled Templates object.
 	    Transformer transformer = tFactory.newTransformer(new StreamSource(sXSLFile));
-
-	    javax.xml.transform.stream.StreamResult streamResult = new javax.xml.transform.stream.StreamResult();
+	    
+	    javax.xml.transform.stream.StreamResult streamResult = new javax.xml.transform.stream.StreamResult(outputStream);
 	    // Use the transformer to apply the associated templates object to an XML document
 	    // and write the output to a file with the same name as the XSL template file that 
 	    // was passed in sXSLFile.

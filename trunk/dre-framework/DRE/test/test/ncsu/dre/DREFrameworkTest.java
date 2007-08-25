@@ -187,7 +187,9 @@ public class DREFrameworkTest extends TestCase{
 	 */
 	@Test
 	public void testProcessLiteralArtifact() {		
-		assertNull(dummyFramework.processLiteralArtifact(new edu.ncsu.dre.impl.data.TextArtifact("santthosh")));
+		javax.xml.transform.stream.StreamResult result = dummyFramework.processLiteralArtifact(new edu.ncsu.dre.impl.data.TextArtifact("Metasearch engines"));
+		System.out.println(result.getOutputStream().toString());		
+		assert(true);
 		//fail("Not yet implemented"); // TODO
 	}
 

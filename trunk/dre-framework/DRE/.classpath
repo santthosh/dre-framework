@@ -2,17 +2,20 @@
 <classpath>
 	<classpathentry including="edu/ncsu/dre/|edu/ncsu/dre/configuration/|edu/ncsu/dre/data/|edu/ncsu/dre/engine/|edu/ncsu/dre/exception/|edu/ncsu/dre/impl/|edu/ncsu/dre/util/" kind="src" path="src"/>
 	<classpathentry including="edu/ncsu/dre/exception/DREException_Messages.properties|log4j.properties" kind="src" path="resources"/>
-	<classpathentry kind="src" path="test">
+	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="src" path="xml">
 		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="DRE/test"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="DRE/xml"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="src" path="cobu"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/LiveSearchAPI.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Lucene"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Axis2"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Logging"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/PDFBox"/>
+	<classpathentry exported="true" kind="lib" path="lib/LiveSearchAPI.jar"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/Lucene"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/Axis2"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/Logging"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/PDFBox"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JUnit"/>
+	<classpathentry kind="lib" path="C:/Program Files/gwt-windows-1.4.10/gwt-user.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
