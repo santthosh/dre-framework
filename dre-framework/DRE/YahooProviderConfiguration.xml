@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EngineConfiguration> 
+  xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" 
+  xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:noNamespaceSchemaLocation="configuration.xsd">  
+  <Segregator>
+  	<Handler>edu.ncsu.dre.impl.engine.DummySegregator</Handler>
+  	<Option key="Comment" value="This is the LexicalSegregator"/>
+  	</Segregator>
+  <ResearchScheduler>
+  	<Handler>edu.ncsu.dre.impl.engine.StandAloneScheduler</Handler>
+  	<Option key="Comment" value="This is the StandAloneScheduler"/>
+  </ResearchScheduler>
+  <Aggregator>
+  	<Handler>edu.ncsu.dre.impl.engine.XMLAggregator</Handler>
+  	<Option key="Comment" value="This is the XMLAggregator"/>
+  </Aggregator> 
+  <ServiceProvider>
+  	<Handler>edu.ncsu.dre.impl.engine.YahooSearchProvider</Handler>
+  	<Option key="AppID" value="eCBIC3LV34EN3FHl35AMrMhA7JoOi4jfPPy1VQrSNr51qWbeO43DkDDLSqG0jmVg"/>  	
+  </ServiceProvider>  
+  <Parameter key="Comment" value="Yahoo Search Provider Configuration."/>
+</EngineConfiguration>

@@ -22,8 +22,6 @@ import java.util.*;
 import edu.ncsu.dre.engine.Segregator;
 
 import org.apache.log4j.Logger;
-import org.apache.lucene.analysis.*;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
 
 
 /**

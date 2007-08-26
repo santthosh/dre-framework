@@ -1,9 +1,9 @@
 body { 
-	background-color: white;
-	color: black;
-	font-family: Arial, sans-serif;
-	font-size: small;
 	margin: 5px;
+	font-family: Arial;
+	font-size: 12px;
+	font-style: normal;
+	font-weight: normal;
 }
 
 a {	
@@ -29,6 +29,8 @@ a:visited {
 }
 
 .gwt-MenuBar {
+	margin-top: auto;
+	border-top: 1px solid Navy;
 	background-color: #C3D9FF;
 	cursor: default;
 }
