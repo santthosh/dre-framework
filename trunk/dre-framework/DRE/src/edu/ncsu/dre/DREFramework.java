@@ -18,7 +18,6 @@
  */
 package edu.ncsu.dre;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +29,6 @@ import org.apache.log4j.Logger;
 import edu.ncsu.dre.data.Artifact;
 import edu.ncsu.dre.exception.*;
 import edu.ncsu.dre.engine.*;
-import edu.ncsu.dre.impl.engine.StandAloneScheduler;
 import edu.ncsu.dre.configuration.*;
 
 /**

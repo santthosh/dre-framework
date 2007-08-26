@@ -1,29 +1,25 @@
 package edu.ncsu.cobu.client;
 
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
-import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.KeyboardListenerAdapter;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.MenuBar;
+import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.TabPanel;
-import com.google.gwt.user.client.ui.TextArea;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.VerticalSplitPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -63,50 +59,25 @@ public class SearchInterface implements EntryPoint {
 		
 		final Grid search = new Grid();
 		tabPanel.add(search, "  Search  ");
-		search.resize(5,1);
-
-		final SuggestBox suggestBox = new SuggestBox();
-		search.setWidget(2, 0, suggestBox);
-		suggestBox.setLimit(1000);
-		search.getCellFormatter().setHeight(2, 0, "22");
-		suggestBox.setWidth("475");
-		//suggestBox.setHeight("20");
+		search.resize(4,1);
+		search.getCellFormatter().setHorizontalAlignment(2, 0, HasHorizontalAlignment.ALIGN_CENTER);
 		search.getCellFormatter().setHorizontalAlignment(2, 0, HasHorizontalAlignment.ALIGN_CENTER);
 
-		final FlowPanel searchFlowPanel = new FlowPanel();
-		search.setWidget(3, 0, searchFlowPanel);
-		search.getCellFormatter().setHeight(3, 0, "22");
-		search.getCellFormatter().setHorizontalAlignment(3, 0, HasHorizontalAlignment.ALIGN_CENTER);
-
-		final Button simpleSearchButton = new Button();
-		searchFlowPanel.add(simpleSearchButton);		
-		simpleSearchButton.setText("Simple Search");
-
-		final Button documentResearchButton = new Button();
-		searchFlowPanel.add(documentResearchButton);
-		documentResearchButton.setText("Document Research");
-
 		final FlowPanel resultFlowPanel = new FlowPanel();
-		search.setWidget(4, 0, resultFlowPanel);
-		search.getCellFormatter().setVerticalAlignment(4, 0, HasVerticalAlignment.ALIGN_TOP);
-		search.getCellFormatter().setHeight(4, 0, "300");
+		search.setWidget(3, 0, resultFlowPanel);
+		search.getCellFormatter().setVerticalAlignment(3, 0, HasVerticalAlignment.ALIGN_TOP);
+		search.getCellFormatter().setHeight(3, 0, "300");
 
-		final HTML html = new HTML("<p> </br></p>\r\n<p><font face=\"arial\" size=2 color=\"gray\">\r\nCobu is a distributed search engine prototype based on DRE framework. It helps you to search across several search engines (or service providers),\r\nfile systems, local, enterprise and internet for information, the way you wish it to be.\r\n</font></p></br>\r\n<hr>\r\n");
+		final HTML html = new HTML("<p> </br></p>\r\n<p><font face=\"arial\" size=2 color=\"gray\">\r\nCobu is a distributed search engine prototype based on Federate Search Framework. It helps you to search across several search engines (or service providers),\r\nfile systems, local, enterprise and internet for information, the way you wish it to be.\r\n</font></p></br>\r\n<hr>\r\n");
 		resultFlowPanel.add(html);
-				
-		final Image image = new Image();
-		search.setWidget(1, 0, image);
-		search.getCellFormatter().setVerticalAlignment(1, 0, HasVerticalAlignment.ALIGN_BOTTOM);
-		search.getCellFormatter().setHeight(1, 0, "40");
-		image.setUrl("Cobu-Small.JPG");
-		search.getCellFormatter().setHorizontalAlignment(1, 0, HasHorizontalAlignment.ALIGN_CENTER);
-		search.getCellFormatter().setHeight(0, 0, "50");
+		search.getCellFormatter().setVerticalAlignment(2, 0, HasVerticalAlignment.ALIGN_TOP);
+		search.getCellFormatter().setHorizontalAlignment(2, 0, HasHorizontalAlignment.ALIGN_CENTER);
+		search.getCellFormatter().setHeight(1, 0, "50");
 
-		final HorizontalPanel horizontalPanel = new HorizontalPanel();
-		search.setWidget(0, 0, horizontalPanel);
-		search.getCellFormatter().setHeight(0, 0, "1");
+		final HorizontalPanel horizontalPanel = new HorizontalPanel();		
+		search.getCellFormatter().setHeight(1, 0, "1");
 		horizontalPanel.setCellHeight(search, "25");
-		horizontalPanel.setVisible(false);
+		horizontalPanel.setVisible(true);
 		
 		final Image image_mini = new Image();
 		horizontalPanel.add(image_mini);
@@ -144,30 +115,141 @@ public class SearchInterface implements EntryPoint {
 		documentation.resize(1, 1);
 		
 		tabPanel.selectTab(0);
+
+		final VerticalPanel verticalPanel = new VerticalPanel();
+		search.setWidget(2, 0, verticalPanel);
+				
+		final Image image = new Image();
+		verticalPanel.add(image);
+		verticalPanel.setCellHorizontalAlignment(image, HasHorizontalAlignment.ALIGN_CENTER);
+		search.getCellFormatter().setHeight(2, 0, "1");
+		image.setUrl("Cobu-Small.JPG");
+
+		final SuggestBox suggestBox = new SuggestBox();
+		verticalPanel.add(suggestBox);
+		
+		suggestBox.setLimit(1000);
+		suggestBox.setWidth("475");
+
+		final FlowPanel searchFlowPanel = new FlowPanel();
+		verticalPanel.add(searchFlowPanel);
+		verticalPanel.setCellHorizontalAlignment(searchFlowPanel, HasHorizontalAlignment.ALIGN_CENTER);
+
+		final Button simpleSearchButton = new Button();
+		searchFlowPanel.add(simpleSearchButton);		
+		simpleSearchButton.setText("Simple Search");
+
+		final Button documentResearchButton = new Button();
+		searchFlowPanel.add(documentResearchButton);
+		documentResearchButton.setText("Document Research");
+		
+		final FlowPanel menuPanel = new FlowPanel();
+		search.getCellFormatter().setHeight(0, 0, "10");
+		search.getCellFormatter().setVerticalAlignment(0, 0, HasVerticalAlignment.ALIGN_TOP);
+		{
+			final MenuBar menuBar = new MenuBar();
+			menuPanel.add(menuBar);
+
+			final MenuItem searchHeader = menuBar.addItem("", (Command)null);
+			searchHeader.setHTML("<b>Search Results</b>");			
+		}
 		
 		simpleSearchButton.addClickListener(new ClickListener() {
 			public void onClick(final Widget sender) 
 			{
+				if(suggestBox.getText()==null || suggestBox.getText().trim().compareTo("")==0)
+				{return;}
 				SimpleSearch.Util.getInstance().doLiteralSearch(suggestBox.getText(), new AsyncCallback() {					
 		            public void onSuccess(Object result) {
 						String value = (String) result;
 						html.setHTML(value);	            	
 						
-						horizontalPanel.setCellHeight(search, "25");
-						horizontalPanel.setVisible(true);
-						
-						image.setVisible(false);
-						image.setHeight("1");
-						
-						searchFlowPanel.setVisible(false);
-						searchFlowPanel.setHeight("1");
-						
-						suggestBox.setVisible(false);						
-						suggestBox.setHeight("1");
+						search.setWidget(0, 0, horizontalPanel);
+						search.setWidget(1, 0, menuPanel);
+						verticalPanel.removeFromParent();
 		            }
 		            public void onFailure(Throwable caught) {
-		            	html.setHTML("Error: " + caught.getMessage() + "\n" + caught.getStackTrace().toString());	            			            	
-		            }		            		           		            
+		            	html.setHTML("<hr><p><font face=\"arial\" size=2 color=\"red\">Error: " + caught.getMessage() + "</font></p>");	            			            	
+		            	
+		            	search.setWidget(0, 0, horizontalPanel);
+		            	search.setWidget(1, 0, menuPanel);
+						verticalPanel.removeFromParent();
+		            }		            		           				            		          
+		        });
+			}
+		});		
+		
+		suggestBox.addKeyboardListener(new KeyboardListenerAdapter() {
+	 		public void onKeyPress(Widget sender, char keyCode, int modifiers) {
+	 			if(keyCode!=KEY_ENTER)
+	 				return;	 			
+				if(suggestBox.getText()==null || suggestBox.getText().trim().compareTo("")==0)
+					return;
+				SimpleSearch.Util.getInstance().doLiteralSearch(suggestBox.getText(), new AsyncCallback() {					
+		            public void onSuccess(Object result) {
+						String value = (String) result;
+						html.setHTML(value);	            	
+						
+						search.setWidget(0, 0, horizontalPanel);	
+						search.setWidget(1, 0, menuPanel);
+						verticalPanel.removeFromParent();
+		            }
+		            public void onFailure(Throwable caught) {
+		            	html.setHTML("<hr><p><font face=\"arial\" size=2 color=\"red\">Error: " + caught.getMessage() + "</font></p>");	            			            	
+		            	
+		            	search.setWidget(0, 0, horizontalPanel);
+		            	search.setWidget(1, 0, menuPanel);
+						verticalPanel.removeFromParent();
+		            }		            		           				            		          
+		        });
+			}
+		});
+		
+		simpleSearchButton_mini.addClickListener(new ClickListener() {
+			public void onClick(final Widget sender) 
+			{
+				if(suggestBox_mini.getText()==null || suggestBox_mini.getText().trim().compareTo("")==0)
+				{return;}
+				SimpleSearch.Util.getInstance().doLiteralSearch(suggestBox_mini.getText(), new AsyncCallback() {					
+		            public void onSuccess(Object result) {
+						String value = (String) result;
+						html.setHTML(value);	            	
+						
+						search.setWidget(0, 0, horizontalPanel);						
+						search.setWidget(1, 0, menuPanel);
+						verticalPanel.removeFromParent();
+		            }
+		            public void onFailure(Throwable caught) {
+		            	html.setHTML("<hr><p><font face=\"arial\" size=2 color=\"red\">Error: " + caught.getMessage() + "</font></p>");	            			            	
+		            	
+		            	search.setWidget(0, 0, horizontalPanel);						
+		        		search.setWidget(1, 0, menuPanel);
+						verticalPanel.removeFromParent();
+		            }		            		           				            		          
+		        });
+			}
+		});
+		
+		suggestBox_mini.addKeyboardListener(new KeyboardListenerAdapter() {
+	 		public void onKeyPress(Widget sender, char keyCode, int modifiers) {
+	 			if(keyCode!=KEY_ENTER)
+	 				return;	 
+	 			SimpleSearch.Util.getInstance().doLiteralSearch(suggestBox_mini.getText(), new AsyncCallback() {					
+		            public void onSuccess(Object result) {
+						String value = (String) result;
+						html.setHTML(value);	            	
+						
+						search.setWidget(0, 0, horizontalPanel);						
+						search.setWidget(1, 0, menuPanel);
+						verticalPanel.removeFromParent();
+		            }
+		            public void onFailure(Throwable caught) {
+		            	html.setHTML("<hr><p><font face=\"arial\" size=2 color=\"red\">Error: " + caught.getMessage() + "</font></p>");	            			            	
+		            	
+		            	search.setWidget(0, 0, horizontalPanel);						
+		        		search.setWidget(1, 0, menuPanel);
+						verticalPanel.removeFromParent();
+		            }		            		           				            		          
 		        });
 			}
 		});

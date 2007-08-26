@@ -32,14 +32,13 @@
 
           <a href="{$hrefUrl}">
             <xsl:apply-templates select="Title"/>
-          </a>
-          <br/>
-          <xsl:apply-templates select="Description"/>
-          <br/>
+          </a><br/>          
+          <xsl:apply-templates select="Description"/>          
           <xsl:apply-templates select="DisplayUrl"/>
-          -
+          <xsl:apply-templates select="CacheSize"/>
+          
           <a href="{$hrefCacheUrl}" style='text-decoration: none;'>
-            <font color="gray">Cached Page</font>
+            <font color="gray"> - Cache</font>
           </a>
           <br/>
         </p>
@@ -48,7 +47,7 @@
   </xsl:template>
 
   <xsl:template match="Title">
-    <font size="3">
+    <font size="3" color="0000CC">
       <xsl:value-of select='.'/>
     </font>
   </xsl:template>
@@ -59,6 +58,7 @@
 
   <xsl:template match="Description">
     <xsl:value-of select='.' disable-output-escaping="yes"/>
+    <br/>
   </xsl:template>
 
   <xsl:template match="DisplayUrl">
@@ -67,7 +67,10 @@
     </font>
   </xsl:template>
 
-  <xsl:template match="B">
-    <xsl:copy/>
+  <xsl:template match="CacheSize">
+    <font color="gray">
+      - <xsl:value-of select=". div 1000"/>k
+    </font>
   </xsl:template>
+
 </xsl:stylesheet>

@@ -32,7 +32,6 @@ import edu.ncsu.dre.engine.ServiceProvider;
 
 import javax.xml.namespace.*;
 import javax.xml.stream.*;
-import java.util.regex.*;
 
 /**
  * <code>LiveSearchProvider</code> is a data service provider add-in for the DRE framework, it 
@@ -112,10 +111,12 @@ public class LiveSearchProvider implements ServiceProvider {
             		
             		ResultSet = "";
             		logger.trace("Literal:" + QueryList.get(a).toString() + " Source:" + srcResponse[i].getSource().toString() + " Total Results: " + srcResponse[i].getTotal());                        		            	
-            		java.io.StringWriter xmlResult = new java.io.StringWriter();            		
+            		java.io.StringWriter xmlResult;            		
             		
             		for(int j=0;j<sourceResults.length;j++)
-            		{            							
+            		{            					
+            			xmlResult = new java.io.StringWriter();
+            			
             			XMLOutputFactory factory = XMLOutputFactory.newInstance();
             			XMLStreamWriter writer = factory.createXMLStreamWriter(xmlResult);	
             			            			
@@ -132,8 +133,10 @@ public class LiveSearchProvider implements ServiceProvider {
             			}
             			
             			sourceResults[j].serialize(new QName("http://schemas.microsoft.com/MSNSearch/2005/09/fex","Result"), new OMDOMFactory(), writer);
-            			writer.close();            	
-            			ResultSet = ResultSet.concat(xmlResult.toString().replaceAll(" xmlns=\"http://schemas.microsoft.com/MSNSearch/2005/09/fex\"",""));
+            			writer.close();
+            			xmlResult.flush();
+            			
+            			ResultSet = ResultSet.concat(xmlResult.toString().replaceAll(" xmlns=\"http://schemas.microsoft.com/MSNSearch/2005/09/fex\"",""));            			
             		}            		
             		ResultSetMap.put(QueryList.get(a).toString(), ResultSet);
             	}               	

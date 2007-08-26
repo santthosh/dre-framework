@@ -7,6 +7,8 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 public class SimpleSearchImpl extends RemoteServiceServlet implements SimpleSearch {
 	
+	private static final long serialVersionUID = 234827492138L;
+		
 	public String doLiteralSearch(String args)
 	{
 		DREFramework dummyFramework = new DREFramework(new java.io.File("DummySegregatorConfiguration.xml"));
