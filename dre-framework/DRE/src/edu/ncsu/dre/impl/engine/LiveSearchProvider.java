@@ -42,17 +42,33 @@ import javax.xml.stream.*;
  *
  * @author <a href="mailto:sbselvad@ncsu.edu">Santthosh Babu Selvadurai</a>
  */
-public class LiveSearchProvider implements ServiceProvider {
+public class LiveSearchProvider extends ServiceProvider {
 	
 	private static Logger logger = Logger.getLogger("edu.ncsu.dre.impl.engine.LiveSearchProvider");
 
 	private static final long serialVersionUID = 54545658676165L;		
 	
+	private Collection<Object> artifactSubset;
+	private Map<String,String> options;
+	private Map<Object,Object> resultSet;
+	
+	/**
+	 * Kick start the thread to collect the results, the arguments have to be set prior to the invocation
+	 * and the result set will be populated after the execution
+	 * 
+	 *  @parm none
+	 *  
+	 *  @return none
+	 */
+	public void run()
+	{
+		this.setResultSet(gatherInformation(this.getArtifactSubset(),this.getOptions()));		
+	}
+		
 	/* (non-Javadoc)
 	 * @see edu.ncsu.dre.engine.ServiceProvider#gatherInformation(java.util.Collection,java.util.Map)
 	 */
-	@Override
-	public Map<Object, Object> gatherInformation(Collection<Object> artifactSubset, Map<String,String> options){
+	private Map<Object, Object> gatherInformation(Collection<Object> artifactSubset, Map<String,String> options){
 		
 		logger.trace("gatherInformation(Collection<Object> artifactSubset, Map<String,String> options)");
 		
@@ -136,7 +152,7 @@ public class LiveSearchProvider implements ServiceProvider {
             			writer.close();
             			xmlResult.flush();
             			
-            			ResultSet = ResultSet.concat(xmlResult.toString().replaceAll(" xmlns=\"http://schemas.microsoft.com/MSNSearch/2005/09/fex\"",""));            			
+            			ResultSet = ResultSet.concat(xmlResult.toString().replaceAll(" xmlns=\"http://schemas.microsoft.com/MSNSearch/2005/09/fex\""," source=\""+options.get("ID")+"\""));            			
             		}            		
             		ResultSetMap.put(QueryList.get(a).toString(), ResultSet);
             	}               	
@@ -147,7 +163,7 @@ public class LiveSearchProvider implements ServiceProvider {
 		{
 			logger.error("Livesearch SOAP service invocation failed!",e);
 			throw new DREIllegalArgumentException(DREIllegalArgumentException.ILLEGAL_ARGUMENT,"Search failed. Please check AppID, options and the internet connection!",null);			
-		}
+		} 
 		catch(XMLStreamException e)
 		{
 			logger.error("XMLStreamException occured while accessing Livesearch results!",e);
@@ -159,7 +175,7 @@ public class LiveSearchProvider implements ServiceProvider {
 	 * @see edu.ncsu.dre.engine.ServiceProvider#validateArugments(java.util.Collection,java.util.Map)
 	 */
 	
-	public boolean validateArguments(java.util.Collection<Object> artifactSubset,java.util.Map<String,String> options)
+	private boolean validateArguments(java.util.Collection<Object> artifactSubset,java.util.Map<String,String> options)
 	throws DRERuntimeException, DREIllegalArgumentException	
 	{		
 		logger.trace("validateArguments(java.util.Collection<Object> artifactSubset,java.util.Map<String,String> options)");
@@ -201,6 +217,13 @@ public class LiveSearchProvider implements ServiceProvider {
 		{
 			logger.warn("Livesearch highlight has be turned on");
 			options.put("highlight", "true");
+		}
+		
+		//Check to see if the mandatory ID option is specified, if not default to the provider ID
+		if(options.get("ID") == null)
+		{
+			logger.warn("ID defaults to NYSE Symbol(MSFT)");
+			options.put("ID", "MSFT");
 		}
 		
 		return true;
@@ -262,5 +285,47 @@ public class LiveSearchProvider implements ServiceProvider {
         
         logger.warn("Livesearch safety level was invalid, defaulting to Strict search.");
         	return SafeSearchOptions.Strict;        
+	}
+	
+	/**
+	 * @return the artifactSubset
+	 */
+	public synchronized Collection<Object> getArtifactSubset() {
+		return artifactSubset;
+	}
+
+	/**
+	 * @param artifactSubset the artifactSubset to set
+	 */
+	public synchronized void setArtifactSubset(Collection<Object> artifactSubset) {
+		this.artifactSubset = artifactSubset;
+	}
+
+	/**
+	 * @return the options
+	 */
+	public synchronized Map<String, String> getOptions() {
+		return options;
+	}
+
+	/**
+	 * @param options the options to set
+	 */
+	public synchronized void setOptions(Map<String, String> options) {
+		this.options = options;
+	}
+
+	/**
+	 * @return the resultSet
+	 */
+	public synchronized Map<Object, Object> getResultSet() {
+		return resultSet;
+	}
+
+	/**
+	 * @param resultSet the resultSet to set
+	 */
+	public synchronized void setResultSet(Map<Object, Object> resultSet) {
+		this.resultSet = resultSet;
 	}
 }

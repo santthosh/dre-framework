@@ -61,7 +61,16 @@ public class StandAloneScheduler implements ResearchScheduler {
 					keyValuePair.put(arguments.get(j).getKey().toLowerCase(),arguments.get(j).getValue().toLowerCase());
 				}
 				
-				ResultSetMap = serviceProvider.gatherInformation(artifact,keyValuePair);
+				serviceProvider.setArtifactSubset(artifact);
+				serviceProvider.setOptions(keyValuePair);
+				serviceProvider.start();
+				serviceProvider.join(30000);
+				
+				do
+				{					
+				}while(serviceProvider.isAlive());
+				
+				ResultSetMap = serviceProvider.getResultSet();
 			}
 			catch(ClassCastException ce)
 			{
@@ -82,6 +91,11 @@ public class StandAloneScheduler implements ResearchScheduler {
 			{
 				logger.error("The class " + searchProviders.get(i).getHandler() +" could not be instantiated!",ie);
 				throw new DREIllegalStateException(DREIllegalStateException.INVALID_CONFIGURATION,null);
+			}
+			catch(InterruptedException ie)
+			{
+				logger.error("One or more service providers did not respond in time. Please check the connection and availability of the service", ie);
+				throw new DRERuntimeException(DRERuntimeException.FAILED_CONTENT_EXTRACTION,null);
 			}
 		}
 		return ResultSetMap;

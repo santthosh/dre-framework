@@ -65,14 +65,18 @@ public class LiveSearchProviderTest extends TestCase{
 	@Test
 	public void testNullQueryValidateArguments() {
 		try
-		{												
-			searchAgent.validateArguments(null, null);	//Try passing null arguments
+		{						
+			searchAgent.setArtifactSubset(null);
+			searchAgent.setOptions(null);
+			searchAgent.start();	//Try passing null arguments
+			
+			do{}while(searchAgent.isAlive());
 
-			fail("Program accepts null queries!");		
+			assert(true);								//Test was successful, expected result
 		}
 		catch(DRERuntimeException e)
-		{			
-			assert(true);								//Test was successful, expected result
+		{		
+			fail("Program accepts null queries! and breaks");				
 		}
 	}
 	
@@ -86,14 +90,17 @@ public class LiveSearchProviderTest extends TestCase{
 			Collection<Object> artifactSubset = new ArrayList<Object>();
 			Map<String,String> options = new HashMap<String,String>();
 			
-			searchAgent.validateArguments(artifactSubset, options);
+			searchAgent.setArtifactSubset(artifactSubset);
+			searchAgent.setOptions(options);
+			searchAgent.start();	
 			
-			fail("Program accepts empty lists!");
+			do{}while(searchAgent.isAlive());
+			
+			assert(true);
 		}
 		catch(DRERuntimeException e)
-		{
-			//Test was successful, expected result
-			assert(true);
+		{												//Test was successful, expected result			
+			fail("Program accepts empty lists! and breaks");
 		}
 	}
 	
@@ -106,7 +113,15 @@ public class LiveSearchProviderTest extends TestCase{
 		{
 			//Test the non-availability of options
 			artifactSubset.add("simple");	
-			searchAgent.validateArguments(artifactSubset, options);			
+			
+			searchAgent.setArtifactSubset(artifactSubset);
+			searchAgent.setOptions(options);
+			searchAgent.start();	
+			
+			do{}while(searchAgent.isAlive());
+			
+			Map<Object,Object> resultSet = searchAgent.getResultSet();
+			
 			assertEquals(options.get("source"),"web");
 			assertEquals(options.get("appid"),"7E8E2A6CDEEE7248E0EBF23EDD20303F86364CCE");
 			assertEquals(options.get("culture"),"en-US");
@@ -118,11 +133,21 @@ public class LiveSearchProviderTest extends TestCase{
 			options.put("appid", "tempappid");
 			options.put("culture", "adsada");
 			options.put("safesearch", "asdasd");
-			searchAgent.validateArguments(artifactSubset, options);
+			
+			searchAgent.setArtifactSubset(artifactSubset);
+			searchAgent.setOptions(options);
+			searchAgent.start();	
+			
+			do{}while(searchAgent.isAlive());
+			
+			resultSet = searchAgent.getResultSet();
+			
 			assertEquals(options.get("source"),"asdasd");											
 			assertEquals(options.get("appid"),"tempappid");
 			assertEquals(options.get("culture"),"adsada");			
 			assertEquals(options.get("safesearch"),"asdasd");
+			
+			assertNotNull(resultSet);
 		}
 		catch(Exception e)
 		{
@@ -136,12 +161,18 @@ public class LiveSearchProviderTest extends TestCase{
 	@Test
 	public void testGatherInformation() {		
 		artifactSubset.add("fact");
-		options.put("source", "asdasd");
+		options.put("source", "asdasd");		
 		//options.put("appid", "tempappid");
 		options.put("culture", "en-US");
 		options.put("safesearch", "asdasd");
 		
-		Map<Object,Object> resultSet = searchAgent.gatherInformation(artifactSubset, options);
+		searchAgent.setArtifactSubset(artifactSubset);
+		searchAgent.setOptions(options);
+		searchAgent.start();	
+		
+		do{}while(searchAgent.isAlive());
+		
+		Map<Object,Object> resultSet = searchAgent.getResultSet();
 
 		System.out.println(resultSet.toString());
 		assertNotNull(resultSet);
