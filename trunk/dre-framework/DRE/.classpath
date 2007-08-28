@@ -10,12 +10,13 @@
 	</classpathentry>
 	<classpathentry kind="src" path="cobu"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry exported="true" kind="lib" path="lib/LiveSearchAPI.jar"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/Lucene"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/Axis2"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/Logging"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/PDFBox"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JUnit"/>
-	<classpathentry kind="lib" path="C:/Program Files/gwt-windows-1.4.10/gwt-user.jar"/>
+	<classpathentry kind="lib" path="lib/gwt-user.jar"/>
+	<classpathentry kind="lib" path="lib/LiveSearchAPI.jar"/>
+	<classpathentry kind="lib" path="lib/yahoo_search-2.0.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -38,17 +38,33 @@ import javax.xml.stream.*;
  *
  * @author <a href="mailto:sbselvad@ncsu.edu">Santthosh Babu Selvadurai</a>
  */
-public class YahooSearchProvider implements ServiceProvider {
+public class YahooSearchProvider extends ServiceProvider {
 	
 	private static Logger logger = Logger.getLogger("edu.ncsu.dre.impl.engine.YahooSearchProvider");
 
-	private static final long serialVersionUID = 32483294009890L;		
+	private static final long serialVersionUID = 32483294009890L;
 	
+	private Collection<Object> artifactSubset;
+	private Map<String,String> options;
+	private Map<Object,Object> resultSet;
+	
+	/**
+	 * Kick start the thread to collect the results, the arguments have to be set prior to the invocation
+	 * and the result set will be populated after the execution
+	 * 
+	 *  @parm none
+	 *  
+	 *  @return none
+	 */
+	public void run()
+	{
+		this.setResultSet(gatherInformation(this.getArtifactSubset(),this.getOptions()));		
+	}
+		
 	/* (non-Javadoc)
 	 * @see edu.ncsu.dre.engine.ServiceProvider#gatherInformation(java.util.Collection,java.util.Map)
 	 */
-	@Override
-	public Map<Object, Object> gatherInformation(Collection<Object> artifactSubset, Map<String,String> options){
+	protected synchronized Map<Object, Object> gatherInformation(Collection<Object> artifactSubset, Map<String,String> options){
 		
 		logger.trace("gatherInformation(Collection<Object> artifactSubset, Map<String,String> options)");
 		
@@ -74,7 +90,7 @@ public class YahooSearchProvider implements ServiceProvider {
                 	                                
                 for (int i = 0; i < results.listResults().length; i++)		 
                 {                	        								//Iterate over the results.
-                    xmlResult = serializeResult(results.listResults()[i]);                                                                                
+                    xmlResult = serializeResult(results.listResults()[i],options.get("ID"));                                                                                
                     ResultSet = ResultSet.concat(xmlResult.toString());                    
                 }    
                 ResultSetMap.put(QueryList.get(a).toString(), ResultSet);
@@ -97,7 +113,7 @@ public class YahooSearchProvider implements ServiceProvider {
 	 * @see edu.ncsu.dre.engine.ServiceProvider#validateArugments(java.util.Collection,java.util.Map)
 	 */
 	
-	public boolean validateArguments(java.util.Collection<Object> artifactSubset,java.util.Map<String,String> options)
+	private synchronized boolean validateArguments(java.util.Collection<Object> artifactSubset,java.util.Map<String,String> options)
 	throws DRERuntimeException, DREIllegalArgumentException	
 	{		
 		logger.trace("validateArguments(java.util.Collection<Object> artifactSubset,java.util.Map<String,String> options)");
@@ -113,14 +129,25 @@ public class YahooSearchProvider implements ServiceProvider {
 			options.put("appid", "eCBIC3LV34EN3FHl35AMrMhA7JoOi4jfPPy1VQrSNr51qWbeO43DkDDLSqG0jmVg");
 		}
 		
+		//Check to see if the mandatory ID option is specified, if not default to the provider ID
+		if(options.get("ID") == null)
+		{
+			logger.warn("ID defaults to NYSE Symbol(YHOO)");
+			options.put("ID", "YHOO");
+		}
+		
 		return true;
 	}
 	
 	/**
+	 * Format the XML Stream output, from the search results returned by Yahoo Search API
 	 * 
+	 * @param 	WebSearchResult
+	 * 			String
 	 * 
+	 * @return  java.io.StringWriter
 	 */	
-	public java.io.StringWriter serializeResult(WebSearchResult result)
+	private synchronized java.io.StringWriter serializeResult(WebSearchResult result, String source)
 	{
 		java.io.StringWriter xmlResult = new java.io.StringWriter();
 				    
@@ -130,6 +157,7 @@ public class YahooSearchProvider implements ServiceProvider {
             XMLStreamWriter writer = factory.createXMLStreamWriter(xmlResult);     
             
             writer.writeStartElement("Result");									//Yahoo does not provide inherent serialization so you will have to do it.
+            writer.writeAttribute("source", source);
 			
             if(result.getTitle()!=null)
             {
@@ -203,5 +231,47 @@ public class YahooSearchProvider implements ServiceProvider {
 		}
         
         return xmlResult;
+	}
+
+	/**
+	 * @return the artifactSubset
+	 */
+	public synchronized Collection<Object> getArtifactSubset() {
+		return artifactSubset;
+	}
+
+	/**
+	 * @param artifactSubset the artifactSubset to set
+	 */
+	public synchronized void setArtifactSubset(Collection<Object> artifactSubset) {
+		this.artifactSubset = artifactSubset;
+	}
+
+	/**
+	 * @return the options
+	 */
+	public synchronized Map<String, String> getOptions() {
+		return options;
+	}
+
+	/**
+	 * @param options the options to set
+	 */
+	public synchronized void setOptions(Map<String, String> options) {
+		this.options = options;
+	}
+
+	/**
+	 * @return the resultSet
+	 */
+	public synchronized Map<Object, Object> getResultSet() {
+		return resultSet;
+	}
+
+	/**
+	 * @param resultSet the resultSet to set
+	 */
+	public synchronized void setResultSet(Map<Object, Object> resultSet) {
+		this.resultSet = resultSet;
 	}
 } 

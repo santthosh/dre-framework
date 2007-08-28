@@ -64,14 +64,18 @@ public class YahooSearchProviderTest extends TestCase{
 	@Test
 	public void testNullQueryValidateArguments() {
 		try
-		{												
-			searchAgent.validateArguments(null, null);	//Try passing null arguments
+		{						
+			searchAgent.setArtifactSubset(null);
+			searchAgent.setOptions(null);
+			searchAgent.start();	//Try passing null arguments
+			
+			do{}while(searchAgent.isAlive());
 
-			fail("Program accepts null queries!");		
+			assert(true);								//Test was successful, expected result
 		}
 		catch(DRERuntimeException e)
-		{			
-			assert(true);								//Test was successful, expected result
+		{		
+			fail("Program accepts null queries! and breaks");				
 		}
 	}
 	
@@ -85,13 +89,17 @@ public class YahooSearchProviderTest extends TestCase{
 			Collection<Object> artifactSubset = new ArrayList<Object>();
 			Map<String,String> options = new HashMap<String,String>();
 			
-			searchAgent.validateArguments(artifactSubset, options);
+			searchAgent.setArtifactSubset(artifactSubset);
+			searchAgent.setOptions(options);
+			searchAgent.start();	
 			
-			fail("Program accepts empty lists!");
+			do{}while(searchAgent.isAlive());
+			
+			assert(true);
 		}
 		catch(DRERuntimeException e)
-		{												//Test was successful, expected result
-			assert(true);
+		{												//Test was successful, expected result			
+			fail("Program accepts empty lists! and breaks");
 		}
 	}
 	
@@ -104,34 +112,15 @@ public class YahooSearchProviderTest extends TestCase{
 		artifactSubset.add("simple");	
 		artifactSubset.add("fact");
 		
-		Map<Object,Object> resultSet = searchAgent.gatherInformation(artifactSubset, options);
+		searchAgent.setArtifactSubset(artifactSubset);
+		searchAgent.setOptions(options);
+		searchAgent.start();	
+		
+		do{}while(searchAgent.isAlive());
+		
+		Map<Object,Object> resultSet = searchAgent.getResultSet();
 		
 		System.out.println(resultSet.toString());
 		assertNotNull(resultSet);
 	}
-
-	/**
-	 * Test method for {@link edu.ncsu.dre.impl.engine.YahooSearchProvider#validateArguments(java.util.Collection, java.util.Map)}.
-	 */
-	@Test
-	public final void testValidateArguments() {
-		try
-		{
-			//Test the non-availability of options
-			artifactSubset.add("simple");	
-			searchAgent.validateArguments(artifactSubset, options);						
-			assertEquals(options.get("appid"),"eCBIC3LV34EN3FHl35AMrMhA7JoOi4jfPPy1VQrSNr51qWbeO43DkDDLSqG0jmVg");			
-			
-			//Test the availability of options
-			options.clear();			
-			options.put("appid", "tempappid");			
-			searchAgent.validateArguments(artifactSubset, options);													
-			assertEquals(options.get("appid"),"tempappid");			
-		}
-		catch(Exception e)
-		{
-			fail("Mandatory variables were not specified!");
-		}
-	}
-
 }
