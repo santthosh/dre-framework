@@ -44,61 +44,78 @@ public class StandAloneScheduler implements ResearchScheduler {
 	{		
 		logger.trace("scheduleResearch(Collection<Object> artifact, List<Component> searchProviders)");
 		
-		Map<Object,Object> ResultSetMap = null;
+		Map<Object,Object> ResultSetMap=null, BufferMap=null;
+		Class searchProvider[] = new Class[searchProviders.size()];
+		ServiceProvider serviceProvider[] = new ServiceProvider[searchProviders.size()];
 		
-		for(int i=0;i<searchProviders.size();i++)
+		try
 		{
-			try
+			for(int i=0;i<searchProviders.size();i++)
 			{
-				Class searchProvider = Class.forName(searchProviders.get(i).getHandler());
-				ServiceProvider serviceProvider = (ServiceProvider) searchProvider.newInstance();
-				
-				List<Arguments> arguments = searchProviders.get(i).getOption();
-				Map<String,String> keyValuePair = new Hashtable<String,String>();
-				
-				for(int j=0;j<arguments.size();j++)
-				{					
-					keyValuePair.put(arguments.get(j).getKey().toLowerCase(),arguments.get(j).getValue().toLowerCase());
+				try
+				{
+					searchProvider[i] = Class.forName(searchProviders.get(i).getHandler());
+					serviceProvider[i] = (ServiceProvider) searchProvider[i].newInstance();
+					
+					List<Arguments> arguments = searchProviders.get(i).getOption();
+					Map<String,String> keyValuePair = new Hashtable<String,String>();
+					
+					for(int j=0;j<arguments.size();j++)
+					{					
+						keyValuePair.put(arguments.get(j).getKey().toLowerCase(),arguments.get(j).getValue().toLowerCase());
+					}
+					
+					serviceProvider[i].setArtifactSubset(artifact);		//Kick off all the threads
+					serviceProvider[i].setOptions(keyValuePair);
+					serviceProvider[i].start();
+					serviceProvider[i].join(30000);							
 				}
-				
-				serviceProvider.setArtifactSubset(artifact);
-				serviceProvider.setOptions(keyValuePair);
-				serviceProvider.start();
-				serviceProvider.join(30000);
-				
-				do
-				{					
-				}while(serviceProvider.isAlive());
-				
-				ResultSetMap = serviceProvider.getResultSet();
-			}
-			catch(ClassCastException ce)
+				catch(ClassCastException ce)
+				{
+					logger.error("Failed to cast handler for a search provider, please use appropriate providers!",ce);
+					throw new DREIllegalStateException(DREIllegalStateException.INVALID_CONFIGURATION,null);
+				}
+				catch(ClassNotFoundException cnfe)
+				{
+					logger.error("The class " + searchProviders.get(i).getHandler() +" was not found!",cnfe);
+					throw new DREIllegalStateException(DREIllegalStateException.INVALID_CONFIGURATION,null);
+				}
+				catch(IllegalAccessException iae)
+				{
+					logger.error("Illegal access to class " + searchProviders.get(i).getHandler(),iae);
+					throw new DREIllegalStateException(DREIllegalStateException.INVALID_CONFIGURATION,null);
+				}
+				catch(InstantiationException ie)
+				{
+					logger.error("The class " + searchProviders.get(i).getHandler() +" could not be instantiated!",ie);
+					throw new DREIllegalStateException(DREIllegalStateException.INVALID_CONFIGURATION,null);
+				}														
+			}	
+						
+			do{}while(serviceProvider[0].isAlive());					//Retrieve the first set of search results
+			if(serviceProvider[0].getResultSet()!=null)
+				ResultSetMap = serviceProvider[0].getResultSet();
+	
+			for(int i=1;i<searchProviders.size();i++)
 			{
-				logger.error("Failed to cast handler for a search provider, please use appropriate providers!",ce);
-				throw new DREIllegalStateException(DREIllegalStateException.INVALID_CONFIGURATION,null);
-			}
-			catch(ClassNotFoundException cnfe)
-			{
-				logger.error("The class " + searchProviders.get(i).getHandler() +" was not found!",cnfe);
-				throw new DREIllegalStateException(DREIllegalStateException.INVALID_CONFIGURATION,null);
-			}
-			catch(IllegalAccessException iae)
-			{
-				logger.error("Illegal access to class " + searchProviders.get(i).getHandler(),iae);
-				throw new DREIllegalStateException(DREIllegalStateException.INVALID_CONFIGURATION,null);
-			}
-			catch(InstantiationException ie)
-			{
-				logger.error("The class " + searchProviders.get(i).getHandler() +" could not be instantiated!",ie);
-				throw new DREIllegalStateException(DREIllegalStateException.INVALID_CONFIGURATION,null);
-			}
-			catch(InterruptedException ie)
-			{
-				logger.error("One or more service providers did not respond in time. Please check the connection and availability of the service", ie);
-				throw new DRERuntimeException(DRERuntimeException.FAILED_CONTENT_EXTRACTION,null);
-			}
+				do{}while(serviceProvider[i].isAlive());
+				if(serviceProvider[i].getResultSet()!=null)
+				{
+					BufferMap = serviceProvider[i].getResultSet();
+					
+					for (Iterator iter = ResultSetMap.keySet().iterator(); iter.hasNext();) {
+						Object test = iter.next();
+						ResultSetMap.put(test, ResultSetMap.get(test).toString() + BufferMap.get(test).toString());													                   
+	                }
+				}
+			}			
 		}
+		catch(InterruptedException ie)
+		{
+			logger.error("One or more service providers did not respond in time. Please check the connection and availability of the service", ie);
+			throw new DRERuntimeException(DRERuntimeException.FAILED_CONTENT_EXTRACTION,null);
+		}
+		
 		return ResultSetMap;
 	}
-
 }

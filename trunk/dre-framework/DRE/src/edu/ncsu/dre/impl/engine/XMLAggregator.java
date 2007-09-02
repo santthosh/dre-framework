@@ -73,11 +73,15 @@ public class XMLAggregator implements Aggregator {
 		XMLResultSet = XMLResultSet.concat("</ResultSet>");
 		logger.info("Result: " + XMLResultSet);
 		
+		StreamResult SourceAlign = null;
 		StreamResult HTMLResult = null;
 		
 		try
 		{
-			HTMLResult = buildHTMLStream(XMLResultSet,"xml/XML2HTML.xslt");
+			SourceAlign = applyXSLTransformation(XMLResultSet,"xml/RealignSource.xslt");			
+			System.out.println(SourceAlign.getOutputStream().toString());
+			
+			HTMLResult = applyXSLTransformation(SourceAlign.getOutputStream().toString(),"xml/XML2HTML.xslt");
 		}
 		catch(IOException ie)
 		{
@@ -101,7 +105,7 @@ public class XMLAggregator implements Aggregator {
 	 * 
 	 * @return javax.xml.transform.stream.StreamResult
 	 */
-	  synchronized  public javax.xml.transform.stream.StreamResult buildHTMLStream(String sXMLData, String sXSLFile)
+	  synchronized  public javax.xml.transform.stream.StreamResult applyXSLTransformation(String sXMLData, String sXSLFile)
 	        throws  TransformerException, TransformerConfigurationException,java.io.IOException
 	  {	     
 	    // Use the static TransformerFactory.newInstance() method to instantiate 
