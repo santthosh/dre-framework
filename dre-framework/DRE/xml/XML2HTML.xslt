@@ -38,8 +38,10 @@
           <xsl:apply-templates select="CacheSize"/>
           
           <a href="{$hrefCacheUrl}" style='text-decoration: none;'>
-            <font color="gray"> - Cache</font>
+            <font color="gray"> - Cache  </font>
           </a>
+
+          <font color="red">[Found in <xsl:apply-templates select="Source"/>]</font>
           <br/>
         </p>
       </xsl:copy>
