@@ -40,12 +40,12 @@ public class SearchInterface implements EntryPoint {
 
 		final Label whatHelpIsLabel = new Label("How helpful is a zillion results?! Find what you want, where you want and how you want it!");
 		grid.setWidget(0, 1, whatHelpIsLabel);
-		whatHelpIsLabel.setStyleName("gwt-Instructions");
+		whatHelpIsLabel.setStyleName("gwt-Title");
 		grid.getCellFormatter().setHorizontalAlignment(0, 1, HasHorizontalAlignment.ALIGN_RIGHT);
 
 		final Label welcomeToCobuLabel = new Label("Welcome to Cobu!");
 		grid.setWidget(0, 0, welcomeToCobuLabel);
-		welcomeToCobuLabel.setStyleName("gwt-Instructions");
+		welcomeToCobuLabel.setStyleName("gwt-Title");
 
 		final Grid operatorGrid = new Grid();
 		rootPanel.add(operatorGrid);
