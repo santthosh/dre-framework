@@ -46,7 +46,7 @@ public class XMLAggregatorTest {
 	}
 
 	/**
-	 * Test method for {@link edu.ncsu.dre.impl.engine.XMLAggregator#buildHTMLStream(java.lang.String, java.lang.String)}.
+	 * Test method for {@link edu.ncsu.dre.impl.engine.XMLAggregator#applyXSLTransformation(java.lang.String, java.lang.String)}.
 	 */
 	@Test
 	public void testBuildHTMLStream() {

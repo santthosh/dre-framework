@@ -37,6 +37,7 @@ public class DREFrameworkTest extends TestCase{
 	DefaultDREConfiguration defaultConfiguration = null;
 	DREFramework framework = null;
 	DREFramework dummyFramework = null;
+	DREFramework normalFramework = null;
 	DREConfiguration sampleConfiguration = null;
 	/**
 	 * @throws java.lang.Exception
@@ -45,6 +46,7 @@ public class DREFrameworkTest extends TestCase{
 	public void setUp() throws Exception {
 		framework = new DREFramework();
 		dummyFramework = new DREFramework(new java.io.File("DummySegregatorConfiguration.xml"));
+		normalFramework = new DREFramework(new java.io.File("configuration.xml"));
 		defaultConfiguration = new DefaultDREConfiguration();
 	}
 
@@ -187,7 +189,8 @@ public class DREFrameworkTest extends TestCase{
 	 */
 	@Test
 	public void testProcessLiteralArtifact() {		
-		javax.xml.transform.stream.StreamResult result = dummyFramework.processLiteralArtifact(new edu.ncsu.dre.impl.data.TextArtifact("Metasearch engines"));
+		//javax.xml.transform.stream.StreamResult result = dummyFramework.processLiteralArtifact(new edu.ncsu.dre.impl.data.TextArtifact("Metasearch engines"));
+		javax.xml.transform.stream.StreamResult result = normalFramework.processLiteralArtifact(new edu.ncsu.dre.impl.data.TextArtifact("Metasearch engines"));
 		System.out.println(result.getOutputStream().toString());		
 		assert(true);
 		//fail("Not yet implemented"); // TODO
