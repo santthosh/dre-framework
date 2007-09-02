@@ -119,7 +119,7 @@ public class LiveSearchProvider extends ServiceProvider {
 
             	SourceResponse[] srcResponse = searchResponse.getResponses().getSourceResponse();
             	
-            	String ResultSet = "";
+            	String ResultSet = "", attributes = "";
             	            	
             	for(int i=0;i<srcResponse.length;i++)
             	{
@@ -138,21 +138,16 @@ public class LiveSearchProvider extends ServiceProvider {
             			            			
             			if(options.get("highlight").compareToIgnoreCase("true")==0)
             			{
-            				/*sourceResults[j].setTitle(sourceResults[j].getTitle().replaceAll(QueryList.get(a).toString(),"<b>"+QueryList.get(a).toString()+"</b>"));
-            				
-            				Pattern pattern = Pattern.compile(QueryList.get(a).toString(),Pattern.CASE_INSENSITIVE);
-            				Matcher literalMatcher = pattern.matcher(sourceResults[j].getDescription());    
-            				while (literalMatcher.find()){            					 
-            					    literalMatcher.
-            				}
-            				sourceResults[j].setDescription(literalMatcher.replaceAll("<b>"+QueryList.get(a).toString()+"</b>"));*/
+            				//To do highlight mechanism
             			}
             			
             			sourceResults[j].serialize(new QName("http://schemas.microsoft.com/MSNSearch/2005/09/fex","Result"), new OMDOMFactory(), writer);
             			writer.close();
             			xmlResult.flush();
             			
-            			ResultSet = ResultSet.concat(xmlResult.toString().replaceAll(" xmlns=\"http://schemas.microsoft.com/MSNSearch/2005/09/fex\""," source=\""+options.get("ID")+"\""));            			
+            			attributes = " Source=\""+options.get("ID")+"\" Rank=\""+String.valueOf(j)+"\"";
+            			
+            			ResultSet = ResultSet.concat(xmlResult.toString().replaceAll(" xmlns=\"http://schemas.microsoft.com/MSNSearch/2005/09/fex\"",attributes));            			
             		}            		
             		ResultSetMap.put(QueryList.get(a).toString(), ResultSet);
             	}               	
@@ -223,7 +218,7 @@ public class LiveSearchProvider extends ServiceProvider {
 		if(options.get("ID") == null)
 		{
 			logger.warn("ID defaults to NYSE Symbol(MSFT)");
-			options.put("ID", "MSFT");
+			options.put("ID", "Livesearch");
 		}
 		
 		return true;

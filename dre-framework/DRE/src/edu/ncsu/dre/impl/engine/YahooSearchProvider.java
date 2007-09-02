@@ -90,7 +90,7 @@ public class YahooSearchProvider extends ServiceProvider {
                 	                                
                 for (int i = 0; i < results.listResults().length; i++)		 
                 {                	        								//Iterate over the results.
-                    xmlResult = serializeResult(results.listResults()[i],options.get("ID"));                                                                                
+                    xmlResult = serializeResult(results.listResults()[i],options.get("ID"),i+1);                                                                                
                     ResultSet = ResultSet.concat(xmlResult.toString());                    
                 }    
                 ResultSetMap.put(QueryList.get(a).toString(), ResultSet);
@@ -132,8 +132,8 @@ public class YahooSearchProvider extends ServiceProvider {
 		//Check to see if the mandatory ID option is specified, if not default to the provider ID
 		if(options.get("ID") == null)
 		{
-			logger.warn("ID defaults to NYSE Symbol(YHOO)");
-			options.put("ID", "YHOO");
+			logger.warn("ID defaults to name(Yahoo)");
+			options.put("ID", "Yahoo");
 		}
 		
 		return true;
@@ -144,10 +144,11 @@ public class YahooSearchProvider extends ServiceProvider {
 	 * 
 	 * @param 	WebSearchResult
 	 * 			String
+	 * 			int 
 	 * 
 	 * @return  java.io.StringWriter
 	 */	
-	private synchronized java.io.StringWriter serializeResult(WebSearchResult result, String source)
+	private synchronized java.io.StringWriter serializeResult(WebSearchResult result, String source, int Rank)
 	{
 		java.io.StringWriter xmlResult = new java.io.StringWriter();
 				    
@@ -157,8 +158,10 @@ public class YahooSearchProvider extends ServiceProvider {
             XMLStreamWriter writer = factory.createXMLStreamWriter(xmlResult);     
             
             writer.writeStartElement("Result");									//Yahoo does not provide inherent serialization so you will have to do it.
-            writer.writeAttribute("source", source);
-			
+            writer.writeAttribute("Source", source);
+            
+            writer.writeAttribute("Rank",String.valueOf(Rank));
+            			
             if(result.getTitle()!=null)
             {
             	writer.writeStartElement("Title");
