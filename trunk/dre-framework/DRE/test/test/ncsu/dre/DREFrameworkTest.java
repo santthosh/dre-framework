@@ -46,7 +46,7 @@ public class DREFrameworkTest extends TestCase{
 	public void setUp() throws Exception {
 		framework = new DREFramework();
 		dummyFramework = new DREFramework(new java.io.File("DummySegregatorConfiguration.xml"));
-		normalFramework = new DREFramework(new java.io.File("configuration.xml"));
+		normalFramework = new DREFramework(new java.io.File("DummySegregatorConfiguration.xml"));
 		defaultConfiguration = new DefaultDREConfiguration();
 	}
 

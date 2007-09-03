@@ -145,7 +145,7 @@ public class LiveSearchProvider extends ServiceProvider {
             			writer.close();
             			xmlResult.flush();
             			
-            			attributes = " Source=\""+options.get("ID")+"\" Rank=\""+String.valueOf(j)+"\"";
+            			attributes = " Source=\""+options.get("ID")+"\" Rank=\""+String.valueOf(j+1)+"\"";
             			
             			ResultSet = ResultSet.concat(xmlResult.toString().replaceAll(" xmlns=\"http://schemas.microsoft.com/MSNSearch/2005/09/fex\"",attributes));            			
             		}            		
