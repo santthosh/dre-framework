@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xs:schema xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="ResultSubSet">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="1" name="Result" type="ResultComponent"/>
+      </xs:sequence>
+      <xs:attribute name="artifactSubset" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ResultComponent">
+    <xs:sequence>
+      <xs:element name="Title" type="xs:string"/>
+      <xs:element name="Url" type="xs:string"/>
+      <xs:element name="Description" type="xs:string"/>
+      <xs:element name="DisplayUrl" type="xs:string"/>
+      <xs:element name="CacheUrl" type="xs:string"/>
+      <xs:element name="CacheSize" type="xs:string"/>
+      <xs:element name="Mimetype" type="xs:string"/>
+      <xs:element name="ModificationDate" type="xs:string"/>
+    </xs:sequence>
+    <xs:attribute name="Source" type="xs:string"/>
+    <xs:attribute name="Rank" type="xs:int"/>
+  </xs:complexType>
+</xs:schema>

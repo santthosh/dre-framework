@@ -18,22 +18,19 @@
  */
 package edu.ncsu.dre.impl.engine;
 
-import java.util.ArrayList;
-import java.util.Map;
-
 import java.io.*;
+import java.util.*;
 
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.stream.StreamSource;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerConfigurationException;
-
+import javax.xml.bind.*;
+import javax.xml.stream.*;
+import javax.xml.transform.*;
+import javax.xml.transform.stream.*;
 
 import org.apache.log4j.Logger;
-
+import edu.ncsu.dre.exception.*;
+import edu.ncsu.dre.data.results.*;
 import edu.ncsu.dre.engine.Aggregator;
+import edu.ncsu.dre.util.*;
 
 /**
  * 
@@ -67,6 +64,7 @@ public class XMLAggregator implements Aggregator {
 			
 			for(int j=0;j<wordList.size();j++)
 			{
+				collateSubSetResults(wordList.get(j),xmlResultMap.get(wordList.get(j)).toString());
 				XMLResultSet = XMLResultSet.concat(xmlResultMap.get(wordList.get(j)).toString());	
 			}
 		}
@@ -80,6 +78,8 @@ public class XMLAggregator implements Aggregator {
 		{
 			SourceAlign = applyXSLTransformation(XMLResultSet,"xml/RealignSource.xslt");			
 			System.out.println(SourceAlign.getOutputStream().toString());
+			
+			
 			
 			HTMLResult = applyXSLTransformation(SourceAlign.getOutputStream().toString(),"xml/XML2HTML.xslt");
 		}
@@ -128,4 +128,76 @@ public class XMLAggregator implements Aggregator {
 	    return streamResult;
 	  }
 
+	  /**
+	   * 
+	   */
+	  synchronized public javax.xml.transform.stream.StreamResult collateSubSetResults(String artifactSubset,String resultStream)
+	  {	
+		  resultStream = "<ResultSubSet artifactSubset=\"" + artifactSubset + "\">" + resultStream + "</ResultSubSet>";
+		  try
+		  {
+			  StringReader stringReader = new StringReader(resultStream);
+			  XMLInputFactory factory = XMLInputFactory.newInstance();
+			  XMLStreamReader xmlStreamReader = factory.createXMLStreamReader(stringReader);
+			  
+			  JAXBContext binderContext = JAXBContext.newInstance("edu.ncsu.dre.data.results");
+			  Unmarshaller unmarshaller = binderContext.createUnmarshaller();
+
+			  ResultSubSet resultSubSet = (ResultSubSet) unmarshaller.unmarshal(xmlStreamReader);
+			  
+			  System.out.println(resultSubSet.getArtifactSubset());
+			  List<ResultComponent> resultList = resultSubSet.getResult();
+			  
+			  
+			  DynamicComparator.sort(resultList,"DisplayUrl",false);
+			  
+			  int NegativeRanker = 1;
+			  
+			  for(int i=0;i<resultList.size();i++)
+			  {
+				  ResultComponent result = resultList.get(i);
+				  ResultComponent resultNext = null;
+
+				  if(i==(resultList.size()-1)){break;}
+				  else{resultNext = resultList.get(i+1);}
+
+				  if(result.getDisplayUrl().compareToIgnoreCase(resultNext.getDisplayUrl())==0)
+				  {
+					  if(result.getRank() > 0)
+					  {
+						  NegativeRanker--;
+						  result.setRank(NegativeRanker);						 
+						  resultNext.setRank(NegativeRanker);
+					  }
+					  else
+					  {
+						  resultNext.setRank(result.getRank());
+					  }
+				  }				  				 				 				 
+			  }
+			  
+			  DynamicComparator.sort(resultList,"Rank",true);
+			  
+			  for(int i=0;i<resultList.size();i++)
+			  {
+				  System.out.println(
+						  "Source: " + resultList.get(i).getSource() + " " +
+						  "Rank: " + resultList.get(i).getRank() + " " +
+						  "Display: " + resultList.get(i).getDisplayUrl() 
+				  );
+			  }
+		  }
+		  catch(XMLStreamException xse)
+		  {
+			    logger.error("XMLStreamException occured!",xse);			
+				throw new DRERuntimeException(DRERuntimeException.FAILED_CONTENT_EXTRACTION,null);								  
+		  }
+		  catch(JAXBException je)
+		  {
+				logger.error("JAXBException occured!",je);			
+				throw new DREIllegalArgumentException(DREIllegalArgumentException.CONFIGURATION_FILE_PARSE_ERROR,null);						
+		  }		  
+			  
+		  return null;
+	  }
 }
