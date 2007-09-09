@@ -31,7 +31,9 @@ import java.io.Serializable;
  *
  * @author <a href="mailto:sbselvad@ncsu.edu">Santthosh Babu Selvadurai</a>
  */
-public class DynamicComparator implements Comparator<Object>, Serializable {
+public @SuppressWarnings("unchecked") class DynamicComparator implements Comparator<Object>, Serializable {
+	
+	private static final long serialVersionUID = 3847892743103872137L;
 	
 	private Collection collection;
 	private String 	   method;
@@ -201,12 +203,12 @@ public class DynamicComparator implements Comparator<Object>, Serializable {
 	}
 
 	private final Method getMethod(Object o) throws NoSuchMethodException {
-		return o.getClass().getMethod(method, null);
+		return o.getClass().getMethod(method,null);
 	}
 
 	private final static Object invoke(Method method, Object o) throws
 	InvocationTargetException, IllegalAccessException {
-		return method.invoke(o, null);
+		return method.invoke(o,null);
 	}
 
 	/**
@@ -215,6 +217,20 @@ public class DynamicComparator implements Comparator<Object>, Serializable {
 	 */
 	private int getSortOrder() {
 		return sortAsc ? 1 : -1;
+	}
+
+	/**
+	 * @return the collection
+	 */
+	public synchronized Collection getCollection() {
+		return collection;
+	}
+
+	/**
+	 * @param collection the collection to set
+	 */
+	public synchronized void setCollection(Collection collection) {
+		this.collection = collection;
 	}
 
 }

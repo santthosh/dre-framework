@@ -54,7 +54,7 @@ public class XMLAggregator implements Aggregator {
 																	java.util.List<Object> ObjectList,
 																	java.util.List<Map<Object,Object>> ResultMap)
 	{
-		String XMLResultSet = "<?xml version=\"1.0\" encoding=\"utf-8\"?><ResultSet>";
+		String XMLResultSet = null; 
 		
 		for(int i=0;i<ObjectList.size();i++)
 		{				
@@ -64,24 +64,16 @@ public class XMLAggregator implements Aggregator {
 			
 			for(int j=0;j<wordList.size();j++)
 			{
-				collateSubSetResults(wordList.get(j),xmlResultMap.get(wordList.get(j)).toString());
-				XMLResultSet = XMLResultSet.concat(xmlResultMap.get(wordList.get(j)).toString());	
+				XMLResultSet = collateSubSetResults(wordList.get(j),xmlResultMap.get(wordList.get(j)).toString()).getOutputStream().toString();
 			}
 		}
-		XMLResultSet = XMLResultSet.concat("</ResultSet>");
 		logger.info("Result: " + XMLResultSet);
 		
-		StreamResult SourceAlign = null;
 		StreamResult HTMLResult = null;
 		
 		try
-		{
-			SourceAlign = applyXSLTransformation(XMLResultSet,"xml/RealignSource.xslt");			
-			System.out.println(SourceAlign.getOutputStream().toString());
-			
-			
-			
-			HTMLResult = applyXSLTransformation(SourceAlign.getOutputStream().toString(),"xml/XML2HTML.xslt");
+		{									
+			HTMLResult = applyXSLTransformation(XMLResultSet,"xml/XML2HTML.xslt");
 		}
 		catch(IOException ie)
 		{
@@ -90,8 +82,7 @@ public class XMLAggregator implements Aggregator {
 		catch(TransformerException te)
 		{
 			logger.error("XSLTFiltering failed!",te);
-		}								
-		
+		}										
 		return HTMLResult;
 	}
 	
@@ -134,6 +125,9 @@ public class XMLAggregator implements Aggregator {
 	  synchronized public javax.xml.transform.stream.StreamResult collateSubSetResults(String artifactSubset,String resultStream)
 	  {	
 		  resultStream = "<ResultSubSet artifactSubset=\"" + artifactSubset + "\">" + resultStream + "</ResultSubSet>";
+		  java.io.ByteArrayOutputStream bufferedOutputStream = new java.io.ByteArrayOutputStream();
+		  StreamResult streamResult = new StreamResult(bufferedOutputStream);
+		  
 		  try
 		  {
 			  StringReader stringReader = new StringReader(resultStream);
@@ -142,13 +136,13 @@ public class XMLAggregator implements Aggregator {
 			  
 			  JAXBContext binderContext = JAXBContext.newInstance("edu.ncsu.dre.data.results");
 			  Unmarshaller unmarshaller = binderContext.createUnmarshaller();
-
+			  Marshaller marshaller = binderContext.createMarshaller();
+			  
 			  ResultSubSet resultSubSet = (ResultSubSet) unmarshaller.unmarshal(xmlStreamReader);
 			  
 			  System.out.println(resultSubSet.getArtifactSubset());
 			  List<ResultComponent> resultList = resultSubSet.getResult();
-			  
-			  
+			  			  
 			  DynamicComparator.sort(resultList,"DisplayUrl",false);
 			  
 			  int NegativeRanker = 1;
@@ -174,18 +168,9 @@ public class XMLAggregator implements Aggregator {
 						  resultNext.setRank(result.getRank());
 					  }
 				  }				  				 				 				 
-			  }
-			  
-			  DynamicComparator.sort(resultList,"Rank",true);
-			  
-			  for(int i=0;i<resultList.size();i++)
-			  {
-				  System.out.println(
-						  "Source: " + resultList.get(i).getSource() + " " +
-						  "Rank: " + resultList.get(i).getRank() + " " +
-						  "Display: " + resultList.get(i).getDisplayUrl() 
-				  );
-			  }
+			  }			  
+			  DynamicComparator.sort(resultList,"Rank",true);			  
+			  marshaller.marshal(resultSubSet,streamResult);		  
 		  }
 		  catch(XMLStreamException xse)
 		  {
@@ -196,8 +181,7 @@ public class XMLAggregator implements Aggregator {
 		  {
 				logger.error("JAXBException occured!",je);			
 				throw new DREIllegalArgumentException(DREIllegalArgumentException.CONFIGURATION_FILE_PARSE_ERROR,null);						
-		  }		  
-			  
-		  return null;
+		  }		  			  
+		  return streamResult;
 	  }
 }
