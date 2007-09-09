@@ -13,6 +13,7 @@
   <xsl:template match="ResultSet">
     <xsl:if test="not(node()) or not(preceding-sibling::node()[.=string(current())])">
       <xsl:copy>
+        <p></p>
         <xsl:apply-templates select="@*|node()"/>
       </xsl:copy>
     </xsl:if>
@@ -20,7 +21,7 @@
 
   <xsl:template match="Result">
     <xsl:if test="not(node()) or not(preceding-sibling::node()[.=string(current())])">
-      <xsl:copy>
+      <xsl:copy>        
         <p>
           <xsl:variable name="hrefUrl">
             <xsl:value-of select="Url"/>
@@ -30,9 +31,18 @@
             <xsl:value-of select="CacheUrl"/>
           </xsl:variable>
 
-          <a href="{$hrefUrl}">
-            <xsl:apply-templates select="Title"/>
-          </a><br/>          
+          <xsl:if test="@Source!='Livesearch'">
+            <img src="live.gif" alt="Livesearch"></img>
+          </xsl:if>
+          <xsl:if test="@Source!='Yahoo'">
+            <img src="yahoo.gif" alt="Yahoo"></img>
+          </xsl:if>
+          
+          <font color="DarkBlue">
+            <a href="{$hrefUrl}" color="DarkBlue">            
+            <xsl:apply-templates select="Title"/>            
+          </a>
+          </font><br/>          
           <xsl:apply-templates select="Description"/>          
           <xsl:apply-templates select="DisplayUrl"/>
           <xsl:apply-templates select="CacheSize"/>
@@ -40,8 +50,6 @@
           <a href="{$hrefCacheUrl}" style='text-decoration: none;'>
             <font color="gray"> - Cache  </font>
           </a>
-
-          <font color="red">[Found in <xsl:apply-templates select="Source"/>]</font>
           <br/>
         </p>
       </xsl:copy>
