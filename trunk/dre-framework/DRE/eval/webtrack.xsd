@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xs:schema xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="webtrack">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="0" name="top" type="topic"/> 
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="topic">
+    <xs:sequence>
+      <xs:element name="num" type="xs:int"/>
+      <xs:element name="title" type="xs:string"/>
+      <xs:element name="desc" type="xs:string"/>
+      <xs:element name="narr" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

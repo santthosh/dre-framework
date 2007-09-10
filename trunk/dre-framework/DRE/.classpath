@@ -9,6 +9,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="cobu"/>
+	<classpathentry kind="src" path="eval"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/Lucene"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/Axis2"/>
@@ -18,5 +19,6 @@
 	<classpathentry kind="lib" path="lib/gwt-user.jar"/>
 	<classpathentry kind="lib" path="lib/LiveSearchAPI.jar"/>
 	<classpathentry kind="lib" path="lib/yahoo_search-2.0.1.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JExcelAPI"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
