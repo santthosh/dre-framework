@@ -12,7 +12,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
  * WITH THE SOFTWARE.
  *
- * File: edu.ncsu.dre.impl.engine.XMLAggregator.java
+ * File: edu.ncsu.dre.impl.engine.HTMLAggregator.java
  * Created by: selvas
  * TimeStamp: Jul 24, 2007 11:21:12 AM
  */
@@ -36,7 +36,7 @@ import edu.ncsu.dre.util.*;
  * 
  * @author <a href="mailto:sbselvad@ncsu.edu">Santthosh Babu Selvadurai</a>
  */
-public class XMLAggregator implements Aggregator {
+public class HTMLAggregator implements Aggregator {
 	
 	static Logger logger = Logger.getLogger("edu.ncsu.dre.impl.engine.XMLAggregator");
 	
@@ -72,7 +72,7 @@ public class XMLAggregator implements Aggregator {
 		
 		try
 		{									
-			HTMLResult = applyXSLTransformation(XMLResultSet,"xml/XML2XML.xslt");
+			HTMLResult = applyXSLTransformation(XMLResultSet,"xml/XML2HTML.xslt");
 		}
 		catch(IOException ie)
 		{

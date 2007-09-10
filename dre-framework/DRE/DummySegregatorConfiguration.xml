@@ -13,8 +13,8 @@
   	<Option key="Comment" value="This is the StandAloneScheduler"/>
   </ResearchScheduler>
   <Aggregator>
-  	<Handler>edu.ncsu.dre.impl.engine.XMLAggregator</Handler>
-  	<Option key="Comment" value="This is the XMLAggregator"/>
+  	<Handler>edu.ncsu.dre.impl.engine.HTMLAggregator</Handler>
+  	<Option key="Comment" value="This is the HTMLAggregator"/>
   </Aggregator> 
   <ServiceProvider>
   	<Handler>edu.ncsu.dre.impl.engine.LiveSearchProvider</Handler>

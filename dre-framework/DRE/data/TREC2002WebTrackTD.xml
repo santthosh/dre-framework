@@ -1,0 +1,933 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<webtrack>
+  <top>
+    <num>551</num>
+    <title>
+      intellectual property
+    </title>
+    <desc>
+      Find documents related to laws or regulations that protect intellectual property.
+    </desc>
+    <narr>
+      Relevant documents describe legislation or federal regulations that protect authors 
+      or composers from copyright infringement, or from piracy of their creative work. 
+      These regulations may also be related to fair use or to encryption.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      552
+    </num>
+    <title>
+      Foods for cancer patients
+    </title>
+    <desc>      
+      Find foods good for cancer patients.
+    </desc>
+    <narr>      
+      Relevant documents cover foods, types of foods, and diets that
+      contribute to the recovery of cancer patients. Information may serve
+      consumers, nutritionists, or medical personnel. Exclude pages covering
+      foods to prevent cancer.
+    </narr>
+  </top>
+  
+  <top>
+    <num>
+      553
+    </num>
+    <title>
+      federal funding mental illness
+    </title>
+    <desc>     
+      How much does the federal government spend on mental health, and to
+      what entities does the funding go?
+    </desc>
+    <narr>      
+      Relevant documents state the entities to which the government
+      directs funding for mental health and/or how much money is
+      allocated. State spending on mental health is not relevant, unless
+      that money came from the federal government. Calls for proposals for
+      grants are not relevant. Standards for grantees are not relevant.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      554
+    </num>
+    <title>
+      Home buying
+    </title>
+    <desc>      
+      How does one find and apply for mortgages and buy a first home?
+    </desc>
+    <narr>      
+      Relevant documents school the reader in buying a home and obtaining a
+      mortgage.  Documents referring to obtaining low-cost housing but not
+      buying a home do not qualify.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      555
+    </num>
+    <title>
+      criteria obtain U.S. visa
+    </title>
+    <desc>      
+      What criteria does the Immigration and Naturalization Service use to
+      approve visa applications from foreign nationals?
+    </desc>
+    <narr>     
+      Relevant documents come from the U.S. government stating policy
+      on requirements for foreign nationals requesting U.S. visas to receive
+      approval. Documents from U.S. consulates abroad or foreign governments
+      are not relevant. How U.S. citizens can obtain visas for travel abroad
+      are not relevant.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      556
+    </num>
+    <title>
+      Federal food purchasing
+    </title>
+    <desc>      
+      For what purposes does the federal government purchase food?
+    </desc>
+    <narr>      
+      Relevant documents state the agency or entity for which the
+      federal government purchases food and the purposes for which it is
+      used. Documents regarding state purchasing of food are not relevant.
+      Documents informing farmers on how to apply for government purchase of
+      commodities are not relevant unless they state the purpose for which
+      the government would purchase those commodities.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      557
+    </num>
+    <title>
+      clean air, clean water
+    </title>
+    <desc>      
+      Find documents describing efforts to maintain or improve clean air
+      or clean water.
+    </desc>
+    <narr>      
+      Relevant documents include descriptions of legislation or
+      regulations to check water and air pollution or to control smog and
+      automobile emissions.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      558
+    </num>
+    <title>
+      U.S./Russian Relationship
+    </title>
+    <desc>      
+      Describe the present day relationship between the U.S. and Russia.
+    </desc>
+    <narr>      
+      Relevant documents detail the contemporary status of cooperation and
+      the overall relationship between the U. S. and Russia at present,
+      including business, trade, financial and in-kind assistance, as well
+      as official governmental relations.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      559
+    </num>
+    <title>
+      Federally assisted community volunteer programs
+    </title>
+    <desc>      
+      Find local community volunteer programs for which the federal
+      government provides resources.
+    </desc>
+    <narr>      
+      Relevant documents describe local community volunteer programs that
+      receive financial assistance, training, or other resources from the
+      federal government.  These include national programs with local
+      components, e.g., Foster Grandparents, or local programs receiving
+      federal assistance, e.g., a service-learning program.  Exclude such
+      programs as the Peace Corps and the National Guard.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      560
+    </num>
+    <title>
+      Symptoms of diabetes
+    </title>
+    <desc>      
+      Find documents that list and explain the danger signals of Type I and
+      Type II diabetes.
+    </desc>
+    <narr>      
+      Relevant documents give the symptoms/danger signals that
+      consumers need to recognize as warnings of the onset of Type I and
+      Type II diabetes. Exclude documents directed at medical personnel.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      561
+    </num>
+    <title>
+      Eradication of boll weevils
+    </title>
+    <desc>      
+      Find documents describing how farmers can eradicate boll weevils.
+    </desc>
+    <narr>      
+      Relevant documents report on established eradication programs and
+      on research to refine or supplement these. Exclude documents on other
+      types of weevils and on the history of the boll weevil in the United
+      States.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      562
+    </num>
+    <title>
+      world population growth
+    </title>
+    <desc>      
+      What is the outlook for world population growth?
+    </desc>
+    <narr>      
+      Relevant documents include projections of and discussion of world
+      population growth. Growth of individual nations' populations is
+      relevant, but data on states within the U.S. is not relevant.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      563
+    </num>
+    <title>
+      smoking drinking during pregnancy
+    </title>
+    <desc>      
+      Find documents describing effects on children of mothers' smoking
+      and/or drinking during pregnancy.
+    </desc>
+    <narr>      
+      Relevant documents describe effects on the cognitive, social,
+      emotional, or physical status of children (prenatal through adulthood)
+      that result from their mothers' smoking or drinking while
+      pregnant. Cigarette or alcohol use after the birth of a child is not
+      relevant.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      564
+    </num>
+    <title>
+      mother-infant nutrition
+    </title>
+    <desc>      
+      Find documents describing guidelines for good nutrition
+      for mothers and infants and/or federal programs to promote their use.
+    </desc>
+    <narr>      
+      Relevant documents describe good nutrition for infants from birth to
+      18 months. Those related to older children are not relevant. Programs
+      described must be federal, not state or local.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      565
+    </num>
+    <title>
+      Library services for disabled
+    </title>
+    <desc>      
+      Find documents that describe library services for persons with disabilities.
+    </desc>
+    <narr>      
+      Relevant documents will describe major services for the visually
+      handicapped in federal, state, or large regional libraries.
+      Exclude minor services in small libraries and such
+      mandated features as physical access for the wheelchair bound.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      566
+    </num>
+    <title>
+      Television violence
+    </title>
+    <desc>      
+      What is being done about violence on TV?
+    </desc>
+    <narr>      
+      Relevant documents describe actions taken or statements made about
+      violence on TV, its effect on children and what is being done or
+      should be done about it. Advice to parents to limit TV viewing is not
+      relevant.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      567
+    </num>
+    <title>
+      indigenous folk art
+    </title>
+    <desc>      
+      Find documents that describe efforts to promote and preserve
+      indigenous folk art.
+    </desc>
+    <narr>      
+      Relevant documents may be related to arts and crafts produced by
+      Eskimo (Inuit) and American Indian such as weaving, jewelry,
+      sculpture, woodcarving, painting, basketry. Amish, Shaker, and
+      Appalachian arts and crafts products are also relevant. Advertisements
+      for the sale of particular items are not relevant documents.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      568
+    </num>
+    <title>
+      federal funding art museums
+    </title>
+    <desc>      
+      What types of federal funding are available to support art museums
+      throughout the country?
+    </desc>
+    <narr>      
+      Relevant documents are only those that describe grants or other
+      funding sources to art museums.  Documents that only describe museum
+      programming are not relevant, even if the museum is a federal
+      institution.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      569
+    </num>
+    <title>
+      invasive animals and plants
+    </title>
+    <desc>      
+      Find documents related to controlling invasive animals and plants.
+    </desc>
+    <narr>      
+      Relevant documents describe federal nationwide or regional programs
+      aiming to control invasive plants and animals that are threatening
+      crops, wildlife, or the environment.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      570
+    </num>
+    <title>
+      future occupations
+    </title>
+    <desc>      
+      What occupations will have the greatest need for workers in the next
+      10 to 20 years?
+    </desc>
+    <narr>      
+      Relevant documents name categories of jobs and professions where
+      there will be the greatest need.  Documents may also give statistics
+      showing current employment and projections for future employment.
+      Recruitment documents that do not include the above data are not
+      relevant.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      571
+    </num>
+    <title>
+      tax havens
+    </title>
+    <desc>      
+      What are tax havens and how are they used and abused?
+    </desc>
+    <narr>      
+      Relevant documents describe "tax havens," locations, usually
+      overseas, which have banks where U.S. citizens transfer money to avoid
+      U.S. taxes. Relevant would be discussions in Congress on ways to
+      discourage use of them.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      572
+    </num>
+    <title>
+      selecting a nursing home
+    </title>
+    <desc>      
+      Describe criteria that one should use in selecting a nursing home.
+    </desc>
+    <narr>      
+      Relevant documents may include formal or informal guidelines,
+      checklists, or laws regarding criteria for nursing home care.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      573
+    </num>
+    <title>
+      teaching jobs Europe Asia
+    </title>
+    <desc>      
+      Find documents that list teaching opportunities for Americans in
+      Europe and Asia.
+    </desc>
+    <narr>      
+      Only documents that list or describe opportunities for Americans to
+      teach in Europe or Asia are relevant.  Teaching opportunities may be
+      in any field or with students of any age level.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      574
+    </num>
+    <title>
+      whales dolphins protection
+    </title>
+    <desc>      
+      What efforts are being made nationally and internationally to protect
+      whales and dolphins?
+    </desc>
+    <narr>      
+      Relevant documents describe legislation or international agreements to
+      protect and save whales and dolphins anywhere in the world.
+      Descriptions of the mammals or informational documents from wildlife
+      organizations are not relevant unless they include references to
+      legislation.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      575
+    </num>
+    <title>
+      Nuclear waste storage transportation
+    </title>
+    <desc>      
+      Find documents that describe how nuclear waste is being stored and how
+      it is transported to the storage site.
+    </desc>
+    <narr>      
+      Relevant documents will describe methods of transporting and storing
+      nuclear waste.  Documents that describe the benefits or dangers of
+      nuclear energy are not relevant; nor are documents in favor of or
+      opposed to a particular storage site or means of transportation.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      576
+    </num>
+    <title>
+      Chesapeake Bay ecology
+    </title>
+    <desc>      
+      How are industry and population growth affecting the ecology of the
+      Chesapeake Bay?
+    </desc>
+    <narr>      
+      Only documents that show the relationship between local industries,
+      (including agriculture,) or population growth in the region and the
+      ecology of the Bay are relevant.  A listing of the resources of the
+      Bay are not relevant unless they indicate changes in the resources due
+      to industry or population changes.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      577
+    </num>
+    <title>
+      Dental school locations
+    </title>
+    <desc>      
+      Find documents that provide the locations of dental schools in the
+      United States.
+    </desc>
+    <narr>      
+      Relevant documents will provide the locations of dental schools in the
+      U.S., detailed addresses are not required.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      578
+    </num>
+    <title>
+      Regulating zoos
+    </title>
+    <desc>      
+      Describe the federal regulations and oversight of zoos.
+    </desc>
+    <narr>      
+      Any document describing regulations regarding animal or human safety,
+      importation of endangered species, humane treatment of animals,
+      etc. is relevant.  Information that describes monitoring
+      programs is also relevant.  A site displaying zoo events and
+      activities is not relevant.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      579
+    </num>
+    <title>
+      US fresh drinking water resources
+    </title>
+    <desc>      
+      Where and how extensive are US fresh drinking water resources?
+    </desc>
+    <narr>      
+      Find documents citing the locations and extent of US fresh drinking
+      water resources.  References to the size of populations dependent upon
+      particular fresh drinking water resources for consumption are
+      relevant.  Documents identifying resources used for recreational
+      purposes are not relevant. Problems in water quality of particular
+      drinking water resources are not relevant.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      580
+    </num>
+    <title>
+      US immigration history demographics
+    </title>
+    <desc>      
+      What are the history and patterns of immigration to the US since 1900?
+    </desc>
+    <narr>      
+      Graphs, charts, textual material that describes the history and
+      patterns of immigration to the US since 1900 are relevant.  Relevant
+      material may include countries of origin, regions settled in the US,
+      or American immigration laws that govern the number of people entering
+      the country.  Documents helping with visas, etc. are not relevant.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      581
+    </num>
+    <title>
+      Lymphoma detection symptoms treatment
+    </title>
+    <desc>      
+      Find documents that provide basic information about non-Hodgkin's lymphoma.
+    </desc>
+    <narr>      
+      Relevant documents will contain information on the definition,
+      symptoms, diagnosis, causes, treatment, mortality, survival, etc.  The
+      information must pertain to non-Hodgkin's lymphoma.  Information on
+      Hodgkin's disease is not relevant.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      582
+    </num>
+    <title>
+      Utah ski resorts
+    </title>
+    <desc>      
+      Find documents that provide the locations of ski resorts in Utah.
+    </desc>
+    <narr>      
+      Relevant documents will locate and/or name ski resorts in Utah, a
+      detailed address is not required.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      583
+    </num>
+    <title>
+      Florida's endangered species
+    </title>
+    <desc>      
+      Find what endangered plants and animals live in Florida.
+    </desc>
+    <narr>      
+      Relevant documents list, describe, or discuss endangered plant and
+      animal species in Florida. Include documents discussing the Endangered
+      Species Act only if these list or discuss Florida's endangered species
+      or matters that directly affect them. Exclude documents discussing
+      species that are not endangered or do not live in Florida.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      584
+    </num>
+    <title>
+      Birth defects in the US
+    </title>
+    <desc>      
+      Find documents identifying the types, causes, and extent of birth
+      defects in the US.
+    </desc>
+    <narr>      
+      Documents identifying environmental factors or citing particular
+      behaviors during pregnancy are relevant if linked directly to
+      potential defect outcomes. National data and statistics on particular
+      birth defects are relevant; similar data/statistics relative to
+      individual states or communities are not relevant.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      585
+    </num>
+    <title>
+      Tornado basics
+    </title>
+    <desc>      
+      Find documents that provide basic information about tornadoes.
+    </desc>
+    <narr>      
+      Relevant documents will provide information on the history of
+      tornadoes, how tornadoes form, forecasting, the Fujita Intensity
+      Scale, specific tornado locations, etc.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      586
+    </num>
+    <title>
+      Women's health cancer
+    </title>
+    <desc>      
+      Find documents providing data on prevention, treatment, and outcomes
+      regarding cancers which typically affect women.
+    </desc>
+    <narr>      
+      Relevant documents will associate particular cancers (i.e., ovarian,
+      breast, cervical) with women's health especially in the US.
+      Statistical data on survival/mortality rates nationwide and
+      internationally are relevant.  Prevention and early detection programs
+      and progress are relevant.  Medical reports/studies on prognoses,
+      treatments, and outcomes are relevant. Data on cancer occurrence,
+      programs, and outcomes not specific to cancers which typically affect
+      women are not relevant.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      587
+    </num>
+    <title>
+      Bilingual education
+    </title>
+    <desc>      
+      What does research tell us about the effectiveness of bilingual education?
+    </desc>
+    <narr>      
+      Only documents that describe research either on best practices for
+      teaching in bilingual classrooms or on the effectiveness of bilingual
+      education are relevant.  Grant applications, case studies,
+      demographics are not relevant.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      588
+    </num>
+    <title>
+      Golf resort locations
+    </title>
+    <desc>      
+      Find documents that provide the locations of golf resorts.
+    </desc>
+    <narr>      
+      Relevant documents will provide the locations of golf resorts with their
+      own golf course and lodging.  Resorts that use nearby golf courses are not
+      relevant.  Municipal golf courses are not relevant.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      589
+    </num>
+    <title>
+      Mental Illness in Adolescence
+    </title>
+    <desc>      
+      Find studies about and services offered for mental illness in
+      adolescents.
+    </desc>
+    <narr>      
+      Relevant documents refer to studies about different mental conditions
+      afflicting some teens or services offered for teens with the
+      condition. Documents with information about other health care or
+      conditions other than mental, such as pregnancy prevention, are not
+      relevant.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      590
+    </num>
+    <title>
+      Pilot training schools
+    </title>
+    <desc>      
+      Find documents that contain the locations of schools for pilot training.
+    </desc>
+    <narr>      
+      Relevant documents will locate schools that provide the training
+      required to obtain a license to pilot aircraft such as airplanes,
+      helicopters, gliders and airships.  Training for recreational,
+      private, or airline transport pilot certificates is relevant.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      591
+    </num>
+    <title>
+      education Indian reservations
+    </title>
+    <desc>      
+      What is the current status of education on Indian reservations.
+    </desc>
+    <narr>      
+      Relevant documents describe programs for education of children and
+      young adults on Indian reservations. Education programs that do not
+      specifically mention Indian reservations are not relevant.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      592
+    </num>
+    <title>
+      Fuel cell uses
+    </title>
+    <desc>      
+      Find documents that describe the present or planned uses of fuel cells.
+    </desc>
+    <narr>      
+      Relevant documents will describe the types of fuel cells and their
+      applications.  Documents that only describe fuel cell technology are
+      not relevant.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      593
+    </num>
+    <title>
+      Bush human rights China
+    </title>
+    <desc>      
+      What is the Bush administration's policy on human rights in China?
+    </desc>
+    <narr>      
+      Relevant documents contain statements from President George
+      W. Bush or members of his administration relating to human rights in
+      China. Statements on proposals to approve China's entrance into the
+      World Trade Organization are relevant when they also discuss human
+      rights in China. Statements by congressmen and senators are not
+      relevant unless they mention Bush administration views.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      594
+    </num>
+    <title>
+      Foods preventing high cholesterol
+    </title>
+    <desc>      
+      Find foods that help people prevent high cholesterol.
+    </desc>
+    <narr>      
+      Relevant documents cover foods, types of foods, and diets that help people
+      prevent high cholesterol. Exclude documents covering foods or diets
+      for preventing other health problems.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      595
+    </num>
+    <title>
+      girls math education
+    </title>
+    <desc>      
+      What efforts are being made to improve girls' education in the area of math?
+    </desc>
+    <narr>      
+      Relevant documents describe programs in schools that interest
+      girls in taking math courses and that help them attain proficiency in
+      math.  Special efforts to teach math to boys and girls, where girls
+      are specifically mentioned, are relevant. Special efforts to teach
+      math, with no mention of girls, are not relevant. Documents that note
+      girls' lack of confidence in their math ability but do not say what is
+      being done about it are not relevant.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      596
+    </num>
+    <title>
+      Federal Law Enforcement Jobs
+    </title>
+    <desc>      
+      How do you find federal law enforcement job opportunities?
+    </desc>
+    <narr>      
+      Relevant documents talk about jobs that are conceivably open to
+      members of the general public. Sites which speak about statistics of
+      or training for law enforcement officers are not relevant.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      597
+    </num>
+    <title>
+      IDEA legislation
+    </title>
+    <desc>      
+      Find documents related to changes in special education for children
+      with disabilities resulting from IDEA legislation (Individuals with
+      Disabilities Education Act).
+    </desc>
+    <narr>      
+      Relevant documents describe current provisions for children with
+      disabilities that are a direct response to regulations resulting from
+      this legislation. These changes may be related to "inclusion," to
+      appropriate materials for testing, for a "free appropriate education,"
+      etc.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      598
+    </num>
+    <title>
+      Foreign terrorist organizations
+    </title>
+    <desc>      
+      Find documents naming foreign terrorist organizations and the US
+      criteria for their designation as such.
+    </desc>
+    <narr>      
+      Relevant documents identify by name entities designated officially by
+      the US as foreign terrorist organizations and/or state the official US
+      criteria for so designating such organizations.  Official US
+      designations as foreign terrorist organizations are relevant.
+      Unofficial or non-US allegations of terrorist activity by foreign
+      entities are not relevant.  Documents describing activities of
+      entities providing funding or logistical support to foreign terrorist
+      organizations are not relevant.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      599
+    </num>
+    <title>
+      scientific research misconduct
+    </title>
+    <desc>      
+      Find documents related to cases of scientific research misconduct
+      and/or efforts made to control or discourage such behavior.
+    </desc>
+    <narr>      
+      Relevant documents may be related to Institutional Review Boards
+      (IRB), protection of human subjects, or conflicts of interest on the
+      part of scientists conducting the research.
+    </narr>
+  </top>
+
+  <top>
+    <num>
+      600
+    </num>
+    <title>
+      highway safety
+    </title>
+    <desc>      
+      Find documents related to improving highway safety in the U.S.
+    </desc>
+    <narr>      
+      Relevant documents include those related to the improvement of safety
+      of all vehicles driven on highways, including cars, trucks, vans, and
+      tractor trailers. Ways to reduce accidents through legislation,
+      vehicle checks, and drivers education programs are all relevant.
+    </narr>
+  </top>
+</webtrack>
