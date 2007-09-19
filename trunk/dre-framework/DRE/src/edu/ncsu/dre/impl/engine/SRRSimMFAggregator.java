@@ -27,6 +27,10 @@ import javax.xml.transform.*;
 import javax.xml.transform.stream.*;
 
 import org.apache.log4j.Logger;
+import org.apache.lucene.analysis.Token;
+import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
+
 import edu.ncsu.dre.exception.*;
 import edu.ncsu.dre.data.results.*;
 import edu.ncsu.dre.engine.Aggregator;
@@ -36,7 +40,7 @@ import edu.ncsu.dre.util.*;
  * 
  * @author <a href="mailto:sbselvad@ncsu.edu">Santthosh Babu Selvadurai</a>
  */
-public class XMLAggregator implements Aggregator {
+public class SRRSimMFAggregator implements Aggregator {
 	
 	static Logger logger = Logger.getLogger("edu.ncsu.dre.impl.engine.XMLAggregator");
 	
@@ -127,6 +131,36 @@ public class XMLAggregator implements Aggregator {
 		  java.io.ByteArrayOutputStream bufferedOutputStream = new java.io.ByteArrayOutputStream();
 		  StreamResult streamResult = new StreamResult(bufferedOutputStream);
 		  
+		  /*Sndt = NDT/QLEN, where 
+		   * NDT is the number of distinct terms in the title matching the query
+		   * QLEN is the number of distinct terms in the query 
+		   */		  
+		  double TitleSndt = 0.0;
+		  double SnippetSndt = 0.0;
+		  
+		  /*Stnt = TDT/TITLEN, where 
+		   * TDT is the number of erms in the title or snippet matching the query
+		   * TITLEN is the length of the title 
+		   */		  
+		  double TitleStnt = 0.0;
+		  double SnippetStnt = 0.0;
+		  
+		  /*Sim(T/S,Q) = Sndt + (Stnt/QLEN), where 
+		   * QLEN is the number of distinct terms in the query 
+		   */		  
+		  double simTQ = 0.0;
+		  double simSQ = 0.0;
+		  
+		  /*
+		   * C = 0.2
+		   * Similarity = TNDT * (C * Sim(T,Q) + (1-C) * Sim(S,Q))/QLEN
+		   */
+		  double similarity = 0.0;
+		  double C = 0.2;
+
+		  Map<String,Integer> QUERY = getDistinctTerms(artifactSubset);
+		  double QLEN = (double)QUERY.size();
+		  
 		  try
 		  {
 			  StringReader stringReader = new StringReader(resultStream);
@@ -142,33 +176,38 @@ public class XMLAggregator implements Aggregator {
 			  System.out.println(resultSubSet.getArtifactSubset());
 			  List<ResultComponent> resultList = resultSubSet.getResult();
 			  			  
-			  DynamicComparator.sort(resultList,"DisplayUrl",false);
-			  
-			  int NegativeRanker = 1;
-			  
-			  for(int i=0;i<resultList.size();i++)
+			  for(int i=0;i<resultList.size();i++)			  
 			  {
 				  ResultComponent result = resultList.get(i);
-				  ResultComponent resultNext = null;
-
-				  if(i==(resultList.size()-1)){break;}
-				  else{resultNext = resultList.get(i+1);}
-
-				  if(result.getDisplayUrl().compareToIgnoreCase(resultNext.getDisplayUrl())==0)
-				  {
-					  if(result.getRank() > 0)
-					  {
-						  NegativeRanker--;
-						  result.setRank((double)NegativeRanker);						 
-						  resultNext.setRank((double)NegativeRanker);
-					  }
-					  else
-					  {
-						  resultNext.setRank(result.getRank());
-					  }
-				  }				  				 				 				 
+				  				  
+				  Map<String,Integer> TITLE = getDistinctTerms(result.getTitle());
+				  Map<String,Integer> SNIPPET = getDistinctTerms(result.getDescription());
+				  
+				  TitleSndt = (double)getDistinctMatchCount(QUERY,TITLE)/QLEN;
+				  SnippetSndt = (double)getDistinctMatchCount(QUERY,SNIPPET)/QLEN;
+				  
+				  TitleStnt = 0.0;
+				  if(getCount(TITLE)>0)
+					  TitleStnt = (double)getMatchCount(QUERY,TITLE)/(double)getCount(TITLE);
+				  
+				  SnippetStnt = 0.0;
+				  if(getCount(SNIPPET)>0)
+					  SnippetStnt = (double)getMatchCount(QUERY,SNIPPET)/(double)getCount(SNIPPET);
+				  
+				  simTQ = TitleSndt + TitleStnt/QLEN;
+				  simSQ = SnippetSndt + SnippetStnt/QLEN;
+				  
+				  Map<String,Integer> TITLE_AND_SNIPPET = getDistinctTerms(result.getTitle() + result.getDescription());
+				  
+				  similarity = (double) TITLE_AND_SNIPPET.size() * (C * simTQ + (1-C) * simSQ) / QLEN;
+				  
+				  System.out.println("Similarity: " + similarity);
+				  logger.debug(" Title: SNDT = " + TitleSndt + " STNT = " + TitleStnt + " Sim(T,Q) = " + simTQ);					  				 				 				 
+				  logger.debug("Snippet: SNDT = " + SnippetSndt + " STNT = " + SnippetStnt + " Sim(S,Q) = " + simSQ);
+				  
+				  result.setRank(similarity);
 			  }			  
-			  DynamicComparator.sort(resultList,"Rank",true);			  
+			  DynamicComparator.sort(resultList,"Rank",false);			  
 			  marshaller.marshal(resultSubSet,streamResult);		  
 		  }
 		  catch(XMLStreamException xse)
@@ -196,5 +235,117 @@ public class XMLAggregator implements Aggregator {
 		 */
 		public synchronized void setXMLResultSet(String resultSet) {
 			XMLResultSet = resultSet;
+		}
+		
+		/**
+		 * This function retrieves the set of distinct terms from the input query and populates a HashMap
+		 * 
+		 * @param String input
+		 * @return java.util.Map<String,Integer> 
+		 */
+		public Map<String,Integer> getDistinctTerms(String input)
+		{			
+			HashMap<String,Integer> termMap = new HashMap<String,Integer>();			
+			
+			try
+			{
+				StandardAnalyzer analyst = new StandardAnalyzer();
+				
+				if(input==null)
+					return termMap;
+				
+				TokenStream tokenStream = analyst.tokenStream("", new java.io.StringReader(input.trim()));				
+				Token word = null;
+				do
+				{	
+					if(word!=null)
+					{
+						if(termMap.containsKey(word.termText()))			//Increment the hash table if it is already present
+							termMap.put(word.termText(),termMap.get(word.termText())+1);
+						else
+							termMap.put(word.termText(),1); 				//Else insert into the hash table													
+					}
+					
+					word = tokenStream.next();				
+				}while(word!=null);
+			}
+			catch(java.io.IOException ioe)
+			{
+				logger.error("IOException occured while parsing input string!",ioe);
+			}				
+			return termMap;
+		}
+		
+		/**
+		 * This function accepts two hashes of strings and returns the count of distinct terms that appear 
+		 * in both the hashes.
+		 *  
+		 * @param Map<String,Integer> source,Map<String,Integer> destination
+		 * @return int 
+		 */
+		public int getDistinctMatchCount(Map<String,Integer> source,Map<String,Integer> destination)
+		{
+			int count = 0;
+			
+			Set<String> keySet = destination.keySet();
+			Iterator<String> iterator = keySet.iterator();
+			
+			while(iterator.hasNext())
+			{
+				if(source.containsKey(iterator.next()))
+					count++;
+			}
+			
+			return count;
+		}
+		
+		/**
+		 * This function accepts two hashes of strings and returns the count of terms that appear 
+		 * in both the hashes + values of the individual terms in the destination hash
+		 *  
+		 * @param Map<String,Integer> source,Map<String,Integer> destination
+		 * @return int 
+		 */
+		public int getMatchCount(Map<String,Integer> source,Map<String,Integer> destination)
+		{
+			int count = 0;
+			String term = null;
+			
+			Set<String> keySet = destination.keySet();
+			Iterator<String> iterator = keySet.iterator();
+			
+			while(iterator.hasNext())
+			{
+				term = iterator.next();
+				if(source.containsKey(term))
+					count+=destination.get(term);
+			}
+			
+			return count;
+		}
+		
+		/**
+		 * This function accepts a single hash of strings and returns the count of terms that appear 
+		 * in the hashes + values of the individual terms in the source hash
+		 *  
+		 * @param Map<String,Integer> source
+		 * @return int 
+		 */
+		public int getCount(Map<String,Integer> source)
+		{
+			int count = 0;
+			String term = null;
+			
+			Set<String> keySet = source.keySet();
+			Iterator<String> iterator = keySet.iterator();
+			
+			while(iterator.hasNext())
+			{
+				term = iterator.next();
+				if(source.containsKey(term))
+					count+=source.get(term);
+			}
+			
+			return count;
 		}
 }

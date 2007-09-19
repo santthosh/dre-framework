@@ -45,8 +45,8 @@ public class DREFrameworkTest extends TestCase{
 	@Before
 	public void setUp() throws Exception {
 		framework = new DREFramework();
-		dummyFramework = new DREFramework(new java.io.File("DummySegregatorConfiguration.xml"));
-		normalFramework = new DREFramework(new java.io.File("DummySegregatorConfiguration.xml"));
+		dummyFramework = new DREFramework(new java.io.File("conf/DummySegregatorConfiguration.xml"));
+		normalFramework = new DREFramework(new java.io.File("conf/DummySegregatorConfiguration.xml"));
 		defaultConfiguration = new DefaultDREConfiguration();
 	}
 
@@ -83,7 +83,7 @@ public class DREFrameworkTest extends TestCase{
 	 */
 	@Test
 	public void testGetConfiguration() {
-		framework.setConfiguration(new java.io.File("configuration.xml"));
+		framework.setConfiguration(new java.io.File("conf/configuration.xml"));
 		sampleConfiguration = framework.getConfiguration();
 		
 		assertEquals(sampleConfiguration.getSegregator().getClass().getName(),"edu.ncsu.dre.impl.engine.LexicalSegregator");
@@ -104,7 +104,7 @@ public class DREFrameworkTest extends TestCase{
 	@Test
 	public void testSetConfigurationFile() {		
 
-		framework.setConfiguration(new java.io.File("configuration.xml"));
+		framework.setConfiguration(new java.io.File("conf/configuration.xml"));
 		assertNotNull(framework.getConfiguration());
 		
 		assertEquals(framework.getConfiguration().getSegregator().getClass().getName(),"edu.ncsu.dre.impl.engine.LexicalSegregator");
@@ -156,7 +156,7 @@ public class DREFrameworkTest extends TestCase{
 	 */
 	@Test
 	public void testDREFrameworkFile() {
-		framework = new DREFramework(new java.io.File("configuration.xml"));		
+		framework = new DREFramework(new java.io.File("conf/configuration.xml"));		
 		assertNotNull(framework.getConfiguration());
 		
 		assertEquals(framework.getConfiguration().getSegregator().getClass().getName(),"edu.ncsu.dre.impl.engine.LexicalSegregator");

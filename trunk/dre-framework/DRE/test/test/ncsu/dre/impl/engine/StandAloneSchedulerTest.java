@@ -53,8 +53,8 @@ public class StandAloneSchedulerTest extends TestCase{
 	@Before
 	public void setUp() throws Exception {
 		
-		framework = new DREFramework(new java.io.File("configuration.xml"));
-		dummyFramework = new DREFramework(new java.io.File("DummySegregatorConfiguration.xml"));
+		framework = new DREFramework(new java.io.File("conf/configuration.xml"));
+		dummyFramework = new DREFramework(new java.io.File("conf/DummySegregatorConfiguration.xml"));
 	
 		artifact = new TextArtifact(new java.io.File("sample.pdf"));
 		dummyArtifact = new TextArtifact("santthosh");

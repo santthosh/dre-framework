@@ -159,8 +159,8 @@ public class HTMLAggregator implements Aggregator {
 					  if(result.getRank() > 0)
 					  {
 						  NegativeRanker--;
-						  result.setRank(NegativeRanker);						 
-						  resultNext.setRank(NegativeRanker);
+						  result.setRank((double)NegativeRanker);						 
+						  resultNext.setRank((double)NegativeRanker);
 					  }
 					  else
 					  {
