@@ -20,6 +20,6 @@
       <xs:element name="ModificationDate" type="xs:string"/>
     </xs:sequence>
     <xs:attribute name="Source" type="xs:string"/>
-    <xs:attribute name="Rank" type="xs:int"/>
+    <xs:attribute name="Rank" type="xs:double"/>
   </xs:complexType>
 </xs:schema>

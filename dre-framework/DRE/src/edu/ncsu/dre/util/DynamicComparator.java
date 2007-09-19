@@ -137,7 +137,7 @@ public @SuppressWarnings("unchecked") class DynamicComparator implements Compara
 				}
 			}
 
-			if (returnType.equals("double")) {
+			if (returnType.equals("double") || returnType.equals("java.lang.Double")) {
 				double f1 = 0;
 				try {
 					f1 = ((Double) invoke(method, o1)).doubleValue();
