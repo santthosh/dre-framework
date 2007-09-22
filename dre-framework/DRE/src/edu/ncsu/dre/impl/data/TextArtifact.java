@@ -18,6 +18,8 @@
  */
 package edu.ncsu.dre.impl.data;
 
+import java.lang.reflect.Method;
+
 import org.apache.log4j.Logger;
 
 import edu.ncsu.dre.util.*;
@@ -41,6 +43,8 @@ public class TextArtifact implements Artifact {
 	static Logger logger = Logger.getLogger("edu.ncsu.dre.impl.data.TextArtifact");
 
 	private static final long serialVersionUID = -481270147011237L;
+	
+	private String 	   method = null;
 	/**
 	 * Generalized artifact object, needs to be type casted as per the requirements of
 	 * Segregator
@@ -52,7 +56,14 @@ public class TextArtifact implements Artifact {
 	 */
 	@Override
 	public Object getQuery() {	
-		logger.trace("getQuery()");
+		logger.trace("getQuery()");		
+		
+		if (this.artifact.getClass().getName().compareToIgnoreCase("java.io.File")==0)
+		{				
+			TextArtifact childArtifact = new TextArtifact((java.io.File)this.artifact);
+			return childArtifact.getQuery();
+		}			
+
 		return this.artifact;
 	}
 
@@ -62,7 +73,18 @@ public class TextArtifact implements Artifact {
 	@Override
 	public void setArtifact(Object inputArtifact) {
 		logger.trace("setArtifact(Object inputArtifact)");
-		this.artifact = inputArtifact;
+		this.artifact = inputArtifact;		
+	}
+	
+	
+	/**
+	 * Constructor overload, accepts a String and uses the <code>setArtifact</code>
+	 * method to generalize the object
+	 * 
+	 */
+	public TextArtifact()
+	{
+		logger.trace("TextArtifact Constructor");		
 	}
 	
 	/**
