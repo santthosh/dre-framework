@@ -13,7 +13,7 @@
   	<Option key="Comment" value="This is the StandAloneScheduler"/>
   </ResearchScheduler>
   <Aggregator>
-  	<Handler>edu.ncsu.dre.impl.engine.SRRSimMFAggregator</Handler>
+  	<Handler>edu.ncsu.dre.impl.engine.SRRSimCGAggregator</Handler>
   	<Option key="Comment" value="This is the SRRSimMFAggregator"/>
   </Aggregator> 
   <ServiceProvider>
