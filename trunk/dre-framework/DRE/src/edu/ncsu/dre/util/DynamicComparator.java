@@ -202,11 +202,11 @@ public @SuppressWarnings("unchecked") class DynamicComparator implements Compara
 		return true;
 	}
 
-	private final Method getMethod(Object o) throws NoSuchMethodException {
+	private @SuppressWarnings("all") final Method getMethod(Object o) throws NoSuchMethodException {
 		return o.getClass().getMethod(method,null);
 	}
 
-	private final static Object invoke(Method method, Object o) throws
+	private @SuppressWarnings("all") final static Object invoke(Method method, Object o) throws
 	InvocationTargetException, IllegalAccessException {
 		return method.invoke(o,null);
 	}

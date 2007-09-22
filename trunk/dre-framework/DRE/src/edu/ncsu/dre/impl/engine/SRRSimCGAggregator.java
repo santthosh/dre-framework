@@ -40,7 +40,7 @@ import edu.ncsu.dre.util.*;
  * 
  * @author <a href="mailto:sbselvad@ncsu.edu">Santthosh Babu Selvadurai</a>
  */
-public class SRRSimMFAggregator implements Aggregator {
+public class SRRSimCGAggregator implements Aggregator {
 	
 	static Logger logger = Logger.getLogger("edu.ncsu.dre.impl.engine.XMLAggregator");
 	
@@ -70,7 +70,7 @@ public class SRRSimMFAggregator implements Aggregator {
 				XMLResultSet = collateSubSetResults(wordList.get(j),xmlResultMap.get(wordList.get(j)).toString()).getOutputStream().toString();
 			}
 		}
-		logger.info("Result: " + XMLResultSet);
+		logger.info("Result: " + XMLResultSet);				
 		
 		StreamResult HTMLResult = null;
 		
@@ -137,6 +137,9 @@ public class SRRSimMFAggregator implements Aggregator {
 		   */		  
 		  double TitleSndt = 0.0;
 		  double SnippetSndt = 0.0;
+		  double GuideSndt = 0.0;
+		  double GTitleSndt = 0.0;
+		  double GSnippetSndt = 0.0;
 		  
 		  /*Stnt = TDT/TITLEN, where 
 		   * TDT is the number of erms in the title or snippet matching the query
@@ -144,12 +147,18 @@ public class SRRSimMFAggregator implements Aggregator {
 		   */		  
 		  double TitleStnt = 0.0;
 		  double SnippetStnt = 0.0;
+		  double GuideStnt = 0.0;
+		  double GTitleStnt = 0.0;
+		  double GSnippetStnt = 0.0;
 		  
 		  /*Sim(T/S,Q) = Sndt + (Stnt/QLEN), where 
 		   * QLEN is the number of distinct terms in the query 
 		   */		  
 		  double simTQ = 0.0;
 		  double simSQ = 0.0;
+		  double simGQ = 0.0;
+		  double simGT = 0.0;
+		  double simGS = 0.0;
 		  
 		  /*
 		   * C = 0.2
@@ -159,7 +168,9 @@ public class SRRSimMFAggregator implements Aggregator {
 		  double C = 0.2;
 
 		  Map<String,Integer> QUERY = getDistinctTerms(artifactSubset);
+		  Map<String,Integer> GUIDE = null;
 		  double QLEN = (double)QUERY.size();
+		  double TLEN=0.0,SLEN=0.0;
 		  
 		  try
 		  {
@@ -177,16 +188,27 @@ public class SRRSimMFAggregator implements Aggregator {
 			  List<ResultComponent> resultList = resultSubSet.getResult();
 			  
 			  if(contentGuidance != null)
-			  {
-				  System.out.println(contentGuidance.getQuery());
+			  {				  
+				  GUIDE = getDistinctTerms((String)contentGuidance.getQuery());
+				  GuideSndt = (double) getDistinctMatchCount(QUERY,GUIDE)/QLEN;
+				  
+				  GuideStnt = 0.0;
+				  if(getCount(GUIDE)>0)
+					  GuideStnt = (double)getMatchCount(QUERY,GUIDE)/(double)getCount(GUIDE);
+				  simGQ = GuideSndt + GuideStnt/QLEN;
+				  
+				  System.out.println("Sim(G,Q) = " + simGQ);
 			  }
-			  			  
+				  			  			  
 			  for(int i=0;i<resultList.size();i++)			  
 			  {
 				  ResultComponent result = resultList.get(i);
 				  				  
 				  Map<String,Integer> TITLE = getDistinctTerms(result.getTitle());
+				  TLEN = TITLE.size();
+				  
 				  Map<String,Integer> SNIPPET = getDistinctTerms(result.getDescription());
+				  SLEN = SNIPPET.size();
 				  
 				  TitleSndt = (double)getDistinctMatchCount(QUERY,TITLE)/QLEN;
 				  SnippetSndt = (double)getDistinctMatchCount(QUERY,SNIPPET)/QLEN;
@@ -201,11 +223,33 @@ public class SRRSimMFAggregator implements Aggregator {
 				  
 				  simTQ = TitleSndt + TitleStnt/QLEN;
 				  simSQ = SnippetSndt + SnippetStnt/QLEN;
-				  
-				  Map<String,Integer> TITLE_AND_SNIPPET = getDistinctTerms(result.getTitle() + result.getDescription());
-				  
+				  				  
+				  Map<String,Integer> TITLE_AND_SNIPPET = getDistinctTerms(result.getTitle() + result.getDescription());				  
 				  similarity = (double) TITLE_AND_SNIPPET.size() * (C * simTQ + (1-C) * simSQ) / QLEN;
 				  
+				  if(contentGuidance != null)
+				  {					  
+					  GTitleSndt = (double)getDistinctMatchCount(TITLE,GUIDE)/TLEN;
+					  GSnippetSndt = (double)getDistinctMatchCount(SNIPPET,GUIDE)/SLEN;
+					  
+					  GTitleStnt = 0.0;
+					  if(getCount(TITLE)>0)
+						  GTitleStnt = (double)getMatchCount(TITLE,GUIDE)/(double)getCount(GUIDE);
+					  
+					  GSnippetStnt = 0.0;
+					  if(getCount(SNIPPET)>0)
+						  GSnippetStnt = (double)getMatchCount(SNIPPET,GUIDE)/(double)getCount(GUIDE);
+					  
+					  simGT = GTitleSndt + GTitleStnt/TLEN;
+					  simGS = GSnippetSndt + GSnippetStnt/SLEN;
+					  					  				
+					  similarity += (double) GUIDE.size() * (C * simGT + (1-C) * simGS) / (TLEN+SLEN);					  
+					  similarity = similarity/2; 
+					  
+					  System.out.print("Similarity: " + similarity);
+					  System.out.println("Guide-Title Similarity: " + simGT + " Guide-Snippet Similarity: " + simGS);
+				  }
+				  				  				  				
 				  logger.debug("Similarity: " + similarity);
 				  logger.debug(" Title: SNDT = " + TitleSndt + " STNT = " + TitleStnt + " Sim(T,Q) = " + simTQ);					  				 				 				 
 				  logger.debug(" Snippet: SNDT = " + SnippetSndt + " STNT = " + SnippetStnt + " Sim(S,Q) = " + simSQ);

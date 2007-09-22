@@ -119,7 +119,7 @@ public class DREFramework {
 	 * 
 	 * @param configurationFile 
 	 */
-	public @SuppressWarnings("unchecked") void setConfiguration(java.io.File configurationFile)
+	public @SuppressWarnings("all") void setConfiguration(java.io.File configurationFile)
 	{		
 		logger.trace("setConfiguration(java.io.File configurationFile)");
 		try
@@ -151,6 +151,10 @@ public class DREFramework {
 			dreConfiguration.setSchedulerOptions(list2Map(configuration.getResearchScheduler().getOption()));
 			dreConfiguration.setAggregatorOptions(list2Map(configuration.getAggregator().getOption()));
 			dreConfiguration.setParameters(list2Map(configuration.getParameter()));
+			
+			//Enable Content Guidance for Result Merging if necessary
+			if(dreConfiguration.getParameters().containsKey("ContentGuide"))				
+				dreConfiguration.getAggregator().contentGuidance.setArtifact(new java.io.File(dreConfiguration.getParameters().get("ContentGuide").toString()));
 			
 			//Identify and populate the ServiceProvider list
 			dreConfiguration.setServiceProvider(configuration.getServiceProvider());

@@ -33,6 +33,8 @@ import java.util.Map;
  */
 public interface Aggregator {
 	
+	edu.ncsu.dre.data.Artifact contentGuidance = new edu.ncsu.dre.impl.data.TextArtifact();
+	
 	/**
 	 * Generalized method for processing result aggregation on the given artifact search results.
 	 * 
@@ -45,4 +47,6 @@ public interface Aggregator {
 	public javax.xml.transform.stream.StreamResult aggregateResults(edu.ncsu.dre.data.Artifact artifact, 
 																	java.util.List<Object> ObjectList,
 																	java.util.List<Map<Object,Object>> ResultMap);
+	
+	
 }
