@@ -28,7 +28,7 @@ import edu.ncsu.dre.DREFramework;
  *
  * @author <a href="mailto:sbselvad@ncsu.edu">Santthosh Babu Selvadurai</a>
  */
-public class SRRSimMFAggregatorTest {
+public class SRRSimCGAggregatorTest {
 
 	DREFramework normalFramework = null;
 	/**
@@ -36,7 +36,7 @@ public class SRRSimMFAggregatorTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		normalFramework = new DREFramework(new java.io.File("conf/SRRSimMFConfiguration.xml"));
+		normalFramework = new DREFramework(new java.io.File("conf/SRRSimCGConfiguration.xml"));
 	}
 
 	/**
@@ -44,7 +44,7 @@ public class SRRSimMFAggregatorTest {
 	 */
 	@Test
 	public void testAggregateResults() {
-		javax.xml.transform.stream.StreamResult result = normalFramework.processLiteralArtifact(new edu.ncsu.dre.impl.data.TextArtifact("Metasearch engines"));
+		javax.xml.transform.stream.StreamResult result = normalFramework.processLiteralArtifact(new edu.ncsu.dre.impl.data.TextArtifact("bus"));
 		System.out.println(result.getOutputStream().toString());		
 		assert(true);
 	}
