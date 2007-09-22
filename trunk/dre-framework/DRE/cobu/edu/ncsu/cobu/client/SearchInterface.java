@@ -38,7 +38,7 @@ public class SearchInterface implements EntryPoint {
 		grid.resize(1, 2);
 		grid.getCellFormatter().setHorizontalAlignment(0, 1, HasHorizontalAlignment.ALIGN_RIGHT);
 
-		final Label whatHelpIsLabel = new Label("How helpful is a zillion results?! Find what you want, where you want and how you want it!");
+		final Label whatHelpIsLabel = new Label("Metasearch Prototype");
 		grid.setWidget(0, 1, whatHelpIsLabel);
 		whatHelpIsLabel.setStyleName("gwt-Title");
 		grid.getCellFormatter().setHorizontalAlignment(0, 1, HasHorizontalAlignment.ALIGN_RIGHT);
@@ -68,7 +68,7 @@ public class SearchInterface implements EntryPoint {
 		search.getCellFormatter().setVerticalAlignment(3, 0, HasVerticalAlignment.ALIGN_TOP);
 		search.getCellFormatter().setHeight(3, 0, "300");
 
-		final HTML html = new HTML("<p> </br></p>\r\n<p><font face=\"arial\" size=2 color=\"gray\">\r\nCobu is a distributed search engine prototype based on Federate Search Framework. It helps you to search across several search engines (or service providers),\r\nfile systems, local, enterprise and internet for information, the way you wish it to be.\r\n</font></p></br>\r\n<hr>\r\n");
+		final HTML html = new HTML("<br><p align=\"center\"><font face=\"arial\" size=2><a href=\"http://www.google.com\">About Cobu</a></font></p>");
 		resultFlowPanel.add(html);
 		search.getCellFormatter().setVerticalAlignment(2, 0, HasVerticalAlignment.ALIGN_TOP);
 		search.getCellFormatter().setHorizontalAlignment(2, 0, HasHorizontalAlignment.ALIGN_CENTER);

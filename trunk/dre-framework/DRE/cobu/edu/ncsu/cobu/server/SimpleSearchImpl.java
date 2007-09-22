@@ -11,7 +11,7 @@ public class SimpleSearchImpl extends RemoteServiceServlet implements SimpleSear
 		
 	public String doLiteralSearch(String args)
 	{
-		DREFramework dummyFramework = new DREFramework(new java.io.File("DummySegregatorConfiguration.xml"));
+		DREFramework dummyFramework = new DREFramework(new java.io.File("conf/SRRSimCGConfiguration.xml"));
 		javax.xml.transform.stream.StreamResult result = dummyFramework.processLiteralArtifact(new edu.ncsu.dre.impl.data.TextArtifact(args));
 		
 		String value = result.getOutputStream().toString();
