@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xs:schema xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:alexa="http://wsearch.amazonaws.com/doc/2007-03-15/">
+  <xs:element name="SearchResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="SearchResult" type="SearchResultComponent"/>
+        <xs:element name="ResponseMetadata" type="ResponseMetadataComponent"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="ResponseMetadataComponent">
+      <xs:sequence>
+        <xs:element name="RequestId" type="xs:string"/>
+      </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="SearchResultComponent">
+      <xs:sequence>
+	 <xs:element name="SearchTerms" type="xs:string"/>
+	 <xs:element name="EstimatedNumberOfDocuments" type="xs:string"/>
+        <xs:element maxOccurs="unbounded" minOccurs="1" name="Document" type="ResultComponent"/>
+      </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ResultComponent">
+    <xs:sequence>
+      <xs:element name="Url" type="xs:string"/>
+      <xs:element name="Title" type="xs:string"/>
+      <xs:element name="Bytes" type="xs:string"/>
+      <xs:element name="Checksum" type="xs:string"/>
+      <xs:element name="Context" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
