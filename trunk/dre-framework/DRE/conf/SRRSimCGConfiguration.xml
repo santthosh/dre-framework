@@ -29,6 +29,10 @@
   	<Option key="AppID" value="eCBIC3LV34EN3FHl35AMrMhA7JoOi4jfPPy1VQrSNr51qWbeO43DkDDLSqG0jmVg"/>  	
   	<Option key="ID" value="Yahoo"/>
   </ServiceProvider>   
+  <ServiceProvider>  
+  	<Handler>edu.ncsu.dre.impl.engine.AlexaSearchProvider</Handler>  	  
+  	<Option key="ID" value="Alexa"/>
+  </ServiceProvider>  
   <Parameter key="Comment" value="SimpleStandAlone DRE Framework."/>
   <Parameter key="ContentGuide" value="mem-sched.pdf"/>
 </EngineConfiguration>
