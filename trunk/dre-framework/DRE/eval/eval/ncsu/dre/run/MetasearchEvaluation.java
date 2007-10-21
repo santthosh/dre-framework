@@ -12,7 +12,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
  * WITH THE SOFTWARE.
  *
- * File: eval.ncsu.dre.run.YahooEvaluation.java
+ * File: eval.ncsu.dre.run.MetasearchEvaluation.java
  * Created by: <a href="mailto:sbselvad@ncsu.edu">Santthosh Babu Selvadurai</a>
  * TimeStamp: Sep 9, 2007 8:12:27 PM
  */
@@ -48,13 +48,13 @@ import jxl.write.*;
  *
  * @author <a href="mailto:sbselvad@ncsu.edu">Santthosh Babu Selvadurai</a>
  */
-public class YahooEvaluation {
+public class MetasearchEvaluation {
 
-	static Logger logger = Logger.getLogger("eval.ncsu.dre.run.YahooEvaluation");
+	static Logger logger = Logger.getLogger("eval.ncsu.dre.run.MetasearchEvaluation");
 	
-	static boolean CONTENT_DIRECTION = true;
+	static boolean CONTENT_DIRECTION = false;
 	
-	public YahooEvaluation()
+	public MetasearchEvaluation()
 	{
 		generateReport(new java.io.File("data/TREC2002WebTrackTD.xml"));
 	}
@@ -69,7 +69,7 @@ public class YahooEvaluation {
 			Webtrack webtrack = (Webtrack) unmarshaller.unmarshal(configurationFile);						
 						
 			List<Topic> top = webtrack.getTop();
-			WritableWorkbook w = Workbook.createWorkbook(new java.io.File("data/YahooReportCG.xls"));
+			WritableWorkbook w = Workbook.createWorkbook(new java.io.File("data/MetasearchReport.xls"));
 			WritableSheet s = w.createSheet("Report", 0);	
 			WritableSheet c = w.createSheet("Chart", 1);
 			
@@ -101,9 +101,19 @@ public class YahooEvaluation {
 				configuration.setAggregator(aggregator);
 				
 				List<Component> serviceProvider = new ArrayList<Component>();
+				
 				Component yahooProvider = new Component();
-				yahooProvider.setHandler("edu.ncsu.dre.impl.engine.YahooSearchProvider");			
+				yahooProvider.setHandler("edu.ncsu.dre.impl.engine.YahooSearchProvider");							
 				serviceProvider.add(yahooProvider);
+				
+				Component liveSearchProvider = new Component();
+				liveSearchProvider.setHandler("edu.ncsu.dre.impl.engine.LiveSearchProvider");			
+				serviceProvider.add(liveSearchProvider);
+				
+				Component alexaSearchProvider = new Component();
+				alexaSearchProvider.setHandler("edu.ncsu.dre.impl.engine.AlexaSearchProvider");			
+				serviceProvider.add(alexaSearchProvider);
+				
 				configuration.setServiceProvider(serviceProvider);
 																								
 				DREFramework framework = new DREFramework();
@@ -183,6 +193,6 @@ public class YahooEvaluation {
 	
 	public static void main(String args[])
 	{
-		new YahooEvaluation();
+		new MetasearchEvaluation();
 	}
 }
