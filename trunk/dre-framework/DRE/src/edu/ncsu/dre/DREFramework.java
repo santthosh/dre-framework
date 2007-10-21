@@ -32,7 +32,7 @@ import edu.ncsu.dre.engine.*;
 import edu.ncsu.dre.configuration.*;
 
 /**
- * This is the application's main interface point to the DRE Framework. 
+ * This is the application's main entry point to the DRE Framework. 
  * <p>
  * This class provides the basic methods and constructors for building the 
  * application.
