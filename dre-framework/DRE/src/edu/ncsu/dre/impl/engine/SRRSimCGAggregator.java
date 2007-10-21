@@ -175,6 +175,7 @@ public class SRRSimCGAggregator implements Aggregator {
 		  try
 		  {
 			  StringReader stringReader = new StringReader(resultStream);
+			  System.out.println(resultStream);
 			  XMLInputFactory factory = XMLInputFactory.newInstance();
 			  XMLStreamReader xmlStreamReader = factory.createXMLStreamReader(stringReader);
 			  
@@ -187,8 +188,8 @@ public class SRRSimCGAggregator implements Aggregator {
 			  System.out.println(resultSubSet.getArtifactSubset());
 			  List<ResultComponent> resultList = resultSubSet.getResult();
 			  
-			  if(contentGuidance != null)
-			  {				  
+			  if(contentGuidance.getQuery() != null)
+			  {						  
 				  GUIDE = getDistinctTerms((String)contentGuidance.getQuery());
 				  GuideSndt = (double) getDistinctMatchCount(QUERY,GUIDE)/QLEN;
 				  
@@ -227,7 +228,7 @@ public class SRRSimCGAggregator implements Aggregator {
 				  Map<String,Integer> TITLE_AND_SNIPPET = getDistinctTerms(result.getTitle() + result.getDescription());				  
 				  similarity = (double) TITLE_AND_SNIPPET.size() * (C * simTQ + (1-C) * simSQ) / QLEN;
 				  
-				  if(contentGuidance != null)
+				  if(contentGuidance.getQuery() != null)
 				  {					  
 					  GTitleSndt = (double)getDistinctMatchCount(TITLE,GUIDE)/TLEN;
 					  GSnippetSndt = (double)getDistinctMatchCount(SNIPPET,GUIDE)/SLEN;

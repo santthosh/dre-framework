@@ -55,6 +55,11 @@ public class TextArtifact implements Artifact {
 	public Object getQuery() {	
 		logger.trace("getQuery()");		
 		
+		if(this.artifact ==null)
+		{
+			return "";
+		}
+		
 		if (this.artifact.getClass().getName().compareToIgnoreCase("java.io.File")==0)
 		{				
 			TextArtifact childArtifact = new TextArtifact((java.io.File)this.artifact);
