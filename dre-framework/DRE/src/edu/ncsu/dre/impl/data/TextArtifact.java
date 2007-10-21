@@ -18,8 +18,6 @@
  */
 package edu.ncsu.dre.impl.data;
 
-import java.lang.reflect.Method;
-
 import org.apache.log4j.Logger;
 
 import edu.ncsu.dre.util.*;
@@ -44,7 +42,6 @@ public class TextArtifact implements Artifact {
 
 	private static final long serialVersionUID = -481270147011237L;
 	
-	private String 	   method = null;
 	/**
 	 * Generalized artifact object, needs to be type casted as per the requirements of
 	 * Segregator

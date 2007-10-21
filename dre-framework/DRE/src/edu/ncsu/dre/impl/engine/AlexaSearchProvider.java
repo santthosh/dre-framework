@@ -41,7 +41,6 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-import javax.xml.namespace.*;
 import javax.xml.stream.*;
 
 import edu.ncsu.dre.impl.engine.alexa.*;
