@@ -31,11 +31,14 @@
             <xsl:value-of select="CacheUrl"/>
           </xsl:variable>
 
-          <xsl:if test="@Source!='Livesearch'">
+          <xsl:if test="@Source='Livesearch'">
             <img src="live.gif" alt="Livesearch"></img>
           </xsl:if>
-          <xsl:if test="@Source!='Yahoo'">
+          <xsl:if test="@Source='Yahoo'">
             <img src="yahoo.gif" alt="Yahoo"></img>
+          </xsl:if>
+          <xsl:if test="@Source='Alexa'">
+            <img src="alexaicon.gif" alt="Alexa"></img>
           </xsl:if>
           
           <font color="DarkBlue">
