@@ -224,7 +224,7 @@ public class AlexaSearchProvider extends ServiceProvider {
             	String ResultSet = "", attributes = "";
             	String xmlResponse = makeRequest(urlBuffer.toString());
             	xmlResponse = xmlResponse.replaceAll(" xmlns=\"http://wsearch.amazonaws.com/doc/2007-03-15/\"","");
-            	System.out.println(xmlResponse);
+            	//System.out.println(xmlResponse);
             	            	            	            																	                
                 try
       		  	{

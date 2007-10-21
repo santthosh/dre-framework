@@ -114,6 +114,23 @@ public class DREFramework {
 	}
 	
 	/**
+	 * Sets the <code>DREConfiguration</code> to the given configuration
+	 * 
+	 * @param configuration the configuration to set
+	 */
+	public void setConfiguration(DREConfiguration configuration, String contentGuidance) {
+		logger.trace("setConfiguration(DREConfiguration configuration)");
+		DREFramework.configuration = configuration;
+		
+		if(contentGuidance!=null)
+			configuration.getAggregator().contentGuidance.setArtifact(contentGuidance);
+		
+		if(!hasValidConfiguration())
+			throw new DREIllegalStateException(DREIllegalStateException.INVALID_CONFIGURATION,null);
+	}
+	
+	
+	/**
 	 * This sets the current instance's configuration to the one loaded from the
 	 * XML configuration file. The mapping is done through JAXB 
 	 * 
@@ -154,7 +171,7 @@ public class DREFramework {
 			
 			//Enable Content Guidance for Result Merging if necessary
 			if(dreConfiguration.getParameters().containsKey("ContentGuide"))				
-				dreConfiguration.getAggregator().contentGuidance.setArtifact(new java.io.File(dreConfiguration.getParameters().get("ContentGuide").toString()));
+				dreConfiguration.getAggregator().contentGuidance.setArtifact(new java.io.File(dreConfiguration.getParameters().get("ContentGuide").toString()));						
 			
 			//Identify and populate the ServiceProvider list
 			dreConfiguration.setServiceProvider(configuration.getServiceProvider());
